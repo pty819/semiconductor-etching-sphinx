@@ -1,0 +1,4106 @@
+<!doctype html>
+<html class="no-js" lang="zh-CN" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="索引" href="../genindex.html"><link rel="search" title="搜索" href="../search.html"><link rel="prev" title="CCP刻蚀系统深度解析" href="03-ccp-system.html">
+
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>第四章 传感器与故障诊断 - 半导体刻蚀技术知识库</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">半导体刻蚀技术知识库</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">半导体刻蚀技术知识库</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="搜索" name="q" aria-label="搜索">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">目录</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01-fundamentals.html">刻蚀技术基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-icp-system.html">ICP刻蚀系统深度解析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-ccp-system.html">CCP刻蚀系统深度解析</a></li>
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">第四章 传感器与故障诊断</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/chapters/04-sensors-diagnostics.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="chapter-sensors-diagnostics">
+<span id="id1"></span><h1>第四章 传感器与故障诊断<a class="headerlink" href="#chapter-sensors-diagnostics" title="链接到此标题。">¶</a></h1>
+<nav class="contents local" id="id2">
+<p class="topic-title">本章目录</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id3" id="id84">引言</a></p></li>
+<li><p><a class="reference internal" href="#section-sensor-overview" id="id85">4.1 传感器系统概述</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id5" id="id86">4.1.1 为什么需要传感器监控</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id87">4.1.2 传感器在刻蚀过程中的作用</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id88">4.1.3 传感器类型分类</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id89">4.1.4 现代刻蚀设备的传感器密度</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#process-parameter-sensors" id="id90">4.2 过程参数传感器（Process Parameter Sensors）</a></p>
+<ul>
+<li><p><a class="reference internal" href="#pressure-sensors" id="id91">4.2.1 压力传感器（Pressure Sensors）</a></p></li>
+<li><p><a class="reference internal" href="#gas-flow-sensors" id="id92">4.2.2 气体流量传感器（Gas Flow Sensors）</a></p></li>
+<li><p><a class="reference internal" href="#temperature-sensors" id="id93">4.2.3 温度传感器（Temperature Sensors）</a></p></li>
+<li><p><a class="reference internal" href="#rf-power-voltage-sensors" id="id94">4.2.4 射频功率与电压传感器（RF Power &amp; Voltage Sensors）</a></p></li>
+<li><p><a class="reference internal" href="#plasma-characterization-sensors" id="id95">4.2.5 等离子体特性传感器（Plasma Characterization Sensors）</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#endpoint-detection-systems" id="id96">4.3 终点检测系统（Endpoint Detection Systems）</a></p>
+<ul>
+<li><p><a class="reference internal" href="#optical-emission-spectroscopy-oes" id="id97">4.3.1 光发射光谱（Optical Emission Spectroscopy, OES）</a></p></li>
+<li><p><a class="reference internal" href="#laser-interferometry" id="id98">4.3.2 激光干涉仪（Laser Interferometry）</a></p></li>
+<li><p><a class="reference internal" href="#broadband-interferometry" id="id99">4.3.3 宽光谱干涉仪（Broadband Interferometry）</a></p></li>
+<li><p><a class="reference internal" href="#id9" id="id100">4.3.4 其他终点检测方法</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#equipment-health-sensors" id="id101">4.4 设备状态传感器（Equipment Health Sensors）</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id10" id="id102">4.4.1 真空系统传感器</a></p></li>
+<li><p><a class="reference internal" href="#id11" id="id103">4.4.2 冷却系统传感器</a></p></li>
+<li><p><a class="reference internal" href="#id12" id="id104">4.4.3 机械运动传感器</a></p></li>
+<li><p><a class="reference internal" href="#particle-monitors" id="id105">4.4.4 颗粒监测传感器（Particle Monitors）</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#section-sensor-layout" id="id106">4.5 传感器布局与安装</a></p>
+<ul>
+<li><p><a class="reference internal" href="#icp-ccp" id="id107">4.5.1 典型ICP/CCP设备的传感器分布</a></p></li>
+<li><p><a class="reference internal" href="#id14" id="id108">4.5.2 传感器安装原则</a></p></li>
+<li><p><a class="reference internal" href="#id15" id="id109">4.5.3 传感器信号传输</a></p></li>
+<li><p><a class="reference internal" href="#daq" id="id110">4.5.4 数据采集系统（DAQ）</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#fdc-fault-detection-and-classification" id="id111">4.6 故障检测与分类（FDC, Fault Detection and Classification）</a></p>
+<ul>
+<li><p><a class="reference internal" href="#fdc" id="id112">4.6.1 FDC系统概述</a></p></li>
+<li><p><a class="reference internal" href="#rule-based-fdc" id="id113">4.6.2 基于规则的故障检测（Rule-based FDC）</a></p></li>
+<li><p><a class="reference internal" href="#statistical-fdc" id="id114">4.6.3 基于统计的故障检测（Statistical FDC）</a></p></li>
+<li><p><a class="reference internal" href="#ml-based-fdc" id="id115">4.6.4 基于机器学习的故障检测（ML-based FDC）</a></p></li>
+<li><p><a class="reference internal" href="#id16" id="id116">4.6.5 常见故障类型与诊断</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id17" id="id117">4.6.5.1 等离子体相关故障</a></p></li>
+<li><p><a class="reference internal" href="#id18" id="id118">4.6.5.2 真空系统故障</a></p></li>
+<li><p><a class="reference internal" href="#id19" id="id119">4.6.5.3 气体系统故障</a></p></li>
+<li><p><a class="reference internal" href="#id20" id="id120">4.6.5.4 温度控制故障</a></p></li>
+<li><p><a class="reference internal" href="#id21" id="id121">4.6.5.5 机械故障</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id22" id="id122">4.6.6 故障定位策略</a></p></li>
+<li><p><a class="reference internal" href="#predictive-maintenance" id="id123">4.6.7 预测性维护（Predictive Maintenance）</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#section-advanced-diagnostics" id="id124">4.7 先进诊断技术</a></p>
+<ul>
+<li><p><a class="reference internal" href="#digital-twin" id="id125">4.7.1 数字孪生（Digital Twin）</a></p></li>
+<li><p><a class="reference internal" href="#id24" id="id126">4.7.2 边缘计算与实时分析</a></p></li>
+<li><p><a class="reference internal" href="#id25" id="id127">4.7.3 多设备协同诊断</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#section-vendors" id="id128">4.8 传感器与诊断系统供应商</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id27" id="id129">4.8.1 传感器供应商</a></p></li>
+<li><p><a class="reference internal" href="#id28" id="id130">4.8.2 FDC系统供应商</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#section-standards" id="id131">4.9 行业标准与最佳实践</a></p>
+<ul>
+<li><p><a class="reference internal" href="#semi" id="id132">4.9.1 SEMI标准</a></p></li>
+<li><p><a class="reference internal" href="#id30" id="id133">4.9.2 数据格式标准</a></p></li>
+<li><p><a class="reference internal" href="#id31" id="id134">4.9.3 最佳实践</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#section-future" id="id135">4.10 未来发展趋势</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id33" id="id136">4.10.1 更多传感器集成</a></p></li>
+<li><p><a class="reference internal" href="#ai" id="id137">4.10.2 AI驱动的自主诊断</a></p></li>
+<li><p><a class="reference internal" href="#id34" id="id138">4.10.3 自适应工艺控制</a></p></li>
+<li><p><a class="reference internal" href="#id35" id="id139">4.10.4 闭环优化系统</a></p></li>
+<li><p><a class="reference internal" href="#id36" id="id140">4.10.5 量子传感技术应用前景</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#chapter-summary" id="id141">本章小结</a></p></li>
+<li><p><a class="reference internal" href="#chapter-references" id="id142">参考文献</a></p></li>
+</ul>
+</nav>
+<section id="id3">
+<h2><a class="toc-backref" href="#id84" role="doc-backlink">引言</a><a class="headerlink" href="#id3" title="链接到此标题。">¶</a></h2>
+<p>现代半导体刻蚀设备是一个高度复杂的系统，其内部包含数以百计的传感器，实时监控着从真空度、气体流量到等离子体特性的各种参数。这些传感器不仅是工艺控制的基础，更是故障检测与分类（Fault Detection and Classification, FDC）系统的核心数据来源。随着工艺节点向3nm及以下推进，对传感器精度、响应速度和可靠性的要求日益严苛。本章将系统介绍刻蚀设备中的各类传感器系统、终点检测技术、故障诊断方法以及未来发展趋势。</p>
+<pre  class="mermaid">
+        graph LR
+    subgraph 传感器层
+        P1[压力传感器]
+        P2[温度传感器]
+        P3[流量传感器]
+        P4[RF功率传感器]
+        P5[等离子体传感器]
+    end
+
+    subgraph 信号处理层
+        ADC[模数转换]
+        DAQ[数据采集系统]
+    end
+
+    subgraph 分析层
+        SPC[统计过程控制]
+        FDC[故障检测分类]
+        ML[机器学习模型]
+    end
+
+    subgraph 决策层
+        Alarm[报警系统]
+        Control[闭环控制]
+        Maintenance[预测性维护]
+    end
+
+    P1 --&gt; ADC
+    P2 --&gt; ADC
+    P3 --&gt; ADC
+    P4 --&gt; ADC
+    P5 --&gt; ADC
+
+    ADC --&gt; DAQ
+    DAQ --&gt; SPC
+    DAQ --&gt; FDC
+    DAQ --&gt; ML
+
+    SPC --&gt; Alarm
+    FDC --&gt; Alarm
+    ML --&gt; Maintenance
+
+    Alarm --&gt; Control
+    Control --&gt; P1
+    Control --&gt; P2
+    Control --&gt; P3
+    </pre></section>
+<section id="section-sensor-overview">
+<span id="id4"></span><h2><a class="toc-backref" href="#id85" role="doc-backlink">4.1 传感器系统概述</a><a class="headerlink" href="#section-sensor-overview" title="链接到此标题。">¶</a></h2>
+<section id="id5">
+<h3><a class="toc-backref" href="#id86" role="doc-backlink">4.1.1 为什么需要传感器监控</a><a class="headerlink" href="#id5" title="链接到此标题。">¶</a></h3>
+<p>半导体刻蚀工艺对过程控制的精度要求极高。在等离子体刻蚀过程中，任何参数的微小偏差都可能导致刻蚀速率变化、选择比降低、侧壁形貌异常等问题，最终影响芯片良率。传感器监控的必要性体现在以下几个方面：</p>
+<dl class="simple">
+<dt><strong>工艺一致性保证</strong></dt><dd><p>现代集成电路制造涉及数百道刻蚀工序，每道工序都需要在精确可控的条件下进行。传感器确保每次刻蚀的工艺参数与设定值一致，实现批次间（run-to-run）的工艺稳定性。</p>
+</dd>
+<dt><strong>实时故障预警</strong></dt><dd><p>通过持续监控关键参数，传感器系统能够在故障发生前检测到异常趋势，为操作人员提供预警，避免批量性质量问题。</p>
+</dd>
+<dt><strong>设备健康管理</strong></dt><dd><p>传感器数据可以反映设备各子系统的健康状态，支持预测性维护（Predictive Maintenance）策略的实施，减少非计划停机时间。</p>
+</dd>
+<dt><strong>工艺优化基础</strong></dt><dd><p>传感器提供的实时数据是先进过程控制（Advanced Process Control, APC）和运行到运行控制（Run-to-Run Control, R2R）的基础，支持工艺的持续优化。</p>
+</dd>
+</dl>
+</section>
+<section id="id6">
+<h3><a class="toc-backref" href="#id87" role="doc-backlink">4.1.2 传感器在刻蚀过程中的作用</a><a class="headerlink" href="#id6" title="链接到此标题。">¶</a></h3>
+<p>传感器在刻蚀过程中扮演多重角色：</p>
+<div class="table-wrapper colwidths-given docutils container" id="id56">
+<table class="docutils align-default" id="id56">
+<caption><span class="caption-text">传感器的核心作用</span><a class="headerlink" href="#id56" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 70.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>作用类别</p></th>
+<th class="head"><p>具体描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>过程参数监控</p></td>
+<td><p>实时测量压力、温度、流量、功率等关键工艺参数</p></td>
+</tr>
+<tr class="row-odd"><td><p>等离子体诊断</p></td>
+<td><p>监测等离子体密度、电子温度、离子通量等核心参数</p></td>
+</tr>
+<tr class="row-even"><td><p>终点检测</p></td>
+<td><p>通过OES、激光干涉等手段确定刻蚀完成时刻</p></td>
+</tr>
+<tr class="row-odd"><td><p>设备状态监测</p></td>
+<td><p>监控真空泵、冷却系统、运动部件等子系统健康状态</p></td>
+</tr>
+<tr class="row-even"><td><p>安全保护</p></td>
+<td><p>检测异常状态（如真空泄漏、过热、异常放电），触发保护动作</p></td>
+</tr>
+<tr class="row-odd"><td><p>数据记录</p></td>
+<td><p>为工艺追溯、故障分析和统计过程控制提供历史数据</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id7">
+<h3><a class="toc-backref" href="#id88" role="doc-backlink">4.1.3 传感器类型分类</a><a class="headerlink" href="#id7" title="链接到此标题。">¶</a></h3>
+<p>现代刻蚀设备中的传感器可以按照其监控对象分为三大类：</p>
+<dl class="simple">
+<dt><strong>过程参数传感器（Process Parameter Sensors）</strong></dt><dd><p>直接监控与刻蚀工艺相关的参数，包括压力、温度、气体流量、RF功率等。这些传感器的数据直接反映当前工艺状态。</p>
+</dd>
+<dt><strong>等离子体诊断传感器（Plasma Diagnostic Sensors）</strong></dt><dd><p>专门用于表征等离子体特性的传感器，包括朗缪尔探针（Langmuir Probe）、光发射光谱（OES）、微波干涉仪等。这些传感器提供对等离子体内部状态的深入理解。</p>
+</dd>
+<dt><strong>设备状态传感器（Equipment Health Sensors）</strong></dt><dd><p>监控设备各子系统运行状态的传感器，包括真空泵状态、冷却系统参数、机械运动状态等。这些传感器主要用于设备健康管理和预测性维护。</p>
+</dd>
+</dl>
+</section>
+<section id="id8">
+<h3><a class="toc-backref" href="#id89" role="doc-backlink">4.1.4 现代刻蚀设备的传感器密度</a><a class="headerlink" href="#id8" title="链接到此标题。">¶</a></h3>
+<p>现代高端刻蚀设备通常配备大量传感器：</p>
+<div class="table-wrapper colwidths-given docutils container" id="id57">
+<table class="docutils align-default" id="id57">
+<caption><span class="caption-text">典型刻蚀设备传感器配置</span><a class="headerlink" href="#id57" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 20.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>传感器类别</p></th>
+<th class="head"><p>典型数量</p></th>
+<th class="head"><p>代表性传感器</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>压力传感器</p></td>
+<td><p>5-15</p></td>
+<td><p>电容薄膜规、皮拉尼规、电离规</p></td>
+</tr>
+<tr class="row-odd"><td><p>温度传感器</p></td>
+<td><p>20-50</p></td>
+<td><p>热电偶、RTD、红外温度计</p></td>
+</tr>
+<tr class="row-even"><td><p>流量传感器</p></td>
+<td><p>10-30</p></td>
+<td><p>质量流量控制器（MFC）内置传感器</p></td>
+</tr>
+<tr class="row-odd"><td><p>RF功率传感器</p></td>
+<td><p>4-8</p></td>
+<td><p>正向/反射功率计、VI探针</p></td>
+</tr>
+<tr class="row-even"><td><p>等离子体传感器</p></td>
+<td><p>2-5</p></td>
+<td><p>OES探头、VI探针、阻抗监测</p></td>
+</tr>
+<tr class="row-odd"><td><p>机械传感器</p></td>
+<td><p>20-40</p></td>
+<td><p>位置编码器、力矩传感器、阀门状态</p></td>
+</tr>
+<tr class="row-even"><td><p>冷却系统传感器</p></td>
+<td><p>8-15</p></td>
+<td><p>温度、流量、压力、电导率传感器</p></td>
+</tr>
+<tr class="row-odd"><td><p>其他传感器</p></td>
+<td><p>10-30</p></td>
+<td><p>颗粒计数器、气体分析仪、泄漏检测</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>一台典型的先进ICP刻蚀设备通常配备 <strong>200-500个传感器</strong>，数据采集频率可达每秒数千次，每天产生的数据量可达数十GB。</p>
+</div>
+</section>
+</section>
+<section id="process-parameter-sensors">
+<span id="section-process-sensors"></span><h2><a class="toc-backref" href="#id90" role="doc-backlink">4.2 过程参数传感器（Process Parameter Sensors）</a><a class="headerlink" href="#process-parameter-sensors" title="链接到此标题。">¶</a></h2>
+<section id="pressure-sensors">
+<h3><a class="toc-backref" href="#id91" role="doc-backlink">4.2.1 压力传感器（Pressure Sensors）</a><a class="headerlink" href="#pressure-sensors" title="链接到此标题。">¶</a></h3>
+<p>压力是刻蚀工艺中最基本的控制参数之一。不同类型的压力传感器覆盖不同的测量范围，在刻蚀设备的各个位置发挥关键作用。</p>
+<p><strong>电容式薄膜规（Capacitance Diaphragm Gauge, CDG）</strong></p>
+<p>电容式薄膜规是刻蚀设备中最精确的压力测量仪器之一。</p>
+<dl class="simple">
+<dt><em>工作原理：</em></dt><dd><p>金属薄膜一侧为参考真空（通常&lt;10⁻⁷ Torr），另一侧暴露于待测压力。当压力变化导致薄膜变形时，薄膜与固定电极之间的电容发生变化，通过测量电容变化即可确定压力值。</p>
+</dd>
+</dl>
+<p><em>关键参数：</em></p>
+<div class="table-wrapper colwidths-given docutils container" id="id58">
+<table class="docutils align-default" id="id58">
+<caption><span class="caption-text">电容式薄膜规技术参数</span><a class="headerlink" href="#id58" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>参数</p></th>
+<th class="head"><p>典型值</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>测量范围</p></td>
+<td><p>0-1 Torr, 0-10 Torr, 0-100 Torr, 0-1000 Torr</p></td>
+</tr>
+<tr class="row-odd"><td><p>精度</p></td>
+<td><p>±0.05% 读数（满量程）</p></td>
+</tr>
+<tr class="row-even"><td><p>响应时间</p></td>
+<td><p>&lt;10ms</p></td>
+</tr>
+<tr class="row-odd"><td><p>气体依赖性</p></td>
+<td><p>无（直接压力测量，与气体种类无关）</p></td>
+</tr>
+<tr class="row-even"><td><p>工作温度</p></td>
+<td><p>最高200°C（传感器头）</p></td>
+</tr>
+<tr class="row-odd"><td><p>典型供应商</p></td>
+<td><p>MKS (Baratron®), Pfeiffer (CMR), Edwards (CDG)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="simple">
+<dt><em>安装位置与应用：</em></dt><dd><p>CDG主要安装在反应腔体上，用于精确测量和控制刻蚀工艺压力。由于其与气体种类无关的特性，CDG是工艺压力控制的首选传感器。在典型的刻蚀设备中，CDG用于：</p>
+<ul class="simple">
+<li><p>反应腔工艺压力精确控制（主要用途）</p></li>
+<li><p>前级管道（Foreline）压力监测</p></li>
+<li><p>负载锁定腔（Load Lock）压力监控</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>皮拉尼规（Pirani Gauge）</strong></p>
+<dl class="simple">
+<dt><em>工作原理：</em></dt><dd><p>皮拉尼规基于气体热传导效应测量压力。加热的电阻元件通过气体分子散热，散热速率与气体压力相关。在低真空范围内，气体热传导与压力成正比关系。</p>
+</dd>
+</dl>
+<p><em>关键参数：</em></p>
+<div class="table-wrapper colwidths-given docutils container" id="id59">
+<table class="docutils align-default" id="id59">
+<caption><span class="caption-text">皮拉尼规技术参数</span><a class="headerlink" href="#id59" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>参数</p></th>
+<th class="head"><p>典型值</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>测量范围</p></td>
+<td><p>10⁻⁴ - 1000 Torr（现代MEMS皮拉尼规）</p></td>
+</tr>
+<tr class="row-odd"><td><p>精度</p></td>
+<td><p>±5-10% 读数</p></td>
+</tr>
+<tr class="row-even"><td><p>响应时间</p></td>
+<td><p>&lt;100ms</p></td>
+</tr>
+<tr class="row-odd"><td><p>气体依赖性</p></td>
+<td><p>强（需用特定气体校准）</p></td>
+</tr>
+<tr class="row-even"><td><p>典型供应商</p></td>
+<td><p>Pfeiffer (PKR), INFICON (Pirani), Sens4 (SmartPirani™)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="simple">
+<dt><em>安装位置与应用：</em></dt><dd><p>皮拉尼规主要用于粗真空和中真空区域的压力监测，典型安装位置包括：</p>
+<ul class="simple">
+<li><p>前级管道压力监测</p></li>
+<li><p>分子泵入口压力监测</p></li>
+<li><p>干泵出口压力监测</p></li>
+<li><p>真空泄漏检测（通过升压测试）</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>电离规（Ionization Gauge）</strong></p>
+<dl class="simple">
+<dt><em>工作原理：</em></dt><dd><p>电离规通过加热阴极（热阴极）或高压放电（冷阴极）电离气体分子，收集产生的离子电流。离子电流与气体密度（压力）成正比。</p>
+</dd>
+</dl>
+<p><em>关键参数：</em></p>
+<div class="table-wrapper colwidths-given docutils container" id="id60">
+<table class="docutils align-default" id="id60">
+<caption><span class="caption-text">电离规技术参数</span><a class="headerlink" href="#id60" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>参数</p></th>
+<th class="head"><p>典型值（热阴极）/ 典型值（冷阴极）</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>测量范围</p></td>
+<td><p>10⁻¹⁰ - 10⁻³ Torr / 10⁻⁹ - 10⁻² Torr</p></td>
+</tr>
+<tr class="row-odd"><td><p>精度</p></td>
+<td><p>±10-20% 读数</p></td>
+</tr>
+<tr class="row-even"><td><p>响应时间</p></td>
+<td><p>&lt;1s</p></td>
+</tr>
+<tr class="row-odd"><td><p>气体依赖性</p></td>
+<td><p>中等（不同气体电离截面不同）</p></td>
+</tr>
+<tr class="row-even"><td><p>典型供应商</p></td>
+<td><p>Pfeiffer (IKR/PKR), Agilent, Granville-Phillips</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="simple">
+<dt><em>安装位置与应用：</em></dt><dd><p>电离规用于高真空和超高真空区域的压力测量：</p>
+<ul class="simple">
+<li><p>反应腔体基线真空监测</p></li>
+<li><p>分子泵出口压力确认</p></li>
+<li><p>腔体检漏验证</p></li>
+<li><p>刻蚀前的真空度确认</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>压力传感器选择指南</strong></p>
+<pre  class="mermaid">
+        flowchart TD
+    A[需要测量压力范围] --&gt; B{&lt; 1 mTorr?}
+    B --&gt;|是| C[电离规]
+    B --&gt;|否| D{1 mTorr - 100 Torr?}
+    D --&gt;|是| E{需要高精度?}
+    D --&gt;|否| F{&gt; 100 Torr?}
+    E --&gt;|是| G[电容式薄膜规 CDG]
+    E --&gt;|否| H[皮拉尼规]
+    F --&gt;|是| I[电容式薄膜规 CDG]
+    </pre></section>
+<section id="gas-flow-sensors">
+<h3><a class="toc-backref" href="#id92" role="doc-backlink">4.2.2 气体流量传感器（Gas Flow Sensors）</a><a class="headerlink" href="#gas-flow-sensors" title="链接到此标题。">¶</a></h3>
+<p>气体流量的精确控制对刻蚀工艺至关重要。刻蚀设备中每条气体管路都配备质量流量控制器（Mass Flow Controller, MFC），实现精确的气体计量和输送。</p>
+<p><strong>质量流量控制器（MFC）工作原理</strong></p>
+<p>MFC是一种闭环控制装置，集成流量传感器和控制阀门，实现气体质量流量的精确测量和控制。</p>
+<dl class="simple">
+<dt><em>热式质量流量传感器（Thermal Mass Flow Sensor）：</em></dt><dd><p>这是半导体行业最常用的流量传感技术。其工作原理基于：</p>
+<ol class="arabic simple">
+<li><p>气体流过传感器管路时，加热元件对气体加热</p></li>
+<li><p>流动的气体带走热量，产生温度变化</p></li>
+<li><p>温度变化与气体质量流量成正比</p></li>
+<li><p>通过测量温度差确定流量值</p></li>
+</ol>
+</dd>
+</dl>
+<p><em>关键特性：</em></p>
+<div class="table-wrapper colwidths-given docutils container" id="id61">
+<table class="docutils align-default" id="id61">
+<caption><span class="caption-text">MFC技术参数</span><a class="headerlink" href="#id61" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>参数</p></th>
+<th class="head"><p>典型值</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>流量范围</p></td>
+<td><p>1 sccm - 10 slm（根据应用选择）</p></td>
+</tr>
+<tr class="row-odd"><td><p>精度</p></td>
+<td><p>±1% F.S.（满量程）</p></td>
+</tr>
+<tr class="row-even"><td><p>重复性</p></td>
+<td><p>±0.2% F.S.</p></td>
+</tr>
+<tr class="row-odd"><td><p>响应时间</p></td>
+<td><p>&lt;1s（达到90%设定值）</p></td>
+</tr>
+<tr class="row-even"><td><p>气体兼容性</p></td>
+<td><p>需要气体校正因子（Gas Correction Factor）</p></td>
+</tr>
+<tr class="row-odd"><td><p>信号接口</p></td>
+<td><p>模拟（0-5V）/ 数字（DeviceNet, RS485）</p></td>
+</tr>
+<tr class="row-even"><td><p>典型供应商</p></td>
+<td><p>MKS (GS系列), Brooks (SLA系列), Horiba (SEC系列), Fujikin</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>安装位置与监控目的</strong></p>
+<p>MFC安装在刻蚀设备的每条气体管路上，典型配置包括：</p>
+<ul class="simple">
+<li><p>主刻蚀气体（如CF₄、CHF₃、Cl₂、HBr等）：10-1000 sccm</p></li>
+<li><p>稀释/载气（如Ar、He、N₂）：100-10000 sccm</p></li>
+<li><p>添加剂气体（如O₂、N₂等）：1-100 sccm</p></li>
+</ul>
+<p><em>监控目的：</em></p>
+<ol class="arabic simple">
+<li><p><strong>确保气体配比精确</strong>：刻蚀工艺对气体比例极为敏感，MFC确保各气体按工艺配方精确输送</p></li>
+<li><p><strong>检测气体泄漏</strong>：通过监控关闭状态下的流量读数，检测管路泄漏</p></li>
+<li><p><strong>异常流量报警</strong>：当实际流量偏离设定值超过阈值时触发报警</p></li>
+<li><p><strong>工艺记录</strong>：记录每片晶圆刻蚀过程中的实际气体流量</p></li>
+</ol>
+<p><strong>多气体兼容性</strong></p>
+<p>现代MFC需要处理多种不同性质的气体，包括：</p>
+<ul class="simple">
+<li><p>卤素气体（Cl₂、HBr、SF₆）：具有强腐蚀性</p></li>
+<li><p>碳氟化合物（CF₄、CHF₃、C₄F₈）：易产生聚合物沉积</p></li>
+<li><p>惰性气体（Ar、He）：用作稀释和载气</p></li>
+<li><p>氧气：用于氧化物刻蚀和腔体清洗</p></li>
+</ul>
+<p>MFC的材料选择必须考虑气体兼容性：</p>
+<div class="table-wrapper colwidths-given docutils container" id="id62">
+<table class="docutils align-default" id="id62">
+<caption><span class="caption-text">MFC材料与气体兼容性</span><a class="headerlink" href="#id62" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 35.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>部件</p></th>
+<th class="head"><p>标准材料</p></th>
+<th class="head"><p>腐蚀性气体材料</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>密封件</p></td>
+<td><p>Viton (FKM)</p></td>
+<td><p>Kalrez (FFKM), 金属密封</p></td>
+</tr>
+<tr class="row-odd"><td><p>流路</p></td>
+<td><p>不锈钢316L</p></td>
+<td><p>镍基合金、镀镍</p></td>
+</tr>
+<tr class="row-even"><td><p>阀门</p></td>
+<td><p>不锈钢</p></td>
+<td><p>Hastelloy、陶瓷涂层</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="temperature-sensors">
+<h3><a class="toc-backref" href="#id93" role="doc-backlink">4.2.3 温度传感器（Temperature Sensors）</a><a class="headerlink" href="#temperature-sensors" title="链接到此标题。">¶</a></h3>
+<p>温度控制是刻蚀工艺稳定性的关键因素。刻蚀设备中的温度传感器分布在多个关键位置，确保工艺温度在可控范围内。</p>
+<p><strong>热电偶（Thermocouple）</strong></p>
+<dl class="simple">
+<dt><em>工作原理：</em></dt><dd><p>两种不同金属导体连接形成回路，当两个接点温度不同时，产生热电势（Seebeck效应）。通过测量热电势确定温度值。</p>
+</dd>
+</dl>
+<p><em>常用类型：</em></p>
+<div class="table-wrapper colwidths-given docutils container" id="id63">
+<table class="docutils align-default" id="id63">
+<caption><span class="caption-text">热电偶类型</span><a class="headerlink" href="#id63" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 30.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>类型</p></th>
+<th class="head"><p>温度范围</p></th>
+<th class="head"><p>精度</p></th>
+<th class="head"><p>应用场景</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>K型</p></td>
+<td><p>-200~1300°C</p></td>
+<td><p>±1.5°C</p></td>
+<td><p>腔壁温度、线圈温度</p></td>
+</tr>
+<tr class="row-odd"><td><p>J型</p></td>
+<td><p>0~750°C</p></td>
+<td><p>±1.5°C</p></td>
+<td><p>电极温度监控</p></td>
+</tr>
+<tr class="row-even"><td><p>T型</p></td>
+<td><p>-200~350°C</p></td>
+<td><p>±0.5°C</p></td>
+<td><p>冷却液温度</p></td>
+</tr>
+<tr class="row-odd"><td><p>N型</p></td>
+<td><p>-200~1300°C</p></td>
+<td><p>±1.0°C</p></td>
+<td><p>高温区域</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>电阻温度检测器（RTD, Resistance Temperature Detector）</strong></p>
+<dl class="simple">
+<dt><em>工作原理：</em></dt><dd><p>金属（通常铂）电阻随温度变化。Pt100在0°C时电阻为100Ω，温度系数约为0.385Ω/°C。</p>
+</dd>
+<dt><em>优势：</em></dt><dd><ul class="simple">
+<li><p>精度高于热电偶（±0.1°C）</p></li>
+<li><p>长期稳定性好</p></li>
+<li><p>线性度优</p></li>
+</ul>
+</dd>
+<dt><em>应用场景：</em></dt><dd><ul class="simple">
+<li><p>电极温度精确控制</p></li>
+<li><p>冷却液进出口温度测量</p></li>
+<li><p>腔壁温度监控</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>红外温度计（Infrared Thermometer）</strong></p>
+<dl class="simple">
+<dt><em>工作原理：</em></dt><dd><p>根据物体辐射的红外能量确定表面温度（Stefan-Boltzmann定律）。</p>
+</dd>
+<dt><em>应用场景：</em></dt><dd><ul class="simple">
+<li><p>晶圆背面温度监测（通过专用视窗）</p></li>
+<li><p>非接触式温度测量</p></li>
+<li><p>运动部件温度监控</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>温度传感器安装位置</strong></p>
+<div class="table-wrapper colwidths-given docutils container" id="id64">
+<table class="docutils align-default" id="id64">
+<caption><span class="caption-text">温度传感器安装配置</span><a class="headerlink" href="#id64" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 25.0%" />
+<col style="width: 45.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>测量位置</p></th>
+<th class="head"><p>传感器类型</p></th>
+<th class="head"><p>监控目的</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>上电极（Showerhead）</p></td>
+<td><p>K型热电偶</p></td>
+<td><p>确保气体分布均匀性</p></td>
+</tr>
+<tr class="row-odd"><td><p>下电极/ESC</p></td>
+<td><p>RTD + 热电偶</p></td>
+<td><p>晶圆温度控制，分区温控</p></td>
+</tr>
+<tr class="row-even"><td><p>腔壁</p></td>
+<td><p>K型热电偶（多点）</p></td>
+<td><p>防止壁面沉积，温度均匀性</p></td>
+</tr>
+<tr class="row-odd"><td><p>ICP线圈</p></td>
+<td><p>K型热电偶</p></td>
+<td><p>线圈过热保护</p></td>
+</tr>
+<tr class="row-even"><td><p>冷却液入口</p></td>
+<td><p>T型热电偶</p></td>
+<td><p>冷却系统性能监控</p></td>
+</tr>
+<tr class="row-odd"><td><p>冷却液出口</p></td>
+<td><p>T型热电偶</p></td>
+<td><p>热负荷监测，泄漏检测</p></td>
+</tr>
+<tr class="row-even"><td><p>晶圆背面（可选）</p></td>
+<td><p>红外温度计/无线传感器</p></td>
+<td><p>实时晶圆温度监控</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>温度均匀性控制</strong></p>
+<p>现代刻蚀设备通常采用多区温度控制（Multi-zone Temperature Control）：</p>
+<ul class="simple">
+<li><p>ESC通常分为2-4个独立温控区域</p></li>
+<li><p>每个区域配备独立的加热器和冷却回路</p></li>
+<li><p>温度均匀性目标：&lt;±1°C（先进设备要求&lt;±0.5°C）</p></li>
+<li><p>通过无线传感器晶圆（Wireless Sensor Wafer）验证温度分布</p></li>
+</ul>
+</section>
+<section id="rf-power-voltage-sensors">
+<h3><a class="toc-backref" href="#id94" role="doc-backlink">4.2.4 射频功率与电压传感器（RF Power &amp; Voltage Sensors）</a><a class="headerlink" href="#rf-power-voltage-sensors" title="链接到此标题。">¶</a></h3>
+<p>RF功率系统向等离子体提供能量，其精确控制和监测对工艺稳定性至关重要。</p>
+<p><strong>RF功率传感器</strong></p>
+<dl class="simple">
+<dt><em>正向功率测量：</em></dt><dd><p>使用定向耦合器（Directional Coupler）或RF功率传感器测量从RF发生器输出到匹配网络的功率。</p>
+</dd>
+<dt><em>反射功率测量：</em></dt><dd><p>测量从匹配网络反射回RF发生器的功率。反射功率反映阻抗匹配状态。</p>
+</dd>
+</dl>
+<p><em>关键参数：</em></p>
+<div class="table-wrapper colwidths-given docutils container" id="id65">
+<table class="docutils align-default" id="id65">
+<caption><span class="caption-text">RF功率传感器技术参数</span><a class="headerlink" href="#id65" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>参数</p></th>
+<th class="head"><p>典型值</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>频率范围</p></td>
+<td><p>0.5-100 MHz（覆盖13.56MHz、2MHz、400kHz等）</p></td>
+</tr>
+<tr class="row-odd"><td><p>功率范围</p></td>
+<td><p>0-3000W（源功率），0-1500W（偏置功率）</p></td>
+</tr>
+<tr class="row-even"><td><p>精度</p></td>
+<td><p>±1% 读数</p></td>
+</tr>
+<tr class="row-odd"><td><p>响应时间</p></td>
+<td><p>&lt;1μs（脉冲RF应用）</p></td>
+</tr>
+<tr class="row-even"><td><p>典型供应商</p></td>
+<td><p>Bird Technology, Meggitt, Advanced Energy</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>VI探针（Voltage-Current Probe）</strong></p>
+<p>VI探针是等离子体诊断的关键工具，测量RF传输线路上的电压、电流和相位。</p>
+<dl class="simple">
+<dt><em>工作原理：</em></dt><dd><p>VI探针包含电压传感器（金属板电容耦合）和电流传感器（线圈感应），同时测量RF信号的瞬时电压和电流波形。</p>
+</dd>
+<dt><em>测量参数：</em></dt><dd><ul class="simple">
+<li><p>电压（V）：峰峰值电压</p></li>
+<li><p>电流（I）：峰峰值电流</p></li>
+<li><p>相位角（Φ）：电压与电流的相位差</p></li>
+<li><p>阻抗（Z = V/I）：等离子体阻抗</p></li>
+<li><p>功率（P = V·I·cosΦ）：实际传输到等离子体的功率</p></li>
+</ul>
+</dd>
+<dt><em>安装位置：</em></dt><dd><p>VI探针通常安装在以下位置：</p>
+<ol class="arabic simple">
+<li><p>RF发生器输出端（监测发生器输出功率）</p></li>
+<li><p>匹配网络输入端</p></li>
+<li><p>匹配网络输出端（监测传输到电极的功率）</p></li>
+<li><p>电极连接处（直接监测等离子体侧参数）</p></li>
+</ol>
+</dd>
+</dl>
+<p><em>关键应用：</em></p>
+<div class="table-wrapper colwidths-given docutils container" id="id66">
+<table class="docutils align-default" id="id66">
+<caption><span class="caption-text">VI探针应用</span><a class="headerlink" href="#id66" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>应用</p></th>
+<th class="head"><p>描述</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>等离子体阻抗匹配</p></td>
+<td><p>通过监测阻抗变化优化匹配网络</p></td>
+</tr>
+<tr class="row-odd"><td><p>功率稳定性监控</p></td>
+<td><p>检测RF功率波动，确保工艺稳定</p></td>
+</tr>
+<tr class="row-even"><td><p>异常放电检测</p></td>
+<td><p>检测电弧（Arcing）事件，保护设备</p></td>
+</tr>
+<tr class="row-odd"><td><p>刻蚀终点检测</p></td>
+<td><p>通过阻抗变化判断刻蚀完成</p></td>
+</tr>
+<tr class="row-even"><td><p>腔体状态监测</p></td>
+<td><p>检测腔壁沉积、部件老化等变化</p></td>
+</tr>
+<tr class="row-odd"><td><p>谐波分析</p></td>
+<td><p>分析RF谐波成分，了解等离子体特性</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>精度要求</strong></p>
+<p>现代刻蚀工艺对RF测量的精度要求：</p>
+<ul class="simple">
+<li><p>电压精度：±1%（在50Ω负载条件下）</p></li>
+<li><p>电流精度：±1%</p></li>
+<li><p>相位精度：±1°</p></li>
+<li><p>谐波测量：可测量基频的1-15次谐波</p></li>
+<li><p>时间分辨率：脉冲RF应用需要&lt;1μs的时间分辨率</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">备注</p>
+<p>随着工艺节点向3nm及以下推进，RF功率的精确控制变得更加关键。VI探针提供的实时阻抗信息是实现自适应阻抗匹配（Adaptive Impedance Matching）的基础。</p>
+</div>
+</section>
+<section id="plasma-characterization-sensors">
+<h3><a class="toc-backref" href="#id95" role="doc-backlink">4.2.5 等离子体特性传感器（Plasma Characterization Sensors）</a><a class="headerlink" href="#plasma-characterization-sensors" title="链接到此标题。">¶</a></h3>
+<p>等离子体特性传感器提供对等离子体内部状态的直接测量，是工艺开发和优化的重要工具。</p>
+<p><strong>朗缪尔探针（Langmuir Probe）</strong></p>
+<dl class="simple">
+<dt><em>工作原理：</em></dt><dd><p>朗缪尔探针是一种侵入式等离子体诊断工具，由插入等离子体中的小型金属电极组成。通过在电极上施加扫描电压并测量收集的电流，获得电流-电压（I-V）特性曲线。</p>
+</dd>
+</dl>
+<p><em>I-V特性曲线分析：</em></p>
+<p>朗缪尔探针的I-V曲线包含多个区域：</p>
+<ol class="arabic simple">
+<li><p><strong>离子饱和区</strong>：电极电位远低于等离子体电位，主要收集离子电流</p></li>
+<li><p><strong>过渡区</strong>：电极电位接近等离子体电位，电子开始被收集</p></li>
+<li><p><strong>电子饱和区</strong>：电极电位高于等离子体电位，主要收集电子电流</p></li>
+</ol>
+<p><em>测量参数：</em></p>
+<div class="table-wrapper colwidths-given docutils container" id="id67">
+<table class="docutils align-default" id="id67">
+<caption><span class="caption-text">朗缪尔探针测量参数</span><a class="headerlink" href="#id67" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 35.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>参数</p></th>
+<th class="head"><p>符号</p></th>
+<th class="head"><p>提取方法</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>电子温度</p></td>
+<td><p>Tₑ (eV)</p></td>
+<td><p>过渡区I-V曲线斜率：d(ln I)/dV</p></td>
+</tr>
+<tr class="row-odd"><td><p>电子密度</p></td>
+<td><p>nₑ (cm⁻³)</p></td>
+<td><p>离子饱和电流或电子饱和电流</p></td>
+</tr>
+<tr class="row-even"><td><p>等离子体电位</p></td>
+<td><p>Vₚ (V)</p></td>
+<td><p>I-V曲线拐点位置</p></td>
+</tr>
+<tr class="row-odd"><td><p>浮置电位</p></td>
+<td><p>V_f (V)</p></td>
+<td><p>净电流为零时的电位</p></td>
+</tr>
+<tr class="row-even"><td><p>电子能量分布</p></td>
+<td><p>EEDF</p></td>
+<td><p>I-V曲线二阶导数（Druyvesteyn方法）</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="simple">
+<dt><em>安装位置与限制：</em></dt><dd><ul class="simple">
+<li><p>通常安装在腔壁或专用诊断端口</p></li>
+<li><p>主要用于工艺开发和等离子体研究</p></li>
+<li><p>在生产环境中使用受限，原因包括：
+- 侵入式测量可能干扰等离子体
+- 在沉积工艺中探针尖端易被污染
+- 复杂的工艺气体混合物增加数据分析难度
+- RF环境需要特殊的补偿技术</p></li>
+</ul>
+</dd>
+</dl>
+<p><em>典型供应商：</em> Impedans (LP System), Plasment, Hiden Analytical</p>
+<p><strong>微波干涉仪（Microwave Interferometer）</strong></p>
+<dl class="simple">
+<dt><em>工作原理：</em></dt><dd><p>微波干涉仪是非侵入式等离子体诊断工具。微波信号穿过等离子体时，等离子体中的自由电子引起信号相位变化。通过测量相位变化可以确定等离子体的平均电子密度。</p>
+</dd>
+<dt><em>测量原理：</em></dt><dd><p>等离子体对微波的折射率与电子密度相关：</p>
+<ul class="simple">
+<li><p>当微波频率接近等离子体频率时，信号被截止</p></li>
+<li><p>通过测量相位变化Δφ，可计算路径平均电子密度</p></li>
+</ul>
+</dd>
+<dt><em>优势：</em></dt><dd><ul class="simple">
+<li><p>非侵入式测量，不干扰等离子体</p></li>
+<li><p>不受聚合物沉积影响</p></li>
+<li><p>可在生产环境中长期使用</p></li>
+<li><p>提供时间分辨的电子密度测量</p></li>
+</ul>
+</dd>
+<dt><em>测量参数：</em></dt><dd><ul class="simple">
+<li><p>平均电子密度（路径积分值）</p></li>
+<li><p>电子密度时间演化</p></li>
+<li><p>等离子体均匀性（多路径测量）</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>其他等离子体传感器</strong></p>
+<ul class="simple">
+<li><p><strong>质谱仪（Residual Gas Analyzer, RGA）</strong>：分析等离子体中的离子和中性成分</p></li>
+<li><p><strong>能量分析仪（Energy Analyzer）</strong>：测量到达基座的离子能量分布</p></li>
+<li><p><strong>微波截止探针（Cutoff Probe）</strong>：新型嵌入式电子密度监测工具</p></li>
+</ul>
+</section>
+</section>
+<section id="endpoint-detection-systems">
+<span id="section-endpoint-detection"></span><h2><a class="toc-backref" href="#id96" role="doc-backlink">4.3 终点检测系统（Endpoint Detection Systems）</a><a class="headerlink" href="#endpoint-detection-systems" title="链接到此标题。">¶</a></h2>
+<p>终点检测是刻蚀工艺控制的核心技术。精确的终点检测确保刻蚀在正确时刻停止，既避免欠刻蚀（Under-etch），又防止过刻蚀（Over-etch）损伤下层结构。</p>
+<section id="optical-emission-spectroscopy-oes">
+<h3><a class="toc-backref" href="#id97" role="doc-backlink">4.3.1 光发射光谱（Optical Emission Spectroscopy, OES）</a><a class="headerlink" href="#optical-emission-spectroscopy-oes" title="链接到此标题。">¶</a></h3>
+<p>OES是半导体刻蚀中最常用的终点检测技术，具有非侵入式、实时、多元素同时监测等优势。</p>
+<p><strong>工作原理</strong></p>
+<p>OES基于以下物理原理：</p>
+<ol class="arabic simple">
+<li><p>等离子体中的原子和分子受到电子碰撞激发</p></li>
+<li><p>激发态的原子/分子退激时发射特征波长的光子</p></li>
+<li><p>不同元素和分子有特定的发射谱线</p></li>
+<li><p>通过监测特定波长强度的变化，判断刻蚀进程</p></li>
+</ol>
+<p><em>特征发射波长：</em></p>
+<div class="table-wrapper colwidths-given docutils container" id="id68">
+<table class="docutils align-default" id="id68">
+<caption><span class="caption-text">常见刻蚀材料的OES监测波长</span><a class="headerlink" href="#id68" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>元素/分子</p></th>
+<th class="head"><p>特征波长 (nm)</p></th>
+<th class="head"><p>应用场景</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Si</p></td>
+<td><p>288.2</p></td>
+<td><p>硅刻蚀终点</p></td>
+</tr>
+<tr class="row-odd"><td><p>F</p></td>
+<td><p>703.7</p></td>
+<td><p>含氟气体刻蚀监控</p></td>
+</tr>
+<tr class="row-even"><td><p>CO</p></td>
+<td><p>483, 519</p></td>
+<td><p>氧化物刻蚀（SiO₂）</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cl</p></td>
+<td><p>837.6</p></td>
+<td><p>氯基刻蚀监控</p></td>
+</tr>
+<tr class="row-even"><td><p>SiCl₄</p></td>
+<td><p>390</p></td>
+<td><p>多晶硅刻蚀</p></td>
+</tr>
+<tr class="row-odd"><td><p>Br</p></td>
+<td><p>827.6</p></td>
+<td><p>HBr刻蚀监控</p></td>
+</tr>
+<tr class="row-even"><td><p>O</p></td>
+<td><p>777.4</p></td>
+<td><p>氧等离子体监控</p></td>
+</tr>
+<tr class="row-odd"><td><p>N₂</p></td>
+<td><p>380-420</p></td>
+<td><p>氮化物刻蚀</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>系统组成</strong></p>
+<p>OES系统由以下关键组件构成：</p>
+<pre  class="mermaid">
+        flowchart LR
+    A[等离子体] --&gt;|发射光| B[石英视窗&lt;br/&gt;View Port]
+    B --&gt; C[光纤&lt;br/&gt;Fiber Optic]
+    C --&gt; D[光谱仪&lt;br/&gt;Spectrometer]
+    D --&gt; E[CCD/CMOS&lt;br/&gt;检测器]
+    E --&gt; F[数据处理&lt;br/&gt;系统]
+    F --&gt; G[终点判断&lt;br/&gt;算法]
+    </pre><p><em>各组件说明：</em></p>
+<ol class="arabic simple">
+<li><p><strong>石英视窗（View Port）</strong>
+- 材料：高纯度熔融石英
+- 位置：刻蚀腔侧面或顶部
+- 作用：收集等离子体发射光
+- 维护：需要定期清洗防止沉积物影响</p></li>
+<li><p><strong>光纤（Fiber Optic）</strong>
+- 类型：紫外增强型石英光纤
+- 芯径：200-600 μm
+- 长度：通常2-5米
+- 传输范围：200-1100 nm</p></li>
+<li><p><strong>光谱仪（Spectrometer）</strong>
+- 分光元件：光栅（1200-2400 lines/mm）
+- 光谱范围：200-1100 nm
+- 光谱分辨率：0.1-2 nm
+- 典型供应商：HORIBA, Ocean Optics, Avantes</p></li>
+<li><p><strong>检测器（Detector）</strong>
+- 类型：背照式CCD或CMOS
+- 积分时间：10-1000 ms（可调）
+- 动态范围：&gt;16 bit</p></li>
+<li><p><strong>数据处理系统</strong>
+- 实时光谱分析
+- 峰值识别和强度追踪
+- 终点判断算法</p></li>
+</ol>
+<p><strong>终点判断算法</strong></p>
+<p>OES终点检测的核心是判断信号变化的算法：</p>
+<ol class="arabic simple">
+<li><p><strong>强度阈值法</strong>
+- 当特定波长强度超过/低于设定阈值时触发终点
+- 简单直观，适用于信号变化明显的工艺</p></li>
+<li><p><strong>斜率变化法</strong>
+- 监测信号强度随时间的变化率（dI/dt）
+- 当斜率发生显著变化时判断终点
+- 更可靠，适用于复杂工艺</p></li>
+<li><p><strong>比值法</strong>
+- 监测两个波长强度的比值
+- 消除光源波动等共模干扰
+- 提高终点判断的鲁棒性</p></li>
+<li><p><strong>主成分分析（PCA）法</strong>
+- 对全光谱数据进行降维分析
+- 提取主要变化特征
+- 适用于多元素同时变化的复杂工艺</p></li>
+</ol>
+<p><strong>优点与局限性</strong></p>
+<dl class="simple">
+<dt><em>优点：</em></dt><dd><ul class="simple">
+<li><p>非侵入式，不干扰等离子体</p></li>
+<li><p>实时监测，响应速度快</p></li>
+<li><p>可同时监测多种元素</p></li>
+<li><p>适用范围广（金属、介质、半导体刻蚀）</p></li>
+<li><p>系统相对简单，维护成本低</p></li>
+</ul>
+</dd>
+<dt><em>局限性：</em></dt><dd><ul class="simple">
+<li><p>需要工艺开发确定监测波长</p></li>
+<li><p>低开放面积（Low Open Area）结构信号弱</p></li>
+<li><p>视窗污染影响信号质量</p></li>
+<li><p>对刻蚀深度控制精度有限</p></li>
+<li><p>不适用于不产生特征发射的工艺</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>先进OES技术</strong></p>
+<p>现代OES系统不断演进：</p>
+<ul class="simple">
+<li><p><strong>全光谱分析</strong>：不再依赖单一波长，而是分析整个光谱的变化模式</p></li>
+<li><p><strong>机器学习辅助终点判断</strong>：使用神经网络、随机森林等算法提高终点判断准确性</p></li>
+<li><p><strong>多腔体同步</strong>：多个刻蚀腔的OES数据联合分析，实现腔体匹配</p></li>
+<li><p><strong>高速OES</strong>：积分时间缩短至毫秒级，适用于脉冲等离子体工艺</p></li>
+</ul>
+</section>
+<section id="laser-interferometry">
+<h3><a class="toc-backref" href="#id98" role="doc-backlink">4.3.2 激光干涉仪（Laser Interferometry）</a><a class="headerlink" href="#laser-interferometry" title="链接到此标题。">¶</a></h3>
+<p>激光干涉仪是另一种重要的终点检测技术，特别适用于透明/半透明薄膜的刻蚀监控。</p>
+<p><strong>工作原理</strong></p>
+<p>激光干涉仪基于光学干涉原理：</p>
+<ol class="arabic simple">
+<li><p>单色激光（通常670nm、905nm、980nm）通过视窗照射晶圆表面</p></li>
+<li><p>激光在薄膜的上表面和下表面分别发生反射</p></li>
+<li><p>两束反射光产生干涉</p></li>
+<li><p>随着刻蚀进行，薄膜厚度变化导致光程差变化</p></li>
+<li><p>干涉信号呈现周期性振荡</p></li>
+</ol>
+<dl>
+<dt><em>干涉条件：</em></dt><dd><p>当薄膜厚度满足以下条件时产生相长干涉：</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[2n·d·cos(θ) = m·λ\]</div>
+</div>
+<p>其中：
+- n：薄膜折射率
+- d：薄膜厚度
+- θ：入射角
+- m：干涉级数（整数）
+- λ：激光波长</p>
+</dd>
+<dt><em>刻蚀速率计算：</em></dt><dd><p>通过计数干涉条纹数量，可以计算刻蚀深度：</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[Δd = λ/(2n) × N\]</div>
+</div>
+<p>其中N是干涉条纹数量。</p>
+</dd>
+</dl>
+<p><strong>系统参数</strong></p>
+<div class="table-wrapper colwidths-given docutils container" id="id69">
+<table class="docutils align-default" id="id69">
+<caption><span class="caption-text">激光干涉仪技术参数</span><a class="headerlink" href="#id69" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>参数</p></th>
+<th class="head"><p>典型值</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>激光波长</p></td>
+<td><p>670nm, 905nm, 980nm, 1550nm</p></td>
+</tr>
+<tr class="row-odd"><td><p>光斑直径</p></td>
+<td><p>20-60 μm（点测量）/ 1-2 mm（大面积）</p></td>
+</tr>
+<tr class="row-even"><td><p>测量精度</p></td>
+<td><p>&lt;1 nm（厚度变化）</p></td>
+</tr>
+<tr class="row-odd"><td><p>采样频率</p></td>
+<td><p>1-100 Hz</p></td>
+</tr>
+<tr class="row-even"><td><p>适用薄膜</p></td>
+<td><p>透明/半透明介质膜</p></td>
+</tr>
+<tr class="row-odd"><td><p>典型供应商</p></td>
+<td><p>HORIBA (LEM系列), Oxford Instruments, Sentronics</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>安装位置</strong></p>
+<p>激光干涉仪通过刻蚀腔顶部的专用视窗垂直照射晶圆：</p>
+<ul class="simple">
+<li><p>视窗直径：≥20mm</p></li>
+<li><p>位置：晶圆中心附近</p></li>
+<li><p>对准：需要精确对准测量区域</p></li>
+<li><p>相机辅助：配备CCD相机辅助光斑定位</p></li>
+</ul>
+<p><strong>优点与局限性</strong></p>
+<dl class="simple">
+<dt><em>优点：</em></dt><dd><ul class="simple">
+<li><p>精确测量薄膜厚度变化（纳米级分辨率）</p></li>
+<li><p>直接测量刻蚀深度</p></li>
+<li><p>适用于透明/半透明薄膜（SiO₂、SiN、光刻胶等）</p></li>
+<li><p>可检测多层结构的各个界面</p></li>
+<li><p>不受气体成分变化影响</p></li>
+</ul>
+</dd>
+<dt><em>局限性：</em></dt><dd><ul class="simple">
+<li><p>需要薄膜在激光波长处透明</p></li>
+<li><p>不适用于金属或不透明材料</p></li>
+<li><p>空间分辨率有限（点测量，光斑直径~2mm）</p></li>
+<li><p>需要已知光学常数（n, k）</p></li>
+<li><p>多层结构信号复杂，需要建模分析</p></li>
+<li><p>对表面粗糙度敏感</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="broadband-interferometry">
+<h3><a class="toc-backref" href="#id99" role="doc-backlink">4.3.3 宽光谱干涉仪（Broadband Interferometry）</a><a class="headerlink" href="#broadband-interferometry" title="链接到此标题。">¶</a></h3>
+<p>宽光谱干涉仪（也称为白光干涉仪）是对单波长激光干涉的升级，提供更强大的测量能力。</p>
+<p><strong>与单波长激光干涉的区别</strong></p>
+<div class="table-wrapper colwidths-given docutils container" id="id70">
+<table class="docutils align-default" id="id70">
+<caption><span class="caption-text">单波长vs宽光谱干涉</span><a class="headerlink" href="#id70" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 35.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>特性</p></th>
+<th class="head"><p>单波长激光干涉</p></th>
+<th class="head"><p>宽光谱干涉</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>光源</p></td>
+<td><p>单色激光（670/980nm）</p></td>
+<td><p>宽光谱光源（卤素灯/氙灯）</p></td>
+</tr>
+<tr class="row-odd"><td><p>光谱范围</p></td>
+<td><p>单一波长</p></td>
+<td><p>400-1100 nm（连续光谱）</p></td>
+</tr>
+<tr class="row-even"><td><p>测量能力</p></td>
+<td><p>厚度变化</p></td>
+<td><p>厚度 + 光学常数</p></td>
+</tr>
+<tr class="row-odd"><td><p>多层结构</p></td>
+<td><p>有限（信号复杂）</p></td>
+<td><p>强（多波长解析）</p></td>
+</tr>
+<tr class="row-even"><td><p>材料适用性</p></td>
+<td><p>需要透明</p></td>
+<td><p>更广泛</p></td>
+</tr>
+<tr class="row-odd"><td><p>空间分辨率</p></td>
+<td><p>点测量</p></td>
+<td><p>点/面测量</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>工作原理</strong></p>
+<p>宽光谱干涉仪使用宽光谱光源（通常是卤素灯或氙灯），同时测量多个波长的干涉信号：</p>
+<ol class="arabic simple">
+<li><p>宽光谱光照射到薄膜表面</p></li>
+<li><p>不同波长在不同膜厚处产生相长/相消干涉</p></li>
+<li><p>反射光谱包含薄膜厚度信息</p></li>
+<li><p>通过光谱拟合算法提取薄膜参数</p></li>
+</ol>
+<p><strong>多波长同时测量的优势</strong></p>
+<ul class="simple">
+<li><p><strong>更高的测量精度</strong>：多个波长提供冗余信息，提高拟合精度</p></li>
+<li><p><strong>多层薄膜解析</strong>：不同波长对不同层敏感，可同时解析多层结构</p></li>
+<li><p><strong>光学常数提取</strong>：通过全光谱拟合可同时确定折射率n和消光系数k</p></li>
+<li><p><strong>减少模糊性</strong>：避免单波长干涉中级数判定的模糊性</p></li>
+</ul>
+<p><strong>适用场景</strong></p>
+<ul class="simple">
+<li><p>多层介质膜刻蚀监控</p></li>
+<li><p>高深宽比结构（如3D NAND）</p></li>
+<li><p>复杂膜系结构（如DARC、ARC多层）</p></li>
+<li><p>需要同时测量厚度和光学常数的应用</p></li>
+<li><p>先进封装中的复杂结构</p></li>
+</ul>
+</section>
+<section id="id9">
+<h3><a class="toc-backref" href="#id100" role="doc-backlink">4.3.4 其他终点检测方法</a><a class="headerlink" href="#id9" title="链接到此标题。">¶</a></h3>
+<p>除OES和干涉仪外，还有多种终点检测技术适用于特定场景。</p>
+<p><strong>质谱分析（Residual Gas Analysis, RGA）</strong></p>
+<dl class="simple">
+<dt><em>工作原理：</em></dt><dd><p>通过四极杆质谱仪分析真空系统中的气体成分，监测刻蚀过程中产生的副产物。</p>
+</dd>
+<dt><em>测量参数：</em></dt><dd><ul class="simple">
+<li><p>刻蚀副产物的质谱峰强度</p></li>
+<li><p>气体成分随时间的变化</p></li>
+<li><p>背景气体污染水平</p></li>
+</ul>
+</dd>
+<dt><em>应用场景：</em></dt><dd><ul class="simple">
+<li><p>特殊材料刻蚀终点</p></li>
+<li><p>腔体清洗终点监控</p></li>
+<li><p>气体泄漏检测</p></li>
+<li><p>工艺异常诊断</p></li>
+</ul>
+</dd>
+<dt><em>优缺点：</em></dt><dd><ul class="simple">
+<li><p>优点：高灵敏度，可识别具体化学成分</p></li>
+<li><p>缺点：设备昂贵，分析复杂，响应速度相对较慢</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>声发射传感器（Acoustic Emission）</strong></p>
+<dl class="simple">
+<dt><em>工作原理：</em></dt><dd><p>监测刻蚀过程中材料去除产生的声波信号。不同材料刻蚀产生不同的声学特征。</p>
+</dd>
+<dt><em>应用场景：</em></dt><dd><ul class="simple">
+<li><p>金属刻蚀终点</p></li>
+<li><p>硬掩模刻蚀</p></li>
+<li><p>特殊材料刻蚀监控</p></li>
+</ul>
+</dd>
+<dt><em>优缺点：</em></dt><dd><ul class="simple">
+<li><p>优点：响应速度快，不受光学窗口污染影响</p></li>
+<li><p>缺点：环境噪声干扰，需要复杂的信号处理</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>椭偏仪（Ellipsometry）</strong></p>
+<dl class="simple">
+<dt><em>工作原理：</em></dt><dd><p>通过测量偏振光在样品表面反射后偏振状态的变化，确定薄膜厚度和光学常数。</p>
+</dd>
+<dt><em>原位椭偏仪（In-situ Ellipsometry）：</em></dt><dd><p>集成在刻蚀腔中，实时监测薄膜厚度变化。</p>
+</dd>
+<dt><em>测量参数：</em></dt><dd><ul class="simple">
+<li><p>薄膜厚度（精度&lt;0.1nm）</p></li>
+<li><p>折射率n和消光系数k</p></li>
+<li><p>薄膜成分和密度信息</p></li>
+</ul>
+</dd>
+<dt><em>应用场景：</em></dt><dd><ul class="simple">
+<li><p>高精度刻蚀深度控制</p></li>
+<li><p>薄膜性质实时监控</p></li>
+<li><p>工艺开发和研究</p></li>
+</ul>
+</dd>
+<dt><em>优缺点：</em></dt><dd><ul class="simple">
+<li><p>优点：极高的测量精度，可同时获取多种参数</p></li>
+<li><p>缺点：系统复杂昂贵，测量面积有限，对表面粗糙度敏感</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>等离子体阻抗监控（Plasma Impedance Monitoring, PIM）</strong></p>
+<dl class="simple">
+<dt><em>工作原理：</em></dt><dd><p>通过VI探针监测等离子体阻抗的变化，当刻蚀穿过界面时阻抗发生特征性变化。</p>
+</dd>
+<dt><em>应用场景：</em></dt><dd><ul class="simple">
+<li><p>刻蚀终点检测（OES的补充手段）</p></li>
+<li><p>腔体清洗终点</p></li>
+<li><p>腔体状态监测</p></li>
+</ul>
+</dd>
+<dt><em>优缺点：</em></dt><dd><ul class="simple">
+<li><p>优点：非侵入式，利用现有VI探针，无需额外硬件</p></li>
+<li><p>缺点：信号解释复杂，需要经验积累</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</section>
+<section id="equipment-health-sensors">
+<span id="section-equipment-sensors"></span><h2><a class="toc-backref" href="#id101" role="doc-backlink">4.4 设备状态传感器（Equipment Health Sensors）</a><a class="headerlink" href="#equipment-health-sensors" title="链接到此标题。">¶</a></h2>
+<p>设备状态传感器用于监控刻蚀设备各子系统的健康状态，是实现预测性维护的基础。</p>
+<section id="id10">
+<h3><a class="toc-backref" href="#id102" role="doc-backlink">4.4.1 真空系统传感器</a><a class="headerlink" href="#id10" title="链接到此标题。">¶</a></h3>
+<p>真空泵是刻蚀设备的关键子系统，其状态直接影响工艺真空度和刻蚀质量。</p>
+<p><strong>分子泵状态监测</strong></p>
+<p>涡轮分子泵（TMP）是刻蚀设备获得高真空的核心部件。</p>
+<p><em>监测参数：</em></p>
+<div class="table-wrapper colwidths-given docutils container" id="id71">
+<table class="docutils align-default" id="id71">
+<caption><span class="caption-text">分子泵监测参数</span><a class="headerlink" href="#id71" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 35.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>参数</p></th>
+<th class="head"><p>正常范围</p></th>
+<th class="head"><p>异常指示</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>转速</p></td>
+<td><p>20000-90000 RPM</p></td>
+<td><p>转速下降→轴承磨损</p></td>
+</tr>
+<tr class="row-odd"><td><p>振动</p></td>
+<td><p>&lt;5 mm/s (RMS)</p></td>
+<td><p>振动增加→轴承/转子问题</p></td>
+</tr>
+<tr class="row-even"><td><p>电机温度</p></td>
+<td><p>&lt;80°C</p></td>
+<td><p>温度升高→冷却/负载问题</p></td>
+</tr>
+<tr class="row-odd"><td><p>电机电流</p></td>
+<td><p>额定值±10%</p></td>
+<td><p>电流异常→机械阻力变化</p></td>
+</tr>
+<tr class="row-even"><td><p>轴承温度</p></td>
+<td><p>&lt;60°C</p></td>
+<td><p>温度升高→润滑/磨损问题</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><em>安装位置：</em> 分子泵本体集成传感器，数据通过控制面板传输</p>
+<dl class="simple">
+<dt><em>预测性维护应用：</em></dt><dd><ul class="simple">
+<li><p>振动频谱分析检测轴承早期退化</p></li>
+<li><p>转速响应时间监测（启动到工作转速的时间）</p></li>
+<li><p>电流趋势分析预测机械故障</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>干泵状态监测</strong></p>
+<p>干式真空泵（Dry Pump）用于前级抽气和粗真空获得。</p>
+<dl class="simple">
+<dt><em>监测参数：</em></dt><dd><ul class="simple">
+<li><p>泵体温度（多级监测）</p></li>
+<li><p>电机电流</p></li>
+<li><p>振动（加速度传感器）</p></li>
+<li><p>排气压力/温度</p></li>
+<li><p>冷却水流量/温度</p></li>
+</ul>
+</dd>
+<dt><em>故障模式：</em></dt><dd><ul class="simple">
+<li><p>温度升高：冷却不良、内部摩擦增加</p></li>
+<li><p>电流波动：转子不平衡、轴承磨损</p></li>
+<li><p>振动增加：机械磨损、异物进入</p></li>
+<li><p>排气压力升高：排气管路堵塞</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>机械泵状态监测</strong></p>
+<p>旋片式机械泵（Backing Pump）提供粗真空和前级抽气。</p>
+<dl class="simple">
+<dt><em>监测参数：</em></dt><dd><ul class="simple">
+<li><p>油位（光学或浮子传感器）</p></li>
+<li><p>油温（热电偶）</p></li>
+<li><p>油压（压力传感器）</p></li>
+<li><p>振动（加速度计）</p></li>
+<li><p>电机电流</p></li>
+</ul>
+</dd>
+<dt><em>维护触发条件：</em></dt><dd><ul class="simple">
+<li><p>油位低于下限→补油</p></li>
+<li><p>油温超过80°C→检查冷却</p></li>
+<li><p>振动超过阈值→轴承检查</p></li>
+<li><p>电流异常→机械故障排查</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="id11">
+<h3><a class="toc-backref" href="#id103" role="doc-backlink">4.4.2 冷却系统传感器</a><a class="headerlink" href="#id11" title="链接到此标题。">¶</a></h3>
+<p>冷却系统确保刻蚀设备各部件在安全温度范围内工作。</p>
+<p><strong>冷却液流量传感器</strong></p>
+<p><em>类型：</em> 电磁流量计或超声波流量计
+<em>测量范围：</em> 1-50 L/min
+<em>精度：</em> ±1% 读数
+<em>安装位置：</em> 冷却主回路和各分支回路</p>
+<p><strong>冷却液温度传感器</strong></p>
+<p><em>类型：</em> PT100 RTD或热电偶</p>
+<p><em>测量位置：</em></p>
+<ul class="simple">
+<li><p>冷却液入口温度（供水温度）</p></li>
+<li><p>冷却液出口温度（回水温度）</p></li>
+<li><p>各冷却分支进出口温度</p></li>
+</ul>
+<p><em>监控目的：</em></p>
+<ul class="simple">
+<li><p>通过温差计算热负荷：Q = ṁ·Cp·ΔT
+- 检测冷却效率下降
+- 异常温升预警</p></li>
+</ul>
+<p><strong>冷却液压力传感器</strong></p>
+<p><em>类型：</em> 压力变送器
+<em>测量范围：</em> 0-10 bar
+<em>精度：</em> ±0.5% F.S.
+<em>监控目的：</em> 确保冷却液正常循环，检测管路堵塞或泄漏</p>
+<p><strong>冷却液电导率传感器</strong></p>
+<p><em>工作原理：</em> 测量冷却液的电导率
+<em>监控目的：</em> 检测去离子水（DI Water）冷却回路中的泄漏——当工艺液体渗入冷却系统时，电导率会显著升高</p>
+<p><em>报警阈值：</em> 通常设定为正常值的2-3倍</p>
+</section>
+<section id="id12">
+<h3><a class="toc-backref" href="#id104" role="doc-backlink">4.4.3 机械运动传感器</a><a class="headerlink" href="#id12" title="链接到此标题。">¶</a></h3>
+<p>刻蚀设备包含多个运动部件，需要精确的位置和状态监控。</p>
+<p><strong>晶圆传输机器人</strong></p>
+<p>晶圆传输机器人（Wafer Transfer Robot）负责晶圆在腔体间的传输。</p>
+<dl class="simple">
+<dt><em>位置编码器（Position Encoder）：</em></dt><dd><ul class="simple">
+<li><p>类型：绝对值编码器或增量式编码器</p></li>
+<li><p>分辨率：&lt;0.01mm</p></li>
+<li><p>安装：各关节和直线轴</p></li>
+<li><p>功能：精确定位，轨迹跟踪</p></li>
+</ul>
+</dd>
+<dt><em>力矩传感器（Torque Sensor）：</em></dt><dd><ul class="simple">
+<li><p>类型：应变式或磁弹性</p></li>
+<li><p>安装：各关节电机</p></li>
+<li><p>功能：监测负载，检测碰撞</p></li>
+</ul>
+</dd>
+<dt><em>碰撞检测传感器：</em></dt><dd><ul class="simple">
+<li><p>类型：力矩监控、电流监控</p></li>
+<li><p>功能：当检测到异常阻力时立即停止</p></li>
+<li><p>响应时间：&lt;10ms</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>阀门状态传感器</strong></p>
+<p><em>类型：</em> 接近开关（Proximity Switch）或限位开关
+<em>功能：</em> 确认阀门的开关状态
+<em>安装：</em> 每个气动或电动阀门
+<em>监控：</em> 阀门动作时间、状态一致性</p>
+<p><strong>晶圆对准传感器</strong></p>
+<p><em>类型：</em> 光学传感器或视觉系统
+<em>功能：</em> 确保晶圆在传输过程中的正确定位
+<em>精度：</em> &lt;0.1mm</p>
+</section>
+<section id="particle-monitors">
+<h3><a class="toc-backref" href="#id105" role="doc-backlink">4.4.4 颗粒监测传感器（Particle Monitors）</a><a class="headerlink" href="#particle-monitors" title="链接到此标题。">¶</a></h3>
+<p>颗粒污染是半导体制造中的重要问题，颗粒监测对工艺质量控制至关重要。</p>
+<p><strong>激光颗粒计数器</strong></p>
+<dl class="simple">
+<dt><em>工作原理：</em></dt><dd><p>激光颗粒计数器基于光散射原理：
+1. 激光束照射气体样品
+2. 气体中的颗粒散射光线
+3. 散射光强度与颗粒大小相关
+4. 通过光电探测器收集散射光
+5. 根据散射信号确定颗粒大小和数量</p>
+</dd>
+</dl>
+<p><em>关键参数：</em></p>
+<div class="table-wrapper colwidths-given docutils container" id="id72">
+<table class="docutils align-default" id="id72">
+<caption><span class="caption-text">颗粒计数器技术参数</span><a class="headerlink" href="#id72" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 65.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>参数</p></th>
+<th class="head"><p>典型值</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>颗粒尺寸范围</p></td>
+<td><p>0.05-5 μm</p></td>
+</tr>
+<tr class="row-odd"><td><p>浓度范围</p></td>
+<td><p>0-1,000,000 particles/ft³</p></td>
+</tr>
+<tr class="row-even"><td><p>流量</p></td>
+<td><p>0.1-1.0 CFM</p></td>
+</tr>
+<tr class="row-odd"><td><p>响应时间</p></td>
+<td><p>&lt;1s</p></td>
+</tr>
+<tr class="row-even"><td><p>典型供应商</p></td>
+<td><p>TSI, Particle Plus, Kanomax</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<dl class="simple">
+<dt><em>安装位置：</em></dt><dd><ul class="simple">
+<li><p>腔体排气口：监测刻蚀过程中产生的颗粒</p></li>
+<li><p>专用监测腔：PM后的腔体清洁度验证</p></li>
+<li><p>传输腔：监测晶圆传输过程中的颗粒产生</p></li>
+</ul>
+</dd>
+<dt><em>应用场景：</em></dt><dd><ul class="simple">
+<li><p>工艺开发：评估不同工艺条件的颗粒产生</p></li>
+<li><p>PM后验证：确认清洗后的腔体清洁度</p></li>
+<li><p>实时监控：检测异常颗粒产生事件</p></li>
+<li><p>趋势分析：监控腔体颗粒产生的长期趋势</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</section>
+<section id="section-sensor-layout">
+<span id="id13"></span><h2><a class="toc-backref" href="#id106" role="doc-backlink">4.5 传感器布局与安装</a><a class="headerlink" href="#section-sensor-layout" title="链接到此标题。">¶</a></h2>
+<section id="icp-ccp">
+<h3><a class="toc-backref" href="#id107" role="doc-backlink">4.5.1 典型ICP/CCP设备的传感器分布</a><a class="headerlink" href="#icp-ccp" title="链接到此标题。">¶</a></h3>
+<pre  class="mermaid">
+        flowchart TB
+    subgraph ICP Chamber
+        direction TB
+        A[ICP Source RF&lt;br/&gt;功率传感器×2] --&gt; B[线圈温度&lt;br/&gt;热电偶×4]
+        B --&gt; C[上电极温度&lt;br/&gt;RTD×2]
+        C --&gt; D[OES视窗&lt;br/&gt;光纤接口]
+        D --&gt; E[腔壁温度&lt;br/&gt;热电偶×6]
+        E --&gt; F[ESC温度&lt;br/&gt;RTD×4/区]
+        F --&gt; G[He背冷&lt;br/&gt;流量/压力传感器]
+        G --&gt; H[偏置RF&lt;br/&gt;VI探针×2]
+        H --&gt; I[腔体压力&lt;br/&gt;CDG + Pirani]
+    end
+
+    subgraph Gas Panel
+        J[MFC×8-20&lt;br/&gt;流量传感器]
+    end
+
+    subgraph Vacuum System
+        K[分子泵&lt;br/&gt;振动/温度/转速]
+        K --&gt; L[前级管道&lt;br/&gt;Pirani规]
+        L --&gt; M[干泵&lt;br/&gt;温度/电流/振动]
+    end
+
+    subgraph Cooling System
+        N[冷却液&lt;br/&gt;温度/流量/压力]
+    end
+    </pre></section>
+<section id="id14">
+<h3><a class="toc-backref" href="#id108" role="doc-backlink">4.5.2 传感器安装原则</a><a class="headerlink" href="#id14" title="链接到此标题。">¶</a></h3>
+<p>传感器安装需要遵循以下原则：</p>
+<ol class="arabic simple">
+<li><p><strong>非侵入式优先</strong>
+- 尽可能选择不干扰等离子体的安装方式
+- 通过视窗安装光学传感器
+- 在传输管道外侧安装电气传感器</p></li>
+<li><p><strong>避免干扰等离子体</strong>
+- 探针类传感器不用于生产环境
+- 传感器材料不能释放污染物
+- 安装位置不影响气流分布</p></li>
+<li><p><strong>耐高温、耐腐蚀</strong>
+- 腔体内部件耐受等离子体环境
+- 密封材料抵抗刻蚀气体腐蚀
+- 光学窗口防止沉积物覆盖</p></li>
+<li><p><strong>便于维护和校准</strong>
+- 传感器安装位置便于接近
+- 校准周期内不影响生产
+- 模块化设计支持快速更换</p></li>
+</ol>
+</section>
+<section id="id15">
+<h3><a class="toc-backref" href="#id109" role="doc-backlink">4.5.3 传感器信号传输</a><a class="headerlink" href="#id15" title="链接到此标题。">¶</a></h3>
+<p>刻蚀设备中的传感器使用多种信号传输标准：</p>
+<p><strong>模拟信号</strong></p>
+<div class="table-wrapper colwidths-given docutils container" id="id73">
+<table class="docutils align-default" id="id73">
+<caption><span class="caption-text">模拟信号标准</span><a class="headerlink" href="#id73" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 30.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>信号类型</p></th>
+<th class="head"><p>范围</p></th>
+<th class="head"><p>应用</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>电流信号</p></td>
+<td><p>4-20 mA</p></td>
+<td><p>压力、温度、流量</p></td>
+</tr>
+<tr class="row-odd"><td><p>电压信号</p></td>
+<td><p>0-10 V</p></td>
+<td><p>功率、温度</p></td>
+</tr>
+<tr class="row-even"><td><p>电压信号</p></td>
+<td><p>0-5 V</p></td>
+<td><p>流量设定值</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><em>优势：</em> 简单、抗干扰、成本低
+<em>劣势：</em> 精度有限、无法传输数字信息</p>
+<p><strong>数字信号</strong></p>
+<div class="table-wrapper colwidths-given docutils container" id="id74">
+<table class="docutils align-default" id="id74">
+<caption><span class="caption-text">数字通信协议</span><a class="headerlink" href="#id74" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 35.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>协议</p></th>
+<th class="head"><p>特点</p></th>
+<th class="head"><p>应用</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>RS485</p></td>
+<td><p>多点、长距离</p></td>
+<td><p>传感器网络</p></td>
+</tr>
+<tr class="row-odd"><td><p>EtherCAT</p></td>
+<td><p>高速、实时</p></td>
+<td><p>运动控制、高速采集</p></td>
+</tr>
+<tr class="row-even"><td><p>PROFINET</p></td>
+<td><p>工业以太网</p></td>
+<td><p>设备集成</p></td>
+</tr>
+<tr class="row-odd"><td><p>DeviceNet</p></td>
+<td><p>设备级网络</p></td>
+<td><p>MFC、阀门控制</p></td>
+</tr>
+<tr class="row-even"><td><p>Modbus TCP</p></td>
+<td><p>以太网通讯</p></td>
+<td><p>远程监控</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><em>优势：</em> 高精度、可传输多参数、支持远程校准
+<em>劣势：</em> 系统复杂、需要通讯协议栈</p>
+</section>
+<section id="daq">
+<h3><a class="toc-backref" href="#id110" role="doc-backlink">4.5.4 数据采集系统（DAQ）</a><a class="headerlink" href="#daq" title="链接到此标题。">¶</a></h3>
+<p>数据采集系统负责将传感器信号转换为数字数据：</p>
+<dl class="simple">
+<dt><em>关键参数：</em></dt><dd><ul class="simple">
+<li><p>采样率：1 Hz - 1 MHz（根据应用选择）</p></li>
+<li><p>分辨率：12-24 bit</p></li>
+<li><p>通道数：64-1024通道</p></li>
+<li><p>同步精度：&lt;1μs</p></li>
+</ul>
+</dd>
+</dl>
+<p><em>数据流：</em></p>
+<pre  class="mermaid">
+        flowchart LR
+    A[传感器] --&gt;|模拟/数字信号| B[信号调理&lt;br/&gt;放大/滤波]
+    B --&gt;|标准化信号| C[DAQ模块&lt;br/&gt;ADC转换]
+    C --&gt;|数字数据| D[数据采集&lt;br/&gt;服务器]
+    D --&gt;|实时数据| E[FDC系统&lt;br/&gt;故障检测]
+    D --&gt;|历史数据| F[数据库&lt;br/&gt;存储分析]
+    D --&gt;|控制信号| G[工艺控制&lt;br/&gt;系统]
+    </pre><p><em>典型供应商：</em> National Instruments (NI), Advantech, Keysight</p>
+</section>
+</section>
+<section id="fdc-fault-detection-and-classification">
+<span id="section-fdc"></span><h2><a class="toc-backref" href="#id111" role="doc-backlink">4.6 故障检测与分类（FDC, Fault Detection and Classification）</a><a class="headerlink" href="#fdc-fault-detection-and-classification" title="链接到此标题。">¶</a></h2>
+<section id="fdc">
+<h3><a class="toc-backref" href="#id112" role="doc-backlink">4.6.1 FDC系统概述</a><a class="headerlink" href="#fdc" title="链接到此标题。">¶</a></h3>
+<p><strong>什么是FDC？</strong></p>
+<p>FDC（Fault Detection and Classification）是半导体制造中的核心质量保障系统。它通过实时监控传感器数据，检测工艺过程中的异常，并对故障进行分类和诊断。</p>
+<p><strong>FDC在半导体制造中的重要性</strong></p>
+<ul class="simple">
+<li><p>现代晶圆厂每小时产生的传感器数据量超过人工审查能力</p></li>
+<li><p>FDC是确保工艺稳定性和产品良率的关键手段</p></li>
+<li><p>及时检测故障可避免批量性质量问题，节省成本</p></li>
+<li><p>FDC支持从被动响应到主动预防的转变</p></li>
+</ul>
+<p><strong>FDC系统架构</strong></p>
+<pre  class="mermaid">
+        flowchart TB
+    A[传感器&lt;br/&gt;Sensors] --&gt;|原始信号| B[数据采集&lt;br/&gt;DAQ]
+    B --&gt;|数字化数据| C[特征提取&lt;br/&gt;Feature Extraction]
+    C --&gt;|特征向量| D[故障检测&lt;br/&gt;Fault Detection]
+    D --&gt;|异常报警| E[故障分类&lt;br/&gt;Fault Classification]
+    E --&gt;|故障类型| F[根因分析&lt;br/&gt;Root Cause Analysis]
+    F --&gt;|诊断结果| G[决策支持&lt;br/&gt;报警/行动]
+
+    H[历史数据库] --&gt;|训练数据| C
+    H --&gt;|正常模型| D
+    H --&gt;|故障模型| E
+    </pre></section>
+<section id="rule-based-fdc">
+<h3><a class="toc-backref" href="#id113" role="doc-backlink">4.6.2 基于规则的故障检测（Rule-based FDC）</a><a class="headerlink" href="#rule-based-fdc" title="链接到此标题。">¶</a></h3>
+<p>基于规则的FDC是最直观的方法，使用预定义的规则检测异常。</p>
+<p><strong>阈值检测</strong></p>
+<dl class="simple">
+<dt><em>固定阈值：</em></dt><dd><ul class="simple">
+<li><p>设定参数的上下限</p></li>
+<li><p>当测量值超出阈值时触发报警</p></li>
+<li><p>示例：腔体压力超过设定值±5%报警</p></li>
+</ul>
+</dd>
+<dt><em>动态阈值：</em></dt><dd><ul class="simple">
+<li><p>阈值根据工艺条件自动调整</p></li>
+<li><p>考虑不同工艺步骤、不同产品的差异</p></li>
+<li><p>示例：根据RF功率水平调整压力阈值</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>趋势检测</strong></p>
+<dl class="simple">
+<dt><em>斜率监测：</em></dt><dd><ul class="simple">
+<li><p>监控参数变化速率</p></li>
+<li><p>示例：压力上升速率超过阈值→泄漏报警</p></li>
+</ul>
+</dd>
+<dt><em>漂移检测：</em></dt><dd><ul class="simple">
+<li><p>监控参数的长期趋势</p></li>
+<li><p>示例：反射功率逐渐增加→匹配网络老化</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>时序分析</strong></p>
+<dl class="simple">
+<dt><em>工艺步骤时间监控：</em></dt><dd><ul class="simple">
+<li><p>监控每个工艺步骤的持续时间</p></li>
+<li><p>示例：稳定状态时间异常→气体或真空问题</p></li>
+</ul>
+</dd>
+<dt><em>传感器响应时间：</em></dt><dd><ul class="simple">
+<li><p>监控传感器达到稳定值的时间</p></li>
+<li><p>示例：压力稳定时间增加→泵性能退化</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>优点与局限性</strong></p>
+<dl class="simple">
+<dt><em>优点：</em></dt><dd><ul class="simple">
+<li><p>简单直观，易于理解和实现</p></li>
+<li><p>可解释性强，报警原因明确</p></li>
+<li><p>不需要大量历史数据</p></li>
+<li><p>计算资源需求低</p></li>
+</ul>
+</dd>
+<dt><em>局限性：</em></dt><dd><ul class="simple">
+<li><p>需要大量工艺经验设定规则</p></li>
+<li><p>难以检测复杂故障模式</p></li>
+<li><p>阈值设定困难（过松漏报，过紧误报）</p></li>
+<li><p>不能处理多变量相关性</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="statistical-fdc">
+<h3><a class="toc-backref" href="#id114" role="doc-backlink">4.6.3 基于统计的故障检测（Statistical FDC）</a><a class="headerlink" href="#statistical-fdc" title="链接到此标题。">¶</a></h3>
+<p>基于统计的方法利用统计学原理检测过程异常。</p>
+<p><strong>统计过程控制（SPC, Statistical Process Control）</strong></p>
+<dl class="simple">
+<dt><em>控制图（Control Charts）：</em></dt><dd><ul class="simple">
+<li><p>X-bar图：监控过程均值</p></li>
+<li><p>R图：监控过程变异性</p></li>
+<li><p>控制限：通常设为均值±3σ</p></li>
+</ul>
+</dd>
+<dt><em>过程能力指数：</em></dt><dd><ul class="simple">
+<li><p>Cp = (USL - LSL) / 6σ</p></li>
+<li><p>Cpk = min[(USL - μ) / 3σ, (μ - LSL) / 3σ]</p></li>
+<li><p>目标：Cpk ≥ 1.33（半导体行业要求）</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>多变量统计过程控制（MSPC）</strong></p>
+<p>传统的SPC对每个变量单独监控，忽略了变量间的相关性。MSPC考虑多变量相关性，提高检测能力。</p>
+<dl class="simple">
+<dt><em>主成分分析（PCA, Principal Component Analysis）：</em></dt><dd><ul class="simple">
+<li><p>将高维数据降维到少数主成分</p></li>
+<li><p>提取数据的主要变化模式</p></li>
+<li><p>减少变量间的冗余信息</p></li>
+</ul>
+</dd>
+<dt><em>偏最小二乘法（PLS, Partial Least Squares）：</em></dt><dd><ul class="simple">
+<li><p>同时考虑输入变量（X）和输出变量（Y）</p></li>
+<li><p>建立X与Y之间的关系模型</p></li>
+<li><p>用于预测和监控</p></li>
+</ul>
+</dd>
+<dt><em>Hotelling's T²统计量：</em></dt><dd><ul class="simple">
+<li><p>多变量综合监控指标</p></li>
+<li><p>当T²超过控制限时判断异常</p></li>
+<li><p>可结合贡献图（Contribution Plot）定位异常变量</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>优点与局限性</strong></p>
+<dl class="simple">
+<dt><em>优点：</em></dt><dd><ul class="simple">
+<li><p>处理多变量相关性</p></li>
+<li><p>减少误报率</p></li>
+<li><p>提供综合监控指标</p></li>
+<li><p>适用于高维数据</p></li>
+</ul>
+</dd>
+<dt><em>局限性：</em></dt><dd><ul class="simple">
+<li><p>需要大量历史数据建立模型</p></li>
+<li><p>模型更新困难（工艺变化后需重新建模）</p></li>
+<li><p>对非线性关系处理能力有限</p></li>
+<li><p>结果解释相对复杂</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="ml-based-fdc">
+<h3><a class="toc-backref" href="#id115" role="doc-backlink">4.6.4 基于机器学习的故障检测（ML-based FDC）</a><a class="headerlink" href="#ml-based-fdc" title="链接到此标题。">¶</a></h3>
+<p>机器学习方法在FDC中的应用日益广泛，能够处理复杂的故障模式。</p>
+<p><strong>监督学习</strong></p>
+<p>监督学习使用标注的故障数据训练分类模型。</p>
+<dl class="simple">
+<dt><em>常用算法：</em></dt><dd><ul class="simple">
+<li><p>支持向量机（SVM）</p></li>
+<li><p>随机森林（Random Forest）</p></li>
+<li><p>梯度提升树（XGBoost, LightGBM）</p></li>
+<li><p>神经网络（Neural Networks）</p></li>
+</ul>
+</dd>
+<dt><em>优点：</em></dt><dd><ul class="simple">
+<li><p>准确率高（当训练数据充分时）</p></li>
+<li><p>可处理复杂的非线性关系</p></li>
+<li><p>能够学习故障特征</p></li>
+</ul>
+</dd>
+<dt><em>挑战：</em></dt><dd><ul class="simple">
+<li><p>故障样本稀缺（正常样本远多于故障样本）</p></li>
+<li><p>标注成本高（需要专家知识）</p></li>
+<li><p>新故障类型无法识别</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>无监督学习</strong></p>
+<p>无监督学习不需要故障标签，通过识别数据中的异常模式检测故障。</p>
+<p><em>常用算法：</em></p>
+<ol class="arabic simple">
+<li><p><strong>自编码器（Autoencoder）</strong>
+- 使用神经网络学习数据的压缩表示
+- 通过重构误差检测异常
+- 重构误差大→异常样本</p></li>
+<li><p><strong>单类SVM（One-class SVM）</strong>
+- 学习正常数据的边界
+- 边界外的样本判断为异常</p></li>
+<li><p><strong>孤立森林（Isolation Forest）</strong>
+- 通过随机分割隔离异常样本
+- 异常样本更容易被隔离
+- 计算效率高</p></li>
+<li><p><strong>生成对抗网络（GAN）</strong>
+- 生成器学习正常数据分布
+- 判别器区分真实和生成样本
+- 可用于数据增强和异常检测</p></li>
+</ol>
+<dl class="simple">
+<dt><em>优点：</em></dt><dd><ul class="simple">
+<li><p>不需要故障样本</p></li>
+<li><p>可检测未知故障类型</p></li>
+<li><p>适用于故障数据稀缺的场景</p></li>
+</ul>
+</dd>
+<dt><em>挑战：</em></dt><dd><ul class="simple">
+<li><p>误报率控制困难</p></li>
+<li><p>结果可解释性差</p></li>
+<li><p>需要仔细调参</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>深度学习应用</strong></p>
+<p>深度学习在处理时序传感器数据方面表现出色。</p>
+<dl class="simple">
+<dt><em>时序数据建模：</em></dt><dd><ul class="simple">
+<li><p>LSTM（Long Short-Term Memory）：捕捉长程依赖关系</p></li>
+<li><p>GRU（Gated Recurrent Unit）：LSTM的简化版本</p></li>
+<li><p>Transformer：自注意力机制，处理长序列</p></li>
+</ul>
+</dd>
+<dt><em>多传感器数据融合：</em></dt><dd><ul class="simple">
+<li><p>同时处理来自多个传感器的时序数据</p></li>
+<li><p>学习传感器间的复杂关系</p></li>
+<li><p>提高故障检测的鲁棒性</p></li>
+</ul>
+</dd>
+<dt><em>端到端故障诊断：</em></dt><dd><ul class="simple">
+<li><p>直接从原始传感器数据到故障分类</p></li>
+<li><p>减少手工特征提取</p></li>
+<li><p>自动学习故障特征</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>实际案例</strong></p>
+<dl class="simple">
+<dt><em>Lam Research Sense.i：</em></dt><dd><ul class="simple">
+<li><p>集成AI驱动的工艺监控</p></li>
+<li><p>实时分析传感器数据</p></li>
+<li><p>预测性维护和故障预防</p></li>
+<li><p>支持设备自治和工艺优化</p></li>
+</ul>
+</dd>
+<dt><em>Applied Materials Equipment Intelligence：</em></dt><dd><ul class="simple">
+<li><p>设备健康监控平台</p></li>
+<li><p>机器学习驱动的异常检测</p></li>
+<li><p>预测性维护建议</p></li>
+<li><p>性能优化推荐</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="id16">
+<h3><a class="toc-backref" href="#id116" role="doc-backlink">4.6.5 常见故障类型与诊断</a><a class="headerlink" href="#id16" title="链接到此标题。">¶</a></h3>
+<section id="id17">
+<h4><a class="toc-backref" href="#id117" role="doc-backlink">4.6.5.1 等离子体相关故障</a><a class="headerlink" href="#id17" title="链接到此标题。">¶</a></h4>
+<p><strong>等离子体不稳定</strong></p>
+<dl class="simple">
+<dt><em>症状：</em></dt><dd><ul class="simple">
+<li><p>RF反射功率波动（&gt;5%）</p></li>
+<li><p>OES信号异常振荡</p></li>
+<li><p>VI探针阻抗变化</p></li>
+<li><p>刻蚀速率不均匀</p></li>
+</ul>
+</dd>
+<dt><em>可能原因：</em></dt><dd><ul class="simple">
+<li><p>匹配网络故障（电容/电感老化）</p></li>
+<li><p>气体流量异常（MFC不稳定）</p></li>
+<li><p>真空泄漏（腔体密封退化）</p></li>
+<li><p>RF发生器故障</p></li>
+<li><p>电极污染或损伤</p></li>
+</ul>
+</dd>
+<dt><em>诊断方法：</em></dt><dd><ul class="simple">
+<li><p>多传感器关联分析：同时分析RF、压力、流量数据</p></li>
+<li><p>频谱分析：识别异常频率成分</p></li>
+<li><p>时序分析：确定故障起始时刻和传播路径</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>等离子体熄灭（Plasma Extinction）</strong></p>
+<dl class="simple">
+<dt><em>症状：</em></dt><dd><ul class="simple">
+<li><p>RF功率突然下降到零</p></li>
+<li><p>腔体压力突然上升</p></li>
+<li><p>OES信号完全消失</p></li>
+<li><p>反射功率瞬间增加</p></li>
+</ul>
+</dd>
+<dt><em>可能原因：</em></dt><dd><ul class="simple">
+<li><p>RF电源故障</p></li>
+<li><p>气体供应中断</p></li>
+<li><p>严重真空泄漏</p></li>
+<li><p>真空系统故障（泵停机）</p></li>
+</ul>
+</dd>
+<dt><em>诊断方法：</em></dt><dd><ul class="simple">
+<li><p>快速时序分析（&lt;1ms分辨率）</p></li>
+<li><p>检查RF电源状态和报警</p></li>
+<li><p>验证气体流量和压力</p></li>
+<li><p>检查真空系统状态</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>异常放电（Arcing）</strong></p>
+<dl class="simple">
+<dt><em>症状：</em></dt><dd><ul class="simple">
+<li><p>RF电压/电流出现尖峰</p></li>
+<li><p>OES信号异常脉冲</p></li>
+<li><p>颗粒产生增加</p></li>
+<li><p>可能伴随声音</p></li>
+</ul>
+</dd>
+<dt><em>可能原因：</em></dt><dd><ul class="simple">
+<li><p>腔体污染（金属沉积）</p></li>
+<li><p>颗粒污染</p></li>
+<li><p>电极损伤或粗糙</p></li>
+<li><p>介质击穿</p></li>
+</ul>
+</dd>
+<dt><em>诊断方法：</em></dt><dd><ul class="simple">
+<li><p>高频采样检测（&gt;1MHz）</p></li>
+<li><p>电弧计数和能量分析</p></li>
+<li><p>VI探针谐波分析</p></li>
+<li><p>颗粒计数器关联</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="id18">
+<h4><a class="toc-backref" href="#id118" role="doc-backlink">4.6.5.2 真空系统故障</a><a class="headerlink" href="#id18" title="链接到此标题。">¶</a></h4>
+<p><strong>真空泄漏</strong></p>
+<dl class="simple">
+<dt><em>症状：</em></dt><dd><ul class="simple">
+<li><p>基线压力升高（&gt;正常值2倍）</p></li>
+<li><p>升压测试（Rate-of-Rise）异常</p></li>
+<li><p>工艺压力控制困难</p></li>
+<li><p>可能伴随OES信号变化（N₂、O₂峰出现）</p></li>
+</ul>
+</dd>
+<dt><em>诊断方法：</em></dt><dd><ul class="simple">
+<li><p>氦质谱检漏（Helium Leak Detection）</p></li>
+<li><p>分段隔离测试</p></li>
+<li><p>温度变化测试（热胀冷缩影响密封）</p></li>
+<li><p>振动测试（机械应力影响密封）</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>泵性能退化</strong></p>
+<dl class="simple">
+<dt><em>症状：</em></dt><dd><ul class="simple">
+<li><p>抽速下降（达到目标压力时间增加）</p></li>
+<li><p>极限真空变差</p></li>
+<li><p>振动增加</p></li>
+<li><p>噪音增加</p></li>
+<li><p>温度升高</p></li>
+</ul>
+</dd>
+<dt><em>诊断方法：</em></dt><dd><ul class="simple">
+<li><p>泵性能曲线分析（压力-抽速关系）</p></li>
+<li><p>振动频谱分析（识别特定频率成分）</p></li>
+<li><p>启动时间监控（达到工作转速的时间）</p></li>
+<li><p>电流趋势分析（机械阻力变化）</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>阀门故障</strong></p>
+<dl class="simple">
+<dt><em>症状：</em></dt><dd><ul class="simple">
+<li><p>压力控制不稳定</p></li>
+<li><p>阀门状态与实际不一致</p></li>
+<li><p>阀门动作时间增加</p></li>
+<li><p>阀门无法完全关闭或打开</p></li>
+</ul>
+</dd>
+<dt><em>诊断方法：</em></dt><dd><ul class="simple">
+<li><p>阀门动作时间监控</p></li>
+<li><p>压力响应测试（阀门开/关后的压力变化）</p></li>
+<li><p>电流监控（阀门驱动电流）</p></li>
+<li><p>视觉检查（内窥镜检查阀座）</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="id19">
+<h4><a class="toc-backref" href="#id119" role="doc-backlink">4.6.5.3 气体系统故障</a><a class="headerlink" href="#id19" title="链接到此标题。">¶</a></h4>
+<p><strong>气体流量异常</strong></p>
+<dl class="simple">
+<dt><em>症状：</em></dt><dd><ul class="simple">
+<li><p>MFC读数与设定值偏差大</p></li>
+<li><p>OES信号变化（特定元素峰强度变化）</p></li>
+<li><p>工艺压力异常</p></li>
+<li><p>刻蚀速率变化</p></li>
+</ul>
+</dd>
+<dt><em>可能原因：</em></dt><dd><ul class="simple">
+<li><p>MFC故障（传感器漂移、阀门卡滞）</p></li>
+<li><p>管路堵塞（过滤器脏污、沉积物）</p></li>
+<li><p>气源问题（气瓶压力低、纯度下降）</p></li>
+<li><p>泄漏（接头松动、密封老化）</p></li>
+</ul>
+</dd>
+<dt><em>诊断方法：</em></dt><dd><ul class="simple">
+<li><p>MFC自诊断功能</p></li>
+<li><p>气体成分分析（RGA或OES）</p></li>
+<li><p>流量校准测试</p></li>
+<li><p>管路压力测试</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>气体污染</strong></p>
+<dl class="simple">
+<dt><em>症状：</em></dt><dd><ul class="simple">
+<li><p>刻蚀速率异常</p></li>
+<li><p>选择比下降</p></li>
+<li><p>侧壁形貌异常</p></li>
+<li><p>颗粒增加</p></li>
+</ul>
+</dd>
+<dt><em>诊断方法：</em></dt><dd><ul class="simple">
+<li><p>RGA分析气体成分</p></li>
+<li><p>工艺结果反推（通过刻蚀特征判断污染类型）</p></li>
+<li><p>气源更换测试</p></li>
+<li><p>管路吹扫验证</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="id20">
+<h4><a class="toc-backref" href="#id120" role="doc-backlink">4.6.5.4 温度控制故障</a><a class="headerlink" href="#id20" title="链接到此标题。">¶</a></h4>
+<p><strong>温度失控</strong></p>
+<dl class="simple">
+<dt><em>症状：</em></dt><dd><ul class="simple">
+<li><p>温度超过设定值（&gt;±5°C）</p></li>
+<li><p>冷却液流量异常</p></li>
+<li><p>加热器持续工作</p></li>
+<li><p>温度波动增大</p></li>
+</ul>
+</dd>
+<dt><em>可能原因：</em></dt><dd><ul class="simple">
+<li><p>冷却系统故障（泵停机、阀门关闭、管路堵塞）</p></li>
+<li><p>加热器失控（固态继电器击穿）</p></li>
+<li><p>温度传感器故障（读数错误）</p></li>
+<li><p>控制系统故障（PID参数不当）</p></li>
+</ul>
+</dd>
+<dt><em>诊断方法：</em></dt><dd><ul class="simple">
+<li><p>多温度传感器交叉验证</p></li>
+<li><p>冷却液流量和温度检查</p></li>
+<li><p>加热器电流监控</p></li>
+<li><p>传感器电阻测量</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>温度均匀性差</strong></p>
+<dl class="simple">
+<dt><em>症状：</em></dt><dd><ul class="simple">
+<li><p>晶圆刻蚀均匀性下降</p></li>
+<li><p>不同区域温度差异大</p></li>
+<li><p>边缘与中心温度偏差</p></li>
+</ul>
+</dd>
+<dt><em>诊断方法：</em></dt><dd><ul class="simple">
+<li><p>温度分布图分析（多传感器数据）</p></li>
+<li><p>无线传感器晶圆验证</p></li>
+<li><p>冷却回路流量分配检查</p></li>
+<li><p>加热器电阻测量</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="id21">
+<h4><a class="toc-backref" href="#id121" role="doc-backlink">4.6.5.5 机械故障</a><a class="headerlink" href="#id21" title="链接到此标题。">¶</a></h4>
+<p><strong>晶圆传输故障</strong></p>
+<dl class="simple">
+<dt><em>症状：</em></dt><dd><ul class="simple">
+<li><p>机器人位置偏差（&gt;±0.1mm）</p></li>
+<li><p>碰撞报警</p></li>
+<li><p>传输时间增加</p></li>
+<li><p>晶圆破损</p></li>
+</ul>
+</dd>
+<dt><em>诊断方法：</em></dt><dd><ul class="simple">
+<li><p>位置编码器数据分析</p></li>
+<li><p>视觉检测系统</p></li>
+<li><p>电机负载监控</p></li>
+<li><p>机械部件检查</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>静电卡盘（ESC）故障</strong></p>
+<dl class="simple">
+<dt><em>症状：</em></dt><dd><ul class="simple">
+<li><p>晶圆吸附不稳定</p></li>
+<li><p>He背冷泄漏增加</p></li>
+<li><p>晶圆背面温度异常</p></li>
+<li><p>吸附/释放时间增加</p></li>
+</ul>
+</dd>
+<dt><em>诊断方法：</em></dt><dd><ul class="simple">
+<li><p>He流量监控（泄漏量）</p></li>
+<li><p>ESC电压/电流监测</p></li>
+<li><p>背面温度分布分析</p></li>
+<li><p>吸附力测试</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</section>
+<section id="id22">
+<h3><a class="toc-backref" href="#id122" role="doc-backlink">4.6.6 故障定位策略</a><a class="headerlink" href="#id22" title="链接到此标题。">¶</a></h3>
+<p>故障定位是将异常检测与具体故障原因联系起来的过程。</p>
+<p><strong>分层诊断</strong></p>
+<p>采用自顶向下的分层方法：</p>
+<ol class="arabic simple">
+<li><p><strong>系统级</strong>：识别哪个子系统异常
+- 等离子体系统？真空系统？气体系统？温度系统？</p></li>
+<li><p><strong>子系统级</strong>：定位子系统内的异常组件
+- RF发生器？匹配网络？电极？</p></li>
+<li><p><strong>部件级</strong>：确定具体故障部件
+- 电容C1？电感L2？密封圈？</p></li>
+<li><p><strong>故障点</strong>：明确故障性质
+- 电容击穿？电感开路？密封老化？</p></li>
+</ol>
+<p><strong>关联分析</strong></p>
+<dl class="simple">
+<dt><em>多传感器数据相关性分析：</em></dt><dd><ul class="simple">
+<li><p>分析多个传感器信号之间的相关性</p></li>
+<li><p>识别因果关系</p></li>
+<li><p>示例：压力升高+OES中N₂峰增加→真空泄漏</p></li>
+</ul>
+</dd>
+<dt><em>时序因果关系：</em></dt><dd><ul class="simple">
+<li><p>确定故障发生的时序关系</p></li>
+<li><p>哪个传感器先异常？</p></li>
+<li><p>异常如何传播？</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>历史数据对比</strong></p>
+<dl class="simple">
+<dt><em>与历史正常工艺对比：</em></dt><dd><ul class="simple">
+<li><p>将当前数据与历史正常数据对比</p></li>
+<li><p>识别偏差</p></li>
+<li><p>量化偏差程度</p></li>
+</ul>
+</dd>
+<dt><em>与历史相似故障对比：</em></dt><dd><ul class="simple">
+<li><p>匹配历史故障模式</p></li>
+<li><p>参考历史诊断结果</p></li>
+<li><p>加速故障定位</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>专家系统</strong></p>
+<dl class="simple">
+<dt><em>基于规则的故障树分析：</em></dt><dd><ul class="simple">
+<li><p>构建故障树（Fault Tree）</p></li>
+<li><p>通过逻辑推理定位故障</p></li>
+<li><p>结合领域专家知识</p></li>
+</ul>
+</dd>
+<dt><em>领域专家知识库：</em></dt><dd><ul class="simple">
+<li><p>积累故障诊断经验</p></li>
+<li><p>提供诊断建议</p></li>
+<li><p>支持新手工程师</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>机器学习辅助</strong></p>
+<dl class="simple">
+<dt><em>故障模式识别：</em></dt><dd><ul class="simple">
+<li><p>使用ML模型识别故障模式</p></li>
+<li><p>自动匹配历史故障</p></li>
+<li><p>提供概率化的故障诊断</p></li>
+</ul>
+</dd>
+<dt><em>根因分析推荐：</em></dt><dd><ul class="simple">
+<li><p>基于故障模式推荐可能的根因</p></li>
+<li><p>排序诊断优先级</p></li>
+<li><p>提供诊断步骤建议</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="predictive-maintenance">
+<h3><a class="toc-backref" href="#id123" role="doc-backlink">4.6.7 预测性维护（Predictive Maintenance）</a><a class="headerlink" href="#predictive-maintenance" title="链接到此标题。">¶</a></h3>
+<p><strong>预测性维护vs预防性维护vs事后维护</strong></p>
+<div class="table-wrapper colwidths-given docutils container" id="id75">
+<table class="docutils align-default" id="id75">
+<caption><span class="caption-text">维护策略对比</span><a class="headerlink" href="#id75" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+<col style="width: 25.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>策略</p></th>
+<th class="head"><p>触发条件</p></th>
+<th class="head"><p>优点</p></th>
+<th class="head"><p>缺点</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>事后维护</p></td>
+<td><p>故障发生后</p></td>
+<td><p>充分利用部件寿命</p></td>
+<td><p>非计划停机，损失大</p></td>
+</tr>
+<tr class="row-odd"><td><p>预防性维护</p></td>
+<td><p>固定时间间隔</p></td>
+<td><p>减少故障</p></td>
+<td><p>可能过早更换，浪费成本</p></td>
+</tr>
+<tr class="row-even"><td><p>预测性维护</p></td>
+<td><p>基于状态监测</p></td>
+<td><p>最优更换时机</p></td>
+<td><p>需要传感器和数据分析系统</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>基于状态的维护（CBM, Condition-Based Maintenance）</strong></p>
+<p>CBM通过持续监测设备状态参数，在需要时进行维护：</p>
+<ul class="simple">
+<li><p>实时监测关键参数（振动、温度、电流等）</p></li>
+<li><p>建立设备健康指标</p></li>
+<li><p>当健康指标超过阈值时触发维护</p></li>
+</ul>
+<p><strong>剩余使用寿命（RUL）预测</strong></p>
+<dl class="simple">
+<dt><em>退化模型建模：</em></dt><dd><ul class="simple">
+<li><p>建立部件退化模型</p></li>
+<li><p>预测性能退化趋势</p></li>
+<li><p>估计剩余寿命</p></li>
+</ul>
+</dd>
+<dt><em>机器学习预测算法：</em></dt><dd><ul class="simple">
+<li><p>使用历史退化数据训练模型</p></li>
+<li><p>预测未来退化轨迹</p></li>
+<li><p>提供RUL概率分布</p></li>
+</ul>
+</dd>
+</dl>
+<p><em>典型应用场景：</em></p>
+<ol class="arabic simple">
+<li><p><strong>真空泵轴承寿命预测</strong>
+- 监测振动频谱变化
+- 建立轴承退化模型
+- 预测轴承剩余寿命
+- 优化维护计划</p></li>
+<li><p><strong>腔体部件更换周期优化</strong>
+- 监测腔壁沉积厚度
+- 分析清洁周期趋势
+- 优化PM频率
+- 减少非计划停机</p></li>
+<li><p><strong>ESC性能退化预测</strong>
+- 监测He泄漏率趋势
+- 分析吸附力变化
+- 预测ESC更换时间
+- 避免晶圆脱落事故</p></li>
+</ol>
+<p><strong>实施挑战</strong></p>
+<ul class="simple">
+<li><p><strong>数据质量与完整性</strong>：需要高质量的历史数据</p></li>
+<li><p><strong>模型泛化能力</strong>：模型在不同设备间的迁移</p></li>
+<li><p><strong>误报成本</strong>：误报导致的不必要维护</p></li>
+<li><p><strong>投资回报</strong>：传感器和分析系统的投资回报评估</p></li>
+</ul>
+<p><strong>工业4.0与智能维护</strong></p>
+<p>预测性维护是工业4.0的核心要素：</p>
+<ul class="simple">
+<li><p>物联网（IoT）：设备互联，数据共享</p></li>
+<li><p>边缘计算：本地实时分析</p></li>
+<li><p>云计算：大规模数据存储和分析</p></li>
+<li><p>数字孪生：虚拟设备模型</p></li>
+<li><p>人工智能：自主决策和优化</p></li>
+</ul>
+</section>
+</section>
+<section id="section-advanced-diagnostics">
+<span id="id23"></span><h2><a class="toc-backref" href="#id124" role="doc-backlink">4.7 先进诊断技术</a><a class="headerlink" href="#section-advanced-diagnostics" title="链接到此标题。">¶</a></h2>
+<section id="digital-twin">
+<h3><a class="toc-backref" href="#id125" role="doc-backlink">4.7.1 数字孪生（Digital Twin）</a><a class="headerlink" href="#digital-twin" title="链接到此标题。">¶</a></h3>
+<p><strong>概念</strong></p>
+<p>数字孪生是物理设备的虚拟副本，通过实时数据同步保持与物理设备的一致性。</p>
+<dl class="simple">
+<dt><em>核心特征：</em></dt><dd><ul class="simple">
+<li><p>实时数据同步：从物理设备持续获取数据</p></li>
+<li><p>多物理场仿真：集成热、流、电磁等多物理场模型</p></li>
+<li><p>预测能力：预测设备行为和性能</p></li>
+<li><p>优化功能：支持工艺和设备优化</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>应用</strong></p>
+<dl class="simple">
+<dt><em>工艺仿真：</em></dt><dd><ul class="simple">
+<li><p>模拟刻蚀工艺过程</p></li>
+<li><p>预测工艺结果</p></li>
+<li><p>优化工艺参数</p></li>
+</ul>
+</dd>
+<dt><em>故障预测：</em></dt><dd><ul class="simple">
+<li><p>预测设备故障</p></li>
+<li><p>评估故障影响</p></li>
+<li><p>制定应对策略</p></li>
+</ul>
+</dd>
+<dt><em>性能优化：</em></dt><dd><ul class="simple">
+<li><p>工艺参数优化</p></li>
+<li><p>设备配置优化</p></li>
+<li><p>生产调度优化</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>数据驱动vs物理模型驱动</strong></p>
+<div class="table-wrapper colwidths-given docutils container" id="id76">
+<table class="docutils align-default" id="id76">
+<caption><span class="caption-text">数字孪生建模方法对比</span><a class="headerlink" href="#id76" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 35.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>方法</p></th>
+<th class="head"><p>优点</p></th>
+<th class="head"><p>缺点</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>物理模型驱动</p></td>
+<td><p>机理清晰，可解释性强</p></td>
+<td><p>模型复杂，计算量大</p></td>
+</tr>
+<tr class="row-odd"><td><p>数据驱动</p></td>
+<td><p>快速建模，适应性强</p></td>
+<td><p>需要大量数据，可解释性差</p></td>
+</tr>
+<tr class="row-even"><td><p>混合方法</p></td>
+<td><p>兼顾机理和数据</p></td>
+<td><p>实现复杂</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>实际案例</strong></p>
+<dl class="simple">
+<dt><em>Applied Materials AppliedTwin™：</em></dt><dd><ul class="simple">
+<li><p>提供设备的虚拟化副本</p></li>
+<li><p>支持工艺开发和优化</p></li>
+<li><p>加速工艺转移</p></li>
+<li><p>支持预测性维护</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="id24">
+<h3><a class="toc-backref" href="#id126" role="doc-backlink">4.7.2 边缘计算与实时分析</a><a class="headerlink" href="#id24" title="链接到此标题。">¶</a></h3>
+<p><strong>边缘vs云端处理</strong></p>
+<div class="table-wrapper colwidths-given docutils container" id="id77">
+<table class="docutils align-default" id="id77">
+<caption><span class="caption-text">边缘计算vs云计算</span><a class="headerlink" href="#id77" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 35.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>特性</p></th>
+<th class="head"><p>边缘计算</p></th>
+<th class="head"><p>云计算</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>延迟</p></td>
+<td><p>低（&lt;10ms）</p></td>
+<td><p>高（&gt;100ms）</p></td>
+</tr>
+<tr class="row-odd"><td><p>带宽需求</p></td>
+<td><p>低（本地处理）</p></td>
+<td><p>高（数据传输）</p></td>
+</tr>
+<tr class="row-even"><td><p>实时性</p></td>
+<td><p>强（本地决策）</p></td>
+<td><p>弱（网络延迟）</p></td>
+</tr>
+<tr class="row-odd"><td><p>存储能力</p></td>
+<td><p>有限</p></td>
+<td><p>几乎无限</p></td>
+</tr>
+<tr class="row-even"><td><p>计算能力</p></td>
+<td><p>有限</p></td>
+<td><p>强大</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>低延迟故障检测</strong></p>
+<p>边缘计算支持实时故障检测：</p>
+<ul class="simple">
+<li><p>本地预处理：减少数据传输量</p></li>
+<li><p>实时分析：毫秒级响应</p></li>
+<li><p>本地决策：快速触发保护动作</p></li>
+<li><p>离线运行：网络中断时仍可工作</p></li>
+</ul>
+<p><strong>数据预处理与特征提取</strong></p>
+<dl class="simple">
+<dt>边缘设备执行：</dt><dd><ul class="simple">
+<li><p>数据滤波和降噪</p></li>
+<li><p>特征提取和降维</p></li>
+<li><p>异常初步检测</p></li>
+<li><p>数据压缩和传输</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="id25">
+<h3><a class="toc-backref" href="#id127" role="doc-backlink">4.7.3 多设备协同诊断</a><a class="headerlink" href="#id25" title="链接到此标题。">¶</a></h3>
+<p><strong>集群设备监控</strong></p>
+<p>现代晶圆厂包含数百台刻蚀设备，需要集群级别的监控：</p>
+<ul class="simple">
+<li><p>统一管理界面</p></li>
+<li><p>集中数据分析</p></li>
+<li><p>跨设备对比</p></li>
+<li><p>资源优化调度</p></li>
+</ul>
+<p><strong>设备间性能对比</strong></p>
+<p>通过对比同类设备的性能：</p>
+<ul class="simple">
+<li><p>识别性能偏差设备</p></li>
+<li><p>优化设备匹配（Tool Matching）</p></li>
+<li><p>共享最佳实践</p></li>
+<li><p>均衡设备负载</p></li>
+</ul>
+<p><strong>系统性故障分析</strong></p>
+<p>当多台设备同时出现类似问题时：</p>
+<ul class="simple">
+<li><p>识别共性问题</p></li>
+<li><p>追溯共同源头（如气源、电源）</p></li>
+<li><p>制定系统性解决方案</p></li>
+<li><p>防止问题扩散</p></li>
+</ul>
+</section>
+</section>
+<section id="section-vendors">
+<span id="id26"></span><h2><a class="toc-backref" href="#id128" role="doc-backlink">4.8 传感器与诊断系统供应商</a><a class="headerlink" href="#section-vendors" title="链接到此标题。">¶</a></h2>
+<section id="id27">
+<h3><a class="toc-backref" href="#id129" role="doc-backlink">4.8.1 传感器供应商</a><a class="headerlink" href="#id27" title="链接到此标题。">¶</a></h3>
+<p><strong>压力传感器</strong></p>
+<div class="table-wrapper colwidths-given docutils container" id="id78">
+<table class="docutils align-default" id="id78">
+<caption><span class="caption-text">压力传感器供应商</span><a class="headerlink" href="#id78" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 35.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>供应商</p></th>
+<th class="head"><p>主要产品</p></th>
+<th class="head"><p>特点</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MKS Instruments</p></td>
+<td><p>Baratron®电容薄膜规</p></td>
+<td><p>高精度，行业标杆</p></td>
+</tr>
+<tr class="row-odd"><td><p>Pfeiffer Vacuum</p></td>
+<td><p>CMR, PKR系列</p></td>
+<td><p>宽范围，集成度高</p></td>
+</tr>
+<tr class="row-even"><td><p>Edwards</p></td>
+<td><p>CDG, APG系列</p></td>
+<td><p>耐腐蚀，长寿命</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>流量传感器</strong></p>
+<div class="table-wrapper colwidths-given docutils container" id="id79">
+<table class="docutils align-default" id="id79">
+<caption><span class="caption-text">流量传感器供应商</span><a class="headerlink" href="#id79" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 35.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>供应商</p></th>
+<th class="head"><p>主要产品</p></th>
+<th class="head"><p>特点</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>MKS Instruments</p></td>
+<td><p>GS系列MFC</p></td>
+<td><p>高精度，快速响应</p></td>
+</tr>
+<tr class="row-odd"><td><p>Brooks Instrument</p></td>
+<td><p>SLA5800系列</p></td>
+<td><p>高稳定性，数字通信</p></td>
+</tr>
+<tr class="row-even"><td><p>Horiba STEC</p></td>
+<td><p>SEC系列</p></td>
+<td><p>宽流量范围</p></td>
+</tr>
+<tr class="row-odd"><td><p>Fujikin</p></td>
+<td><p>FFC系列</p></td>
+<td><p>紧凑设计，高纯度</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>温度传感器</strong></p>
+<div class="table-wrapper colwidths-given docutils container" id="id80">
+<table class="docutils align-default" id="id80">
+<caption><span class="caption-text">温度传感器供应商</span><a class="headerlink" href="#id80" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 35.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>供应商</p></th>
+<th class="head"><p>主要产品</p></th>
+<th class="head"><p>特点</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Omega Engineering</p></td>
+<td><p>热电偶、RTD</p></td>
+<td><p>产品线全面</p></td>
+</tr>
+<tr class="row-odd"><td><p>Fluke</p></td>
+<td><p>红外温度计</p></td>
+<td><p>高精度，可靠性</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>OES系统</strong></p>
+<div class="table-wrapper colwidths-given docutils container" id="id81">
+<table class="docutils align-default" id="id81">
+<caption><span class="caption-text">OES系统供应商</span><a class="headerlink" href="#id81" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 35.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>供应商</p></th>
+<th class="head"><p>主要产品</p></th>
+<th class="head"><p>特点</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>HORIBA</p></td>
+<td><p>Plasma Spectro Monitor系列</p></td>
+<td><p>行业领先，全光谱分析</p></td>
+</tr>
+<tr class="row-odd"><td><p>Ocean Optics</p></td>
+<td><p>USB/Maya系列光谱仪</p></td>
+<td><p>灵活配置，模块化</p></td>
+</tr>
+<tr class="row-even"><td><p>Avantes</p></td>
+<td><p>AvaSpec系列</p></td>
+<td><p>高性能，OEM方案</p></td>
+</tr>
+<tr class="row-odd"><td><p>Impedans</p></td>
+<td><p>Moduli系列</p></td>
+<td><p>RF光谱，等离子体诊断</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="id28">
+<h3><a class="toc-backref" href="#id130" role="doc-backlink">4.8.2 FDC系统供应商</a><a class="headerlink" href="#id28" title="链接到此标题。">¶</a></h3>
+<p><strong>设备制造商集成方案</strong></p>
+<dl class="simple">
+<dt><em>Lam Research Sense.i：</em></dt><dd><ul class="simple">
+<li><p>集成AI驱动的工艺监控</p></li>
+<li><p>密集传感器架构</p></li>
+<li><p>设备自治和自适应控制</p></li>
+<li><p>预测性维护能力</p></li>
+</ul>
+</dd>
+<dt><em>Applied Materials Equipment Intelligence：</em></dt><dd><ul class="simple">
+<li><p>设备健康监控</p></li>
+<li><p>AppliedTwin™数字孪生</p></li>
+<li><p>机器学习驱动的分析</p></li>
+<li><p>工艺优化建议</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>第三方FDC解决方案</strong></p>
+<div class="table-wrapper colwidths-given docutils container" id="id82">
+<table class="docutils align-default" id="id82">
+<caption><span class="caption-text">第三方FDC供应商</span><a class="headerlink" href="#id82" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 25.0%" />
+<col style="width: 75.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>供应商</p></th>
+<th class="head"><p>产品/方案</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>PDF Solutions</p></td>
+<td><p>Exensio®平台：数据分析、良率优化</p></td>
+</tr>
+<tr class="row-odd"><td><p>Onto Innovation</p></td>
+<td><p>缺陷检测和分类</p></td>
+</tr>
+<tr class="row-even"><td><p>INFICON</p></td>
+<td><p>SmartFDC®：AI驱动的故障检测</p></td>
+</tr>
+<tr class="row-odd"><td><p>Cambrionix</p></td>
+<td><p>设备监控和数据分析</p></td>
+</tr>
+<tr class="row-even"><td><p>Sentronics</p></td>
+<td><p>过程监控解决方案</p></td>
+</tr>
+<tr class="row-odd"><td><p>Tignis (Cohu)</p></td>
+<td><p>AI驱动的FDC</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</section>
+<section id="section-standards">
+<span id="id29"></span><h2><a class="toc-backref" href="#id131" role="doc-backlink">4.9 行业标准与最佳实践</a><a class="headerlink" href="#section-standards" title="链接到此标题。">¶</a></h2>
+<section id="semi">
+<h3><a class="toc-backref" href="#id132" role="doc-backlink">4.9.1 SEMI标准</a><a class="headerlink" href="#semi" title="链接到此标题。">¶</a></h3>
+<p>SEMI（Semiconductor Equipment and Materials International）制定了一系列半导体设备标准。</p>
+<p><strong>SEMI E10：设备可靠性、可用性、可维护性（RAM）</strong></p>
+<p>SEMI E10定义了设备性能的基本指标：</p>
+<dl class="simple">
+<dt><em>可靠性（Reliability）：</em></dt><dd><ul class="simple">
+<li><p>MTBF（Mean Time Between Failures）：平均故障间隔时间</p></li>
+<li><p>故障率（Failure Rate）</p></li>
+</ul>
+</dd>
+<dt><em>可用性（Availability）：</em></dt><dd><ul class="simple">
+<li><p>总运行时间（Total Uptime）</p></li>
+<li><p>运行可用性（Operational Availability）</p></li>
+</ul>
+</dd>
+<dt><em>可维护性（Maintainability）：</em></dt><dd><ul class="simple">
+<li><p>MTTR（Mean Time To Repair）：平均修复时间</p></li>
+<li><p>MTTPM（Mean Time To Preventive Maintenance）：平均预防性维护时间</p></li>
+</ul>
+</dd>
+<dt><em>设备状态定义：</em></dt><dd><p>SEMI E10定义了6种互斥的设备状态：
+1. 生产（Production）
+2. 待机（Standby）
+3. 工程测试（Engineering）
+4. 计划维护（Scheduled Maintenance）
+5. 非计划维护（Unscheduled Maintenance）
+6. 非计划时间（Non-scheduled Time）</p>
+</dd>
+</dl>
+<p><strong>SEMI E79：设备生产率</strong></p>
+<p>SEMI E79定义了设备生产率指标：</p>
+<p><em>整体设备效率（OEE, Overall Equipment Efficiency）：</em></p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[OEE = 可用性 × 性能 × 质量\]</div>
+</div>
+<dl class="simple">
+<dt><em>可用性（Availability）：</em></dt><dd><p>实际生产时间 / 计划生产时间</p>
+</dd>
+<dt><em>性能（Performance）：</em></dt><dd><p>实际产出 / 理论最大产出</p>
+</dd>
+<dt><em>质量（Quality）：</em></dt><dd><p>合格品数量 / 总产出数量</p>
+</dd>
+</dl>
+<p><em>目标：</em> OEE &gt; 85%（世界级制造水平）</p>
+<p><strong>SEMI E133：设备通信</strong></p>
+<p>SEMI E133定义了设备通信标准：</p>
+<dl class="simple">
+<dt><em>目的：</em></dt><dd><ul class="simple">
+<li><p>标准化设备与主机系统之间的通信</p></li>
+<li><p>支持设备状态监控</p></li>
+<li><p>支持远程控制</p></li>
+</ul>
+</dd>
+<dt><em>关键功能：</em></dt><dd><ul class="simple">
+<li><p>设备状态报告</p></li>
+<li><p>数据采集和报告</p></li>
+<li><p>远程控制命令</p></li>
+<li><p>报警管理</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="id30">
+<h3><a class="toc-backref" href="#id133" role="doc-backlink">4.9.2 数据格式标准</a><a class="headerlink" href="#id30" title="链接到此标题。">¶</a></h3>
+<p><strong>SECS/GEM</strong></p>
+<p>SECS（SEMI Equipment Communications Standard）/GEM（Generic Equipment Model）是半导体设备的标准通信协议。</p>
+<dl class="simple">
+<dt><em>SECS-II：</em></dt><dd><ul class="simple">
+<li><p>定义消息格式</p></li>
+<li><p>数据结构标准化</p></li>
+<li><p>支持复杂数据交换</p></li>
+</ul>
+</dd>
+<dt><em>GEM：</em></dt><dd><ul class="simple">
+<li><p>定义设备行为模型</p></li>
+<li><p>状态管理</p></li>
+<li><p>事件报告</p></li>
+<li><p>远程命令</p></li>
+</ul>
+</dd>
+<dt><em>应用：</em></dt><dd><ul class="simple">
+<li><p>设备与MES（制造执行系统）通信</p></li>
+<li><p>FDC数据采集</p></li>
+<li><p>远程监控和控制</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>ISA-95</strong></p>
+<p>ISA-95（IEC 62264）定义了企业系统与控制系统之间的集成标准。</p>
+<dl class="simple">
+<dt><em>层次模型：</em></dt><dd><ul class="simple">
+<li><p>Level 0：物理过程</p></li>
+<li><p>Level 1：基本控制</p></li>
+<li><p>Level 2：监督控制</p></li>
+<li><p>Level 3：制造运营管理</p></li>
+<li><p>Level 4：业务规划与物流</p></li>
+</ul>
+</dd>
+<dt><em>应用：</em></dt><dd><ul class="simple">
+<li><p>生产调度</p></li>
+<li><p>质量管理</p></li>
+<li><p>维护管理</p></li>
+<li><p>库存管理</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+<section id="id31">
+<h3><a class="toc-backref" href="#id134" role="doc-backlink">4.9.3 最佳实践</a><a class="headerlink" href="#id31" title="链接到此标题。">¶</a></h3>
+<p><strong>传感器校准周期</strong></p>
+<dl class="simple">
+<dt><em>校准原则：</em></dt><dd><ul class="simple">
+<li><p>根据传感器类型和应用确定校准周期</p></li>
+<li><p>考虑环境条件和使用频率</p></li>
+<li><p>遵循制造商建议</p></li>
+<li><p>根据历史漂移数据调整</p></li>
+</ul>
+</dd>
+</dl>
+<p><em>典型校准周期：</em></p>
+<div class="table-wrapper colwidths-given docutils container" id="id83">
+<table class="docutils align-default" id="id83">
+<caption><span class="caption-text">传感器校准周期</span><a class="headerlink" href="#id83" title="链接到此表格。">¶</a></caption>
+<colgroup>
+<col style="width: 35.0%" />
+<col style="width: 30.0%" />
+<col style="width: 35.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>传感器类型</p></th>
+<th class="head"><p>校准周期</p></th>
+<th class="head"><p>校准方法</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>压力传感器（CDG）</p></td>
+<td><p>6-12个月</p></td>
+<td><p>参考标准压力计</p></td>
+</tr>
+<tr class="row-odd"><td><p>质量流量控制器</p></td>
+<td><p>12个月</p></td>
+<td><p>标准流量计或体积法</p></td>
+</tr>
+<tr class="row-even"><td><p>温度传感器</p></td>
+<td><p>12-24个月</p></td>
+<td><p>标准温度源</p></td>
+</tr>
+<tr class="row-odd"><td><p>RF功率传感器</p></td>
+<td><p>12个月</p></td>
+<td><p>RF功率标准</p></td>
+</tr>
+<tr class="row-even"><td><p>OES系统</p></td>
+<td><p>6个月</p></td>
+<td><p>标准光源</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>数据备份策略</strong></p>
+<dl class="simple">
+<dt><em>数据分类：</em></dt><dd><ul class="simple">
+<li><p>关键数据：实时传感器数据、报警记录</p></li>
+<li><p>重要数据：工艺配方、校准数据</p></li>
+<li><p>一般数据：历史趋势、维护记录</p></li>
+</ul>
+</dd>
+<dt><em>备份策略：</em></dt><dd><ul class="simple">
+<li><p>实时备份：关键数据实时复制</p></li>
+<li><p>定期备份：每天/每周完整备份</p></li>
+<li><p>异地备份：防止本地灾难</p></li>
+<li><p>版本管理：保留多个历史版本</p></li>
+</ul>
+</dd>
+<dt><em>保留策略：</em></dt><dd><ul class="simple">
+<li><p>实时数据：保留30-90天</p></li>
+<li><p>历史趋势：保留1-3年</p></li>
+<li><p>关键事件：永久保留</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>故障响应流程</strong></p>
+<p><em>标准响应流程：</em></p>
+<ol class="arabic simple">
+<li><p><strong>检测</strong>：FDC系统检测到异常</p></li>
+<li><p><strong>确认</strong>：操作人员确认报警有效性</p></li>
+<li><p><strong>评估</strong>：评估故障严重程度和影响范围</p></li>
+<li><p><strong>决策</strong>：决定继续、暂停或停止生产</p></li>
+<li><p><strong>诊断</strong>：定位故障根因</p></li>
+<li><p><strong>修复</strong>：执行修复措施</p></li>
+<li><p><strong>验证</strong>：验证修复效果</p></li>
+<li><p><strong>记录</strong>：记录故障和处理过程</p></li>
+<li><p><strong>改进</strong>：总结经验，改进流程</p></li>
+</ol>
+<dl class="simple">
+<dt><em>升级机制：</em></dt><dd><ul class="simple">
+<li><p>Level 1：操作人员处理（&lt;15分钟）</p></li>
+<li><p>Level 2：工程师支持（&lt;1小时）</p></li>
+<li><p>Level 3：供应商支持（&lt;24小时）</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>持续改进机制</strong></p>
+<dl class="simple">
+<dt><em>PDCA循环：</em></dt><dd><ul class="simple">
+<li><p>Plan（计划）：识别改进机会</p></li>
+<li><p>Do（执行）：实施改进措施</p></li>
+<li><p>Check（检查）：评估改进效果</p></li>
+<li><p>Act（行动）：标准化成功实践</p></li>
+</ul>
+</dd>
+<dt><em>关键绩效指标（KPI）：</em></dt><dd><ul class="simple">
+<li><p>设备可用性（Availability）</p></li>
+<li><p>平均故障间隔（MTBF）</p></li>
+<li><p>平均修复时间（MTTR）</p></li>
+<li><p>误报率（False Alarm Rate）</p></li>
+<li><p>漏报率（Missed Detection Rate）</p></li>
+</ul>
+</dd>
+<dt><em>定期评审：</em></dt><dd><ul class="simple">
+<li><p>月度：故障统计和趋势分析</p></li>
+<li><p>季度：FDC系统性能评审</p></li>
+<li><p>年度：全面系统评估和优化</p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</section>
+<section id="section-future">
+<span id="id32"></span><h2><a class="toc-backref" href="#id135" role="doc-backlink">4.10 未来发展趋势</a><a class="headerlink" href="#section-future" title="链接到此标题。">¶</a></h2>
+<section id="id33">
+<h3><a class="toc-backref" href="#id136" role="doc-backlink">4.10.1 更多传感器集成</a><a class="headerlink" href="#id33" title="链接到此标题。">¶</a></h3>
+<p><strong>趋势</strong></p>
+<p>未来的刻蚀设备将集成更多传感器：</p>
+<ul class="simple">
+<li><p>更高密度的传感器布置</p></li>
+<li><p>更靠近等离子体的测量位置</p></li>
+<li><p>多参数复合传感器</p></li>
+<li><p>无线传感器网络</p></li>
+</ul>
+<p><strong>驱动因素</strong></p>
+<ul class="simple">
+<li><p>工艺节点缩小，对控制精度要求提高</p></li>
+<li><p>3D结构复杂度增加（如3D NAND）</p></li>
+<li><p>新材料和新工艺的引入</p></li>
+<li><p>对工艺理解的深入</p></li>
+</ul>
+<p><strong>技术挑战</strong></p>
+<ul class="simple">
+<li><p>传感器尺寸限制</p></li>
+<li><p>耐高温、耐腐蚀材料</p></li>
+<li><p>信号干扰和串扰</p></li>
+<li><p>数据处理和存储</p></li>
+</ul>
+</section>
+<section id="ai">
+<h3><a class="toc-backref" href="#id137" role="doc-backlink">4.10.2 AI驱动的自主诊断</a><a class="headerlink" href="#ai" title="链接到此标题。">¶</a></h3>
+<p><strong>趋势</strong></p>
+<p>AI技术将使故障诊断更加智能化：</p>
+<ul class="simple">
+<li><p>自主学习故障模式</p></li>
+<li><p>自动根因分析</p></li>
+<li><p>预测性维护建议</p></li>
+<li><p>自主决策和优化</p></li>
+</ul>
+<p><strong>关键技术</strong></p>
+<dl class="simple">
+<dt><em>深度学习：</em></dt><dd><ul class="simple">
+<li><p>更强大的时序数据建模能力</p></li>
+<li><p>多模态数据融合</p></li>
+<li><p>迁移学习和领域适应</p></li>
+</ul>
+</dd>
+<dt><em>强化学习：</em></dt><dd><ul class="simple">
+<li><p>自主优化诊断策略</p></li>
+<li><p>动态调整监控参数</p></li>
+<li><p>学习最优维护时机</p></li>
+</ul>
+</dd>
+<dt><em>大语言模型（LLM）：</em></dt><dd><ul class="simple">
+<li><p>自然语言故障报告</p></li>
+<li><p>知识库智能检索</p></li>
+<li><p>交互式故障诊断</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>应用前景</strong></p>
+<ul class="simple">
+<li><p>减少工程师工作量</p></li>
+<li><p>提高诊断准确性</p></li>
+<li><p>加速故障恢复</p></li>
+<li><p>知识积累和传承</p></li>
+</ul>
+</section>
+<section id="id34">
+<h3><a class="toc-backref" href="#id138" role="doc-backlink">4.10.3 自适应工艺控制</a><a class="headerlink" href="#id34" title="链接到此标题。">¶</a></h3>
+<p><strong>趋势</strong></p>
+<p>从被动监控到主动控制的转变：</p>
+<ul class="simple">
+<li><p>实时工艺调整</p></li>
+<li><p>自适应参数优化</p></li>
+<li><p>预测性控制</p></li>
+<li><p>闭环优化系统</p></li>
+</ul>
+<p><strong>关键技术</strong></p>
+<dl class="simple">
+<dt><em>模型预测控制（MPC）：</em></dt><dd><ul class="simple">
+<li><p>基于模型预测未来状态</p></li>
+<li><p>优化控制动作</p></li>
+<li><p>处理约束条件</p></li>
+</ul>
+</dd>
+<dt><em>自适应控制：</em></dt><dd><ul class="simple">
+<li><p>在线模型更新</p></li>
+<li><p>参数自整定</p></li>
+<li><p>鲁棒控制设计</p></li>
+</ul>
+</dd>
+<dt><em>数字孪生驱动控制：</em></dt><dd><ul class="simple">
+<li><p>虚拟设备实时仿真</p></li>
+<li><p>虚拟调试和验证</p></li>
+<li><p>控制策略优化</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>应用案例</strong></p>
+<ul class="simple">
+<li><p>自适应阻抗匹配：实时调整匹配网络</p></li>
+<li><p>自适应压力控制：根据工艺状态调整</p></li>
+<li><p>自适应温度控制：多区独立优化</p></li>
+<li><p>自适应终点检测：动态调整检测策略</p></li>
+</ul>
+</section>
+<section id="id35">
+<h3><a class="toc-backref" href="#id139" role="doc-backlink">4.10.4 闭环优化系统</a><a class="headerlink" href="#id35" title="链接到此标题。">¶</a></h3>
+<p><strong>趋势</strong></p>
+<p>构建完整的闭环优化系统：</p>
+<ol class="arabic simple">
+<li><p><strong>感知层</strong>：传感器数据采集</p></li>
+<li><p><strong>分析层</strong>：数据分析和特征提取</p></li>
+<li><p><strong>决策层</strong>：优化策略生成</p></li>
+<li><p><strong>执行层</strong>：控制动作实施</p></li>
+<li><p><strong>反馈层</strong>：效果评估和学习</p></li>
+</ol>
+<p><strong>系统架构</strong></p>
+<pre  class="mermaid">
+        flowchart TB
+    A[传感器数据] --&gt; B[数据分析]
+    B --&gt; C[状态评估]
+    C --&gt; D[优化决策]
+    D --&gt; E[控制执行]
+    E --&gt; F[工艺过程]
+    F --&gt;|反馈| A
+
+    G[数字孪生] --&gt;|仿真| D
+    H[历史数据库] --&gt;|学习| B
+    I[专家知识] --&gt;|规则| D
+    </pre><p><strong>关键技术</strong></p>
+<ul class="simple">
+<li><p>实时优化算法</p></li>
+<li><p>多目标优化</p></li>
+<li><p>不确定性量化</p></li>
+<li><p>安全约束处理</p></li>
+</ul>
+<p><strong>应用前景</strong></p>
+<ul class="simple">
+<li><p>自适应刻蚀速率控制</p></li>
+<li><p>均匀性实时优化</p></li>
+<li><p>选择比最大化</p></li>
+<li><p>缺陷率最小化</p></li>
+</ul>
+</section>
+<section id="id36">
+<h3><a class="toc-backref" href="#id140" role="doc-backlink">4.10.5 量子传感技术应用前景</a><a class="headerlink" href="#id36" title="链接到此标题。">¶</a></h3>
+<p><strong>潜在应用</strong></p>
+<p>量子传感技术可能为刻蚀设备监控带来革命性变化：</p>
+<dl class="simple">
+<dt><em>量子压力传感器：</em></dt><dd><ul class="simple">
+<li><p>基于原子干涉原理</p></li>
+<li><p>超高精度压力测量</p></li>
+<li><p>绝对测量，无需校准</p></li>
+</ul>
+</dd>
+<dt><em>量子温度传感器：</em></dt><dd><ul class="simple">
+<li><p>基于原子能级跃迁</p></li>
+<li><p>极高温度分辨率</p></li>
+<li><p>宽温度范围</p></li>
+</ul>
+</dd>
+<dt><em>量子磁场传感器：</em></dt><dd><ul class="simple">
+<li><p>基于NV色心</p></li>
+<li><p>超高灵敏度磁场测量</p></li>
+<li><p>纳米级空间分辨率</p></li>
+</ul>
+</dd>
+</dl>
+<p><strong>挑战</strong></p>
+<ul class="simple">
+<li><p>技术成熟度低</p></li>
+<li><p>环境适应性（真空、温度、振动）</p></li>
+<li><p>成本和可靠性</p></li>
+<li><p>系统集成复杂度</p></li>
+</ul>
+<p><strong>时间线</strong></p>
+<ul class="simple">
+<li><p>近期（5-10年）：实验室研究和概念验证</p></li>
+<li><p>中期（10-15年）：特定应用场景试点</p></li>
+<li><p>远期（15-20年）：商业化应用</p></li>
+</ul>
+</section>
+</section>
+<section id="chapter-summary">
+<span id="id37"></span><h2><a class="toc-backref" href="#id141" role="doc-backlink">本章小结</a><a class="headerlink" href="#chapter-summary" title="链接到此标题。">¶</a></h2>
+<p>本章系统介绍了半导体刻蚀设备中的传感器系统和故障诊断技术：</p>
+<ol class="arabic simple">
+<li><p><strong>传感器系统概述</strong>：阐述了传感器在刻蚀过程中的重要作用，介绍了传感器的分类和典型配置。现代刻蚀设备通常配备200-500个传感器，涵盖压力、温度、流量、RF功率等多个方面。</p></li>
+<li><p><strong>过程参数传感器</strong>：详细介绍了压力传感器（CDG、皮拉尼、电离规）、气体流量传感器（MFC）、温度传感器（热电偶、RTD）、RF功率传感器和VI探针等核心传感器的原理、参数和应用。</p></li>
+<li><p><strong>终点检测系统</strong>：深入讲解了OES、激光干涉仪、宽光谱干涉仪等主要终点检测技术的工作原理、系统组成和应用场景，以及质谱、声发射、椭偏仪等补充技术。</p></li>
+<li><p><strong>设备状态传感器</strong>：介绍了真空系统、冷却系统、机械运动系统和颗粒监测等子系统的传感器配置，阐述了预测性维护的基础。</p></li>
+<li><p><strong>传感器布局与安装</strong>：展示了典型ICP/CCP设备的传感器分布，讨论了传感器安装原则、信号传输标准和数据采集系统。</p></li>
+<li><p><strong>故障检测与分类（FDC）</strong>：系统介绍了基于规则、基于统计和基于机器学习的FDC方法，详细描述了常见故障类型（等离子体、真空、气体、温度、机械故障）的症状、原因和诊断方法，以及故障定位策略和预测性维护技术。</p></li>
+<li><p><strong>先进诊断技术</strong>：探讨了数字孪生、边缘计算、多设备协同诊断等先进技术的应用。</p></li>
+<li><p><strong>供应商和标准</strong>：列举了主要传感器和FDC系统供应商，介绍了SEMI标准（E10、E79、E133）和数据格式标准（SECS/GEM、ISA-95）。</p></li>
+<li><p><strong>未来发展趋势</strong>：展望了传感器集成、AI驱动诊断、自适应控制、闭环优化和量子传感等未来发展方向。</p></li>
+</ol>
+<p>随着半导体工艺向更先进节点推进，传感器技术和故障诊断系统将变得更加智能化、集成化和自主化。掌握这些技术对于确保刻蚀工艺质量、提高设备可用性和降低制造成本至关重要。</p>
+</section>
+<section id="chapter-references">
+<span id="id38"></span><h2><a class="toc-backref" href="#id142" role="doc-backlink">参考文献</a><a class="headerlink" href="#chapter-references" title="链接到此标题。">¶</a></h2>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id39" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<p>M.A. Lieberman and A.J. Lichtenberg, &quot;Principles of Plasma Discharges and Materials Processing,&quot; 2nd ed., Wiley, 2005.</p>
+</aside>
+<aside class="footnote brackets" id="id40" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
+<p>K.A. Macken, &quot;Plasma Etch Process Monitoring and Control,&quot; Semiconductor International, 2018.</p>
+</aside>
+<aside class="footnote brackets" id="id41" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></span>
+<p>HORIBA, &quot;Optical Emission Spectroscopy Sensors Endpoint Detection Solutions,&quot; Technical Brochure, 2023.</p>
+</aside>
+<aside class="footnote brackets" id="id42" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></span>
+<p>Impedans, &quot;RF Voltage-Current (VI) Probes: Plasma Diagnostics,&quot; Application Notes, 2023.</p>
+</aside>
+<aside class="footnote brackets" id="id43" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>5<span class="fn-bracket">]</span></span>
+<p>SEMI International Standards, &quot;SEMI E10: Specification for Definition and Measurement of Equipment Reliability, Availability, and Maintainability (RAM) and Utilization,&quot; 2022.</p>
+</aside>
+<aside class="footnote brackets" id="id44" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>6<span class="fn-bracket">]</span></span>
+<p>SEMI International Standards, &quot;SEMI E79: Specification for Definition and Measurement of Equipment Productivity,&quot; 2022.</p>
+</aside>
+<aside class="footnote brackets" id="id45" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>7<span class="fn-bracket">]</span></span>
+<p>Lam Research, &quot;Equipment Intelligence: Powering Autonomous Semiconductor Fabs,&quot; Technical White Paper, 2023.</p>
+</aside>
+<aside class="footnote brackets" id="id46" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>8<span class="fn-bracket">]</span></span>
+<p>Applied Materials, &quot;Digital Twins for Semiconductor Equipment and Processes,&quot; Technical Blog, 2023.</p>
+</aside>
+<aside class="footnote brackets" id="id47" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>9<span class="fn-bracket">]</span></span>
+<ol class="upperalpha simple" start="10">
+<li><p>Lee et al., &quot;Machine Learning-Based Process-Level Fault Detection and Part-Level Fault Classification in Semiconductor Etch Equipment,&quot; IEEE Transactions on Semiconductor Manufacturing, vol. 35, no. 2, 2022.</p></li>
+</ol>
+</aside>
+<aside class="footnote brackets" id="id48" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>10<span class="fn-bracket">]</span></span>
+<p>INFICON, &quot;SmartFDC®: AI-Powered Fault Detection for Manufacturing,&quot; Product Documentation, 2023.</p>
+</aside>
+<aside class="footnote brackets" id="id49" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>11<span class="fn-bracket">]</span></span>
+<p>Bird Technology, &quot;V-I-Phase RF Sensor for Plasma Process Monitoring,&quot; Application Guide, 2023.</p>
+</aside>
+<aside class="footnote brackets" id="id50" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>12<span class="fn-bracket">]</span></span>
+<p>MKS Instruments, &quot;Vacuum Pressure Control for Semiconductor Fabrication,&quot; Technical Guide, 2023.</p>
+</aside>
+<aside class="footnote brackets" id="id51" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>13<span class="fn-bracket">]</span></span>
+<p>F.F. Chen, &quot;Lecture Notes on Langmuir Probe Diagnostics,&quot; University of California, Los Angeles, 2006.</p>
+</aside>
+<aside class="footnote brackets" id="id52" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>14<span class="fn-bracket">]</span></span>
+<p>NIST, &quot;Plasma Process Metrology,&quot; Program Overview, 2023.</p>
+</aside>
+<aside class="footnote brackets" id="id53" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>15<span class="fn-bracket">]</span></span>
+<p>Oxford Instruments Plasma Technology, &quot;Endpointing: Knowing When to Stop,&quot; Application Notes, 2020.</p>
+</aside>
+<aside class="footnote brackets" id="id54" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>16<span class="fn-bracket">]</span></span>
+<p>Ocean Optics, &quot;Advancing Semiconductor Fabrication with Real-Time OES,&quot; Technical Article, 2023.</p>
+</aside>
+<aside class="footnote brackets" id="id55" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>17<span class="fn-bracket">]</span></span>
+<p>Avantes, &quot;Optical Emission Spectroscopy in the Fabrication of Integrated Circuits,&quot; Application Note, 2023.</p>
+</aside>
+</aside>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          
+          <a class="prev-page" href="03-ccp-system.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">CCP刻蚀系统深度解析</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">第四章 传感器与故障诊断</a><ul>
+<li><a class="reference internal" href="#id3">引言</a></li>
+<li><a class="reference internal" href="#section-sensor-overview">4.1 传感器系统概述</a><ul>
+<li><a class="reference internal" href="#id5">4.1.1 为什么需要传感器监控</a></li>
+<li><a class="reference internal" href="#id6">4.1.2 传感器在刻蚀过程中的作用</a></li>
+<li><a class="reference internal" href="#id7">4.1.3 传感器类型分类</a></li>
+<li><a class="reference internal" href="#id8">4.1.4 现代刻蚀设备的传感器密度</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#process-parameter-sensors">4.2 过程参数传感器（Process Parameter Sensors）</a><ul>
+<li><a class="reference internal" href="#pressure-sensors">4.2.1 压力传感器（Pressure Sensors）</a></li>
+<li><a class="reference internal" href="#gas-flow-sensors">4.2.2 气体流量传感器（Gas Flow Sensors）</a></li>
+<li><a class="reference internal" href="#temperature-sensors">4.2.3 温度传感器（Temperature Sensors）</a></li>
+<li><a class="reference internal" href="#rf-power-voltage-sensors">4.2.4 射频功率与电压传感器（RF Power &amp; Voltage Sensors）</a></li>
+<li><a class="reference internal" href="#plasma-characterization-sensors">4.2.5 等离子体特性传感器（Plasma Characterization Sensors）</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#endpoint-detection-systems">4.3 终点检测系统（Endpoint Detection Systems）</a><ul>
+<li><a class="reference internal" href="#optical-emission-spectroscopy-oes">4.3.1 光发射光谱（Optical Emission Spectroscopy, OES）</a></li>
+<li><a class="reference internal" href="#laser-interferometry">4.3.2 激光干涉仪（Laser Interferometry）</a></li>
+<li><a class="reference internal" href="#broadband-interferometry">4.3.3 宽光谱干涉仪（Broadband Interferometry）</a></li>
+<li><a class="reference internal" href="#id9">4.3.4 其他终点检测方法</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#equipment-health-sensors">4.4 设备状态传感器（Equipment Health Sensors）</a><ul>
+<li><a class="reference internal" href="#id10">4.4.1 真空系统传感器</a></li>
+<li><a class="reference internal" href="#id11">4.4.2 冷却系统传感器</a></li>
+<li><a class="reference internal" href="#id12">4.4.3 机械运动传感器</a></li>
+<li><a class="reference internal" href="#particle-monitors">4.4.4 颗粒监测传感器（Particle Monitors）</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#section-sensor-layout">4.5 传感器布局与安装</a><ul>
+<li><a class="reference internal" href="#icp-ccp">4.5.1 典型ICP/CCP设备的传感器分布</a></li>
+<li><a class="reference internal" href="#id14">4.5.2 传感器安装原则</a></li>
+<li><a class="reference internal" href="#id15">4.5.3 传感器信号传输</a></li>
+<li><a class="reference internal" href="#daq">4.5.4 数据采集系统（DAQ）</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#fdc-fault-detection-and-classification">4.6 故障检测与分类（FDC, Fault Detection and Classification）</a><ul>
+<li><a class="reference internal" href="#fdc">4.6.1 FDC系统概述</a></li>
+<li><a class="reference internal" href="#rule-based-fdc">4.6.2 基于规则的故障检测（Rule-based FDC）</a></li>
+<li><a class="reference internal" href="#statistical-fdc">4.6.3 基于统计的故障检测（Statistical FDC）</a></li>
+<li><a class="reference internal" href="#ml-based-fdc">4.6.4 基于机器学习的故障检测（ML-based FDC）</a></li>
+<li><a class="reference internal" href="#id16">4.6.5 常见故障类型与诊断</a><ul>
+<li><a class="reference internal" href="#id17">4.6.5.1 等离子体相关故障</a></li>
+<li><a class="reference internal" href="#id18">4.6.5.2 真空系统故障</a></li>
+<li><a class="reference internal" href="#id19">4.6.5.3 气体系统故障</a></li>
+<li><a class="reference internal" href="#id20">4.6.5.4 温度控制故障</a></li>
+<li><a class="reference internal" href="#id21">4.6.5.5 机械故障</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id22">4.6.6 故障定位策略</a></li>
+<li><a class="reference internal" href="#predictive-maintenance">4.6.7 预测性维护（Predictive Maintenance）</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#section-advanced-diagnostics">4.7 先进诊断技术</a><ul>
+<li><a class="reference internal" href="#digital-twin">4.7.1 数字孪生（Digital Twin）</a></li>
+<li><a class="reference internal" href="#id24">4.7.2 边缘计算与实时分析</a></li>
+<li><a class="reference internal" href="#id25">4.7.3 多设备协同诊断</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#section-vendors">4.8 传感器与诊断系统供应商</a><ul>
+<li><a class="reference internal" href="#id27">4.8.1 传感器供应商</a></li>
+<li><a class="reference internal" href="#id28">4.8.2 FDC系统供应商</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#section-standards">4.9 行业标准与最佳实践</a><ul>
+<li><a class="reference internal" href="#semi">4.9.1 SEMI标准</a></li>
+<li><a class="reference internal" href="#id30">4.9.2 数据格式标准</a></li>
+<li><a class="reference internal" href="#id31">4.9.3 最佳实践</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#section-future">4.10 未来发展趋势</a><ul>
+<li><a class="reference internal" href="#id33">4.10.1 更多传感器集成</a></li>
+<li><a class="reference internal" href="#ai">4.10.2 AI驱动的自主诊断</a></li>
+<li><a class="reference internal" href="#id34">4.10.3 自适应工艺控制</a></li>
+<li><a class="reference internal" href="#id35">4.10.4 闭环优化系统</a></li>
+<li><a class="reference internal" href="#id36">4.10.5 量子传感技术应用前景</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#chapter-summary">本章小结</a></li>
+<li><a class="reference internal" href="#chapter-references">参考文献</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=d13773e8"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/translations.js?v=540d3cec"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = `pre.mermaid {
+    /* Same as .mermaid-container > pre */
+    display: block;
+    width: 100%;
+}
+
+pre.mermaid > svg {
+    /* Same as .mermaid-container > pre > svg */
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}`;
+    document.head.appendChild(defaultStyle);
+
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = `.mermaid-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.mermaid-container > pre {
+    display: block;
+    width: 100%;
+}
+
+.mermaid-container > pre > svg {
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+
+.mermaid-fullscreen-btn {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    color: #333;
+}
+
+.mermaid-fullscreen-btn:hover {
+    opacity: 100% !important;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-btn.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-btn.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 95vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.98);
+    z-index: 9999;
+    padding: 20px;
+    overflow: auto;
+}
+
+.mermaid-fullscreen-modal.dark-theme {
+    background: rgba(0, 0, 0, 0.98);
+}
+
+.mermaid-fullscreen-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen {
+    position: relative;
+    width: 95vw;
+    height: 90vh;
+    max-width: 95vw;
+    max-height: 90vh;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen.dark-theme {
+    background: #1a1a1a;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.mermaid-container-fullscreen pre.mermaid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen .mermaid svg {
+    height: 100% !important;
+    width: 100% !important;
+    cursor: grab;
+}
+
+.mermaid-fullscreen-close {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+    font-size: 24px;
+    line-height: 1;
+    color: #333;
+}
+
+.mermaid-fullscreen-close:hover {
+    background: white;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-close.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-close.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal .mermaid-fullscreen-btn {
+    display: none !important;
+}`;
+    document.head.appendChild(fullscreenStyle);
+}
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
+        return brightness < 128;
+    }
+    // console.log("No dark or light theme detected, defaulting to light theme");
+    return false;
+};
+
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
+let _lazyObserver = null;
+let _renderQueue = Promise.resolve();
+
+// Apply d3 zoom to each SVG. Idempotent: an SVG already wrapped is skipped,
+// so this is safe to call both for the initial batch and for diagrams that
+// render lazily once they become visible.
+const addZoomToSvgs = (svgs) => {
+    svgs.each(function() {
+        if (this.getAttribute('data-zoom-applied') === 'true') return;
+        var svg = d3.select(this);
+        svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+        var inner = svg.select("g");
+        var zoom = d3.zoom().on("zoom", function(event) {
+            inner.attr("transform", event.transform);
+        });
+        svg.call(zoom);
+        this.setAttribute('data-zoom-applied', 'true');
+    });
+};
+
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        // Disconnect any previous lazy rendering observer
+        if (_lazyObserver) {
+            _lazyObserver.disconnect();
+            _lazyObserver = null;
+        }
+
+        all_mermaids.forEach((el) => {
+            el.removeAttribute('data-mermaid-deferred');
+            el.removeAttribute('data-mermaid-render-failed');
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+
+        // Separate visible and hidden elements. Mermaid's layout engine measures
+        // text dimensions via the DOM, which fails for elements hidden by a parent
+        // (e.g., Reveal.js non-active slides, sphinx-design unopened tabs),
+        // producing broken SVGs. Render visible elements now, defer hidden ones.
+        const visible = [];
+        const hidden = [];
+        all_mermaids.forEach((el) => {
+            // offsetParent is null for display:none ancestors.
+            // getClientRects().length > 0 catches position:fixed elements
+            // (which also have null offsetParent but are still visible).
+            if (el.offsetParent !== null || el.getClientRects().length > 0) {
+                visible.push(el);
+            } else {
+                hidden.push(el);
+                el.setAttribute('data-mermaid-deferred', 'true');
+            }
+        });
+
+        if (visible.length > 0) {
+            try {
+                await mermaid.run({ nodes: visible });
+            } catch (e) {
+                console.error("Mermaid rendering failed:", e);
+            }
+        }
+
+        // Lazily render hidden elements when they become visible.
+        // Uses a promise chain (_renderQueue) to serialize rendering,
+        // since IntersectionObserver may report multiple entries at once
+        // and mermaid.run() is not safe to call concurrently.
+        if (hidden.length > 0) {
+            if (typeof IntersectionObserver === 'undefined') {
+                console.warn("IntersectionObserver not available; hidden mermaid diagrams will not render.");
+            } else {
+                _renderQueue = Promise.resolve();
+                _lazyObserver = new IntersectionObserver((entries) => {
+                    for (const entry of entries) {
+                        if (entry.isIntersecting && entry.target.getAttribute("data-processed") !== "true") {
+                            _lazyObserver.unobserve(entry.target);
+                            const el = entry.target;
+                            _renderQueue = _renderQueue.then(async () => {
+                                try {
+                                    await mermaid.run({ nodes: [el] });
+                                    el.removeAttribute('data-mermaid-deferred');
+                                    // Apply zoom to the now-rendered diagram, matching
+                                    // the decoration visible diagrams receive.
+                                    if ("False" === "True") {
+                                        addZoomToSvgs(d3.selectAll(""));
+                                    }
+                                } catch (e) {
+                                    console.error("Mermaid deferred rendering failed:", e);
+                                    el.removeAttribute('data-mermaid-deferred');
+                                    el.setAttribute('data-mermaid-render-failed', 'true');
+                                }
+                            });
+                        }
+                    }
+                });
+                hidden.forEach((el) => _lazyObserver.observe(el));
+            }
+        }
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
+    // Exclude deferred (hidden) and render-failed elements from completion checks
+    const mermaids_active = document.querySelectorAll(".mermaid:not([data-mermaid-deferred]):not([data-mermaid-render-failed])");
+    const mermaids_processed = document.querySelectorAll(".mermaid:not([data-mermaid-deferred]):not([data-mermaid-render-failed])[data-processed='true']");
+
+    if ("False" === "True") {
+        const mermaids_to_add_zoom = -1 === -1 ? mermaids_active.length : -1;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("");
+            // Wait until every active (visible) diagram has rendered. Deferred
+            // diagrams are excluded, so a fixed d3_node_count that counts a
+            // hidden diagram no longer loops forever waiting for its SVG.
+            if(mermaids_active.length !== mermaids_processed.length) {
+                setTimeout(() => runMermaid(false), 200);
+                return;
+            }
+            addZoomToSvgs(svgs);
+        }
+    } else if(mermaids_active.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(() => runMermaid(false), 200);
+        return;
+    }
+
+    // Stop here if not adding fullscreen capability
+    if ("True" !== "True") return;
+
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = '⛶';
+        fullscreenBtn.style.opacity = '50%';
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scroll, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.sdisplay = 'block';
+
+                if ("False" === "True") {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        container.appendChild(fullscreenBtn);
+    });
+};
+
+const load = async () => {
+    initStyles();
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...JSON.parse(
+                    `{"startOnLoad": false}`
+                ),
+                ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...JSON.parse(
+        `{"startOnLoad": false}`
+    ),
+    ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+    }
+);
+
+window.addEventListener("load", load);
+window.runMermaid = runMermaid;</script>
+    </body>
+</html>

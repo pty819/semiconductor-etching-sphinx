@@ -1,0 +1,1317 @@
+<!doctype html>
+<html class="no-js" lang="zh-CN" data-content_root="../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="索引" href="../genindex.html"><link rel="search" title="搜索" href="../search.html"><link rel="next" title="ICP刻蚀系统深度解析" href="02-icp-system.html"><link rel="prev" title="半导体刻蚀技术知识库" href="../index.html">
+
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>刻蚀技术基础 - 半导体刻蚀技术知识库</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../index.html"><div class="brand">半导体刻蚀技术知识库</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../index.html">
+  
+  <span class="sidebar-brand-text">半导体刻蚀技术知识库</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../search.html" role="search">
+  <input class="sidebar-search" placeholder="搜索" name="q" aria-label="搜索">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <p class="caption" role="heading"><span class="caption-text">目录</span></p>
+<ul class="current">
+<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">刻蚀技术基础</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02-icp-system.html">ICP刻蚀系统深度解析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03-ccp-system.html">CCP刻蚀系统深度解析</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04-sensors-diagnostics.html">第四章 传感器与故障诊断</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../_sources/chapters/01-fundamentals.rst.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="id1">
+<h1>刻蚀技术基础<a class="headerlink" href="#id1" title="链接到此标题。">¶</a></h1>
+<p>本章深入介绍半导体刻蚀技术的核心概念、工艺原理和设备架构。刻蚀是集成电路制造的关键工艺步骤，负责将光刻定义的图案精确转移到晶圆表面。我们将从基础物理化学原理出发，系统阐述刻蚀技术的工作原理、工艺步骤、关键参数以及现代刻蚀设备的整体架构。</p>
+<section id="id2">
+<h2>什么是刻蚀<a class="headerlink" href="#id2" title="链接到此标题。">¶</a></h2>
+<p>刻蚀（Etching）是半导体制造中通过物理或化学方法从晶圆表面选择性去除材料的工艺过程。在集成电路制造流程中，刻蚀位于光刻之后，负责将光刻胶上定义的二维图案精确转移到下方的薄膜材料上，形成器件的三维结构。</p>
+<p>刻蚀工艺的核心目标是在去除特定材料的同时，保持对下层材料的高选择比，并实现精确的形貌控制。现代先进逻辑芯片制造过程中，刻蚀步骤可能超过100次，占整个前道工艺步骤的20-25%。</p>
+<p>从物理机制角度，刻蚀可以分为两大类：</p>
+<p><strong>湿法刻蚀（Wet Etching）</strong> 使用液态化学试剂（如氢氟酸、磷酸、硝酸等）通过化学反应溶解材料。湿法刻蚀具有极高的选择比和均匀性，但本质上是各向同性的，无法实现精细的图案控制。在0.35微米以上的成熟工艺节点，湿法刻蚀曾是主流技术，但在现代亚微米工艺中已被干法刻蚀取代，仅用于清洗和去胶等辅助步骤。</p>
+<p><strong>干法刻蚀（Dry Etching）</strong> 使用气相等离子体中的活性粒子（自由基、离子）通过化学反应和/或物理轰击去除材料。干法刻蚀的核心优势在于各向异性——可以精确控制刻蚀方向，实现垂直侧壁和高深宽比结构。现代集成电路制造中，95%以上的刻蚀步骤采用干法刻蚀技术。</p>
+<p>干法刻蚀根据等离子体产生方式和能量耦合机制，主要分为两种技术路线：</p>
+<p><strong>电容耦合等离子体（CCP）</strong> 通过平行板电极间的射频电场直接加速电子，产生等离子体。CCP的特点是等离子体密度相对较低（10⁹-10¹⁰ cm⁻³），但离子能量较高且与等离子体密度强耦合。CCP主要用于介质刻蚀（氧化物、氮化物），凭借高选择比和优异的形貌控制能力，在接触孔、通孔、浅槽隔离等工艺中占据主导地位。</p>
+<p><strong>电感耦合等离子体（ICP）</strong> 通过外部线圈的交变磁场在腔体内感应出涡旋电场，加速电子产生高密度等离子体。ICP的核心优势在于等离子体密度高（10¹¹-10¹² cm⁻³），且离子能量和密度可以独立控制。ICP主要用于硅刻蚀、金属刻蚀以及需要高刻蚀速率和高深宽比的应用场景。</p>
+<p>CCP和ICP的选择取决于具体的工艺需求：需要高选择比的介质刻蚀通常选择CCP；需要高刻蚀速率、高深宽比或精确控制离子能量的应用则选择ICP。现代先进刻蚀设备往往集成了多种等离子体源，以覆盖更广泛的工艺窗口。</p>
+<pre  class="mermaid">
+        graph TD
+    A[刻蚀工艺] --&gt; B[湿法刻蚀]
+    A --&gt; C[干法刻蚀]
+    B --&gt; D[各向同性]
+    C --&gt; E[各向异性]
+    C --&gt; F[等离子体刻蚀]
+    C --&gt; G[反应离子刻蚀]
+    F --&gt; H[纯化学刻蚀]
+    G --&gt; I[物理+化学]
+    C --&gt; J[CCP]
+    C --&gt; K[ICP]
+    J --&gt; L[等离子体密度: 10⁹-10¹⁰]
+    J --&gt; M[高选择比]
+    J --&gt; N[介质刻蚀]
+    K --&gt; O[等离子体密度: 10¹¹-10¹²]
+    K --&gt; P[独立控制]
+    K --&gt; Q[硅/金属刻蚀]
+    </pre></section>
+<section id="id3">
+<h2>刻蚀的分类体系<a class="headerlink" href="#id3" title="链接到此标题。">¶</a></h2>
+</section>
+<section id="id4">
+<h2>刻蚀的物理化学机制<a class="headerlink" href="#id4" title="链接到此标题。">¶</a></h2>
+<p>刻蚀过程涉及复杂的物理和化学机制，深入理解这些机制对于优化工艺至关重要。</p>
+<p>### 等离子体物理基础</p>
+<p>在干法刻蚀中，等离子体是刻蚀反应的活性介质。等离子体由电子、离子、中性粒子和自由基组成，其行为受电磁场控制。</p>
+<p><strong>等离子体参数</strong></p>
+<ul class="simple">
+<li><p><strong>电子温度（Te）</strong>：通常为2-5 eV（约23000-58000 K）</p></li>
+<li><p><strong>电子密度（ne）</strong>：ICP为10¹⁰-10¹² cm⁻³，CCP为10⁹-10¹⁰ cm⁻³</p></li>
+<li><p><strong>等离子体电位（Vp）</strong>：通常为10-30 V</p></li>
+<li><p><strong>德拜长度（λD）</strong>：表征等离子体屏蔽效应的特征长度</p></li>
+</ul>
+<p><strong>鞘层形成</strong></p>
+<p>在等离子体与固体表面交界处，由于电子质量远小于离子，电子运动速度更快，导致表面带负电，形成正离子富集的鞘层区域。鞘层电压决定了离子轰击能量。</p>
+<p><strong>离子能量分布（IEDF）</strong></p>
+<p>离子到达表面时的能量不是单一值，而是呈现一定分布。IEDF的宽度受以下因素影响：
+- 鞘层电压波动
+- 离子在鞘层中的碰撞
+- 等离子体密度的时空变化</p>
+<p>### 化学反应动力学</p>
+<p>刻蚀过程涉及气相反应和表面反应两大类。</p>
+<p><strong>气相反应</strong></p>
+<p>在等离子体中，高能电子与气体分子碰撞，产生自由基和离子：</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">e⁻</span> <span class="pre">+</span> <span class="pre">CF₄</span> <span class="pre">→</span> <span class="pre">e⁻</span> <span class="pre">+</span> <span class="pre">CF₃</span> <span class="pre">+</span> <span class="pre">F</span>&#160;&#160;&#160; <span class="pre">（解离反应）</span>
+<span class="pre">e⁻</span> <span class="pre">+</span> <span class="pre">CF₄</span> <span class="pre">→</span> <span class="pre">e⁻</span> <span class="pre">+</span> <span class="pre">CF₃⁺</span> <span class="pre">+</span> <span class="pre">F⁻</span>&#160; <span class="pre">（电离反应）</span>
+<span class="pre">`</span></code></p>
+<p>自由基浓度是刻蚀速率的关键参数。以硅刻蚀为例：</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">Si</span> <span class="pre">+</span> <span class="pre">4F</span> <span class="pre">→</span> <span class="pre">SiF₄↑</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">（主要刻蚀反应）</span>
+<span class="pre">Si</span> <span class="pre">+</span> <span class="pre">4Cl</span> <span class="pre">→</span> <span class="pre">SiCl₄↑</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">（氯基刻蚀）</span>
+<span class="pre">`</span></code></p>
+<p><strong>表面反应动力学</strong></p>
+<p>表面反应遵循Langmuir-Hinshelwood机理或Eley-Rideal机理：</p>
+<ul class="simple">
+<li><p><strong>Langmuir-Hinshelwood机理</strong>：两种吸附粒子在表面扩散相遇后反应</p></li>
+<li><p><strong>Eley-Rideal机理</strong>：气相粒子直接与吸附粒子反应</p></li>
+</ul>
+<p>表面反应速率受以下因素控制：
+- 吸附粒子浓度
+- 表面温度
+- 活化能
+- 离子轰击增强效应</p>
+<p><strong>聚合物沉积机制</strong></p>
+<p>在含碳氟化合物的刻蚀中，会在侧壁形成聚合物钝化层：</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">CFₓ</span> <span class="pre">+</span> <span class="pre">CFᵧ</span> <span class="pre">→</span> <span class="pre">C₂Fₓ₊ᵧ</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">（聚合反应）</span>
+<span class="pre">`</span></code></p>
+<p>聚合物的组成和厚度取决于：
+- CFₓ自由基浓度
+- 离子轰击能量（影响脱氟速率）
+- 表面温度</p>
+<p>### 离子-表面相互作用</p>
+<p>离子轰击在刻蚀中起到多重作用：</p>
+<p><strong>物理溅射</strong></p>
+<p>高能离子直接将表面原子撞击出来。溅射产额Y与离子能量E的关系：</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">Y</span> <span class="pre">∝</span> <span class="pre">(E</span> <span class="pre">-</span> <span class="pre">Eth)</span> <span class="pre">/</span> <span class="pre">Us</span>
+<span class="pre">`</span></code></p>
+<p>其中Eth为溅射阈值，Us为表面结合能。</p>
+<p><strong>化学溅射增强</strong></p>
+<p>离子轰击可以：
+- 破坏表面化学键，降低反应活化能
+- 增加表面活性位点
+- 促进挥发性产物的解吸
+- 形成混合层，改变化学计量比</p>
+<p><strong>表面损伤</strong></p>
+<p>离子轰击会造成晶格损伤：
+- 空位和间隙原子
+- 非晶化
+- 亚表面损伤层（通常5-20 nm）</p>
+<p>损伤程度与离子种类、能量和剂量相关。</p>
+<p>刻蚀工艺可以从多个维度进行分类，每种分类方式反映了不同的物理机制和工艺特性。</p>
+<p>按照刻蚀方向性，可以分为各向同性刻蚀和各向异性刻蚀：</p>
+<p>各向同性刻蚀（Isotropic Etching）在所有方向上以相同速率进行，刻蚀剖面呈圆弧形。这种刻蚀方式会产生明显的底切（Undercut）效应，即掩模下方的材料也被刻蚀掉。各向同性刻蚀适用于不需要精确图案控制的场景，如晶圆清洗、表面粗糙化、牺牲层释放等。湿法刻蚀和某些干法刻蚀（如使用特定气体配方的等离子体刻蚀）表现为各向同性。</p>
+<p>各向异性刻蚀（Anisotropic Etching）主要沿垂直方向进行，侧壁几乎不被刻蚀，刻蚀剖面呈矩形或梯形。各向异性是现代集成电路刻蚀的核心要求，因为它保证了图案转移的精确性和高深宽比结构的形成。各向异性刻蚀的实现机制包括：离子轰击的方向性增强（物理溅射成分）、侧壁钝化层的保护（如Bosch工艺中的C4F8聚合物沉积）、以及反应产物的方向性去除。</p>
+<p>按照刻蚀机制，干法刻蚀可以进一步细分为：</p>
+<p>纯物理刻蚀（如离子束刻蚀IBE）完全依赖高能离子的物理溅射作用去除材料。物理溅射的选择比很低（通常&lt;10:1），且刻蚀速率较慢，但各向异性极好，且适用于几乎所有材料。离子束刻蚀主要用于需要极高精度的场景，如光栅制造、镜面抛光等。</p>
+<p>纯化学刻蚀（如等离子体刻蚀PE）完全依靠等离子体中的活性自由基与材料表面的化学反应。化学刻蚀的选择比极高（可达100:1以上），且刻蚀速率快，但本质上是各向同性的。纯化学刻蚀主要用于对方向性要求不高的场景，如光刻胶去除（Ashing）、表面清洗等。</p>
+<p>反应离子刻蚀（RIE）同时利用化学反应和物理轰击，是现代干法刻蚀的主流技术。RIE的核心优势在于结合了化学刻蚀的高选择比和物理轰击的各向异性。在RIE过程中，离子轰击不仅直接溅射去除材料（物理成分），还破坏了材料表面的化学键，增强了活性自由基的化学反应速率（化学增强），同时通过轰击去除侧壁钝化层，维持刻蚀的方向性。</p>
+<p>按照等离子体密度，干法刻蚀可以分为常规等离子体刻蚀和高密度等离子体（HDP）刻蚀：</p>
+<p>常规等离子体刻蚀（如CCP）的等离子体密度在10⁹-10¹⁰ cm⁻³量级，工作气压较高（10-100 mTorr）。这类刻蚀技术成熟、设备简单，但等离子体密度和离子能量的独立控制能力有限。</p>
+<p>高密度等离子体刻蚀（如ICP、ECR、TCP）的等离子体密度可达10¹¹-10¹² cm⁻³，工作气压较低（1-10 mTorr）。HDP刻蚀的核心优势在于离子通量高、离子能量低且可控，能够实现高刻蚀速率、低损伤、高深宽比的刻蚀。低气压环境下，离子的平均自由程增加，散射减少，各向异性更好。</p>
+</section>
+<section id="id5">
+<h2>标准刻蚀工艺步骤<a class="headerlink" href="#id5" title="链接到此标题。">¶</a></h2>
+<p>一个完整的刻蚀工艺通常包含多个步骤，每个步骤都有明确的目标和物理化学过程。理解这些步骤对于优化刻蚀工艺、控制刻蚀形貌和提高良率至关重要。</p>
+<p><strong>预处理步骤（Pre-treatment）</strong></p>
+<p>在正式刻蚀之前，通常需要进行预处理以改善刻蚀均匀性、增强刻蚀选择性或为后续刻蚀创造有利条件。常见的预处理包括：</p>
+<p>表面清洗：去除晶圆表面的自然氧化层、有机污染物和颗粒。清洗方法包括湿法清洗（如RCA清洗、稀释HF清洗）和干法清洗（如远程等离子体清洗）。表面清洗对于保证刻蚀起始点的均匀性和可重复性至关重要。</p>
+<p>表面钝化：在某些工艺中，需要在刻蚀前在掩模侧壁或特定区域沉积钝化层，以保护不需要刻蚀的区域。例如，在硅深刻蚀（DRIE）的Bosch工艺中，每个刻蚀循环之前都会在侧壁沉积C4F8聚合物钝化层。</p>
+<p>表面活化：通过低能离子轰击或等离子体处理，激活材料表面的化学反应活性，降低刻蚀起始延迟，提高刻蚀均匀性。</p>
+<p><strong>主刻蚀步骤（Main Etch）</strong></p>
+<p>主刻蚀是刻蚀工艺的核心步骤，负责去除大部分目标材料。主刻蚀的设计目标是实现高刻蚀速率、良好的均匀性和可控的形貌。</p>
+<p>在主刻蚀过程中，工艺参数（气体流量、RF功率、气压、温度等）被优化以实现最佳的刻蚀性能。主刻蚀通常采用较高的RF功率和较长的刻蚀时间，以快速去除材料。主刻蚀的终点通常通过终点检测系统（如OES光学发射光谱）来确定，当检测到目标材料被完全刻蚀、暴露出下层材料时，主刻蚀步骤结束。</p>
+<p>主刻蚀过程中需要平衡多个相互制约的目标：高刻蚀速率要求高的离子通量和能量，但过高的离子能量会导致掩模损耗加剧、选择比降低、表面损伤增加；良好的均匀性要求等离子体分布均匀，但这可能与高刻蚀速率的要求相冲突；各向异性要求强的离子轰击和侧壁钝化，但这可能降低刻蚀速率。</p>
+<p><strong>过刻蚀步骤（Over Etch）</strong></p>
+<p>过刻蚀是在主刻蚀结束后继续进行的短时间刻蚀，目的是确保目标材料被完全去除，特别是在刻蚀均匀性较差或主刻蚀终点检测存在延迟的情况下。</p>
+<p>过刻蚀的设计原则是在保证完全去除目标材料的同时，最小化对下层材料的损伤和过度刻蚀。过刻蚀时间通常为主刻蚀时间的10-30%，具体取决于刻蚀均匀性、终点检测精度和工艺裕量要求。</p>
+<p>过刻蚀步骤的工艺参数通常与主刻蚀不同：降低RF功率以减少对下层材料的损伤；调整气体配方以增强对目标材料的选择比；降低刻蚀速率以实现更精确的控制。在某些高精度工艺中，过刻蚀步骤可能分为多个子步骤，逐步降低刻蚀速率，实现渐进式的精确控制。</p>
+<p>过刻蚀的主要挑战包括：如何保证过刻蚀不会过度损伤下层材料；如何处理过刻蚀过程中产生的副产物；如何控制过刻蚀对刻蚀形貌的影响（如底切、侧壁粗糙度增加）。</p>
+<p><strong>后处理步骤（Post-treatment）</strong></p>
+<p>刻蚀完成后，通常需要进行后处理以去除残留物、修复表面损伤或改善表面状态。</p>
+<p>去胶（Ashing）：使用氧等离子体去除残留的光刻胶。去胶过程本质上是一个化学氧化过程，氧自由基与光刻胶中的碳氢化合物反应，生成CO2和H2O等挥发性产物。去胶可以在刻蚀腔内原位进行（In-situ Ashing），也可以在单独的灰化炉中进行（Ex-situ Ashing）。原位去胶减少了晶圆传输过程中的污染风险，但可能延长工艺时间；离位去胶可以实现更高效的去胶工艺，但增加了污染风险和工艺复杂度。</p>
+<p>表面清洗：去除刻蚀过程中沉积在侧壁和表面的聚合物残留物、金属污染物和颗粒。清洗方法包括湿法清洗（如硫酸+过氧化氢混合液SPM、稀释HF清洗）和干法清洗（如远程等离子体清洗）。清洗工艺需要在去除残留物和保护下层材料之间取得平衡。</p>
+<p>表面修复：刻蚀过程中的离子轰击可能导致表面晶格损伤、化学计量比偏离或表面粗糙度增加。表面修复步骤通过低温退火、化学处理或等离子体处理，修复表面损伤，恢复材料的化学和物理特性。例如，在III-V族化合物半导体刻蚀后，通常需要进行硫钝化处理，以修复表面悬挂键，降低表面态密度。</p>
+</section>
+<section id="ale-vs">
+<h2>ALE vs 传统刻蚀<a class="headerlink" href="#ale-vs" title="链接到此标题。">¶</a></h2>
+<p>原子层刻蚀（Atomic Layer Etching, ALE）是一种新兴的刻蚀技术，通过自限制的化学反应实现原子级别的精确控制，与传统刻蚀技术存在本质差异。</p>
+<p><strong>传统刻蚀的局限性</strong></p>
+<p>传统刻蚀技术（包括RIE、ICP、CCP等）本质上是一个连续的过程，刻蚀深度由刻蚀时间和刻蚀速率共同决定。这种连续刻蚀方式面临几个根本性挑战：</p>
+<p>刻蚀深度的精确控制受限：刻蚀深度取决于刻蚀速率的稳定性，而刻蚀速率受多种因素影响（等离子体密度、气体流量、温度、腔室状态等），难以实现埃米级（Å）的精确控制。在先进工艺节点（如3nm以下），某些关键刻蚀步骤要求深度控制精度达到几个原子层（约1nm以内），传统刻蚀技术难以满足这一要求。</p>
+<p>刻蚀损伤难以避免：连续的高能离子轰击会导致表面晶格损伤、亚表面缺陷形成和材料性质改变。这些损伤对于先进器件（如FinFET、GAA晶体管）的性能和可靠性有显著影响。</p>
+<p>刻蚀形貌控制受限：传统刻蚀中，刻蚀形貌（侧壁角度、底部形貌、表面粗糙度）由多个参数共同决定，参数之间存在复杂的耦合关系，难以独立优化。</p>
+<p><strong>ALE的工作原理</strong></p>
+<p>ALE通过两个交替的自限制步骤实现原子级精度的刻蚀：</p>
+<p>第一步：表面改性（Surface Modification）。将反应性气体引入腔室，与材料表面发生化学反应，形成一层改性层（通常为几埃到几十埃厚）。这个反应是自限制的——当表面完全反应后，反应自动停止，不会继续向材料内部延伸。例如，在硅的ALE中，可以使用Cl2或Cl2/BCl3混合气体，在硅表面形成SiClx改性层。</p>
+<p>第二步：离子轰击去除（Ion Bombardment Removal）。使用低能离子（能量通常在50-200eV范围）轰击表面，选择性地去除改性层，而不损伤下层未改性的材料。离子能量被精确控制在改性层的结合能以上、体材料的位移阈值以下，从而实现选择性去除。</p>
+<p>这两个步骤交替进行，每次循环去除的厚度等于改性层的厚度（通常为几个原子层）。通过控制循环次数，可以实现原子级的刻蚀深度控制。</p>
+<p>ALE的核心特征是自限制性（Self-limiting）：表面改性步骤的反应在达到饱和后自动停止，不会过度反应；离子轰击步骤只能去除改性层，无法刻蚀未改性的体材料。这种自限制性保证了刻蚀的精确性和可重复性。</p>
+<p><strong>ALE vs 传统刻蚀的关键差异</strong></p>
+<p>控制机制：传统刻蚀是连续的、时间依赖的过程，刻蚀深度由刻蚀速率和时间决定；ALE是离散的、循环依赖的过程，刻蚀深度由循环次数和每循环去除量决定。</p>
+<p>精度：传统刻蚀的深度控制精度通常在纳米级别（5-20nm）；ALE的深度控制精度可达埃米级别（0.1-0.5nm），相当于几个原子层。</p>
+<p>损伤：传统刻蚀的高能离子轰击会导致显著的亚表面损伤；ALE使用低能离子，且只去除已改性的表面层，亚表面损伤大幅降低。</p>
+<p>选择比：传统刻蚀的选择比取决于材料对等离子体的化学和物理响应；ALE的选择比理论上可以无限高，因为改性反应和离子去除都具有材料特异性。</p>
+<p>刻蚀速率：传统刻蚀的刻蚀速率通常在100-1000 nm/min；ALE的刻蚀速率很低，通常为0.1-1 nm/cycle，相当于每分钟几个到几十个纳米。</p>
+<p>应用场景：传统刻蚀适用于大多数常规刻蚀步骤；ALE适用于需要极高精度和极低损伤的关键步骤，如FinFET鳍片修整、GAA纳米片释放、超浅结形成、二维材料图案化等。</p>
+<p><strong>ALE的技术挑战</strong></p>
+<p>虽然ALE在理论上具有诸多优势，但在实际应用中仍面临多个挑战：</p>
+<p>工艺复杂度高：ALE需要精确控制两个交替步骤的参数（气体流量、RF功率、压力、时间等），且两个步骤之间需要良好的协调和匹配。</p>
+<p>产能低：ALE的刻蚀速率远低于传统刻蚀，对于需要去除大量材料的应用场景，工艺时间显著增加，影响产能和成本。</p>
+<p>设备要求高：ALE需要精确的离子能量控制、快速的气体切换、良好的腔室清洁度，对设备性能要求更高。</p>
+<p>工艺开发难度大：ALE的工艺窗口通常较窄，需要深入理解表面化学反应和离子-表面相互作用的物理机制。</p>
+<p>尽管如此，随着工艺节点向3nm以下推进，ALE在多个关键步骤中的应用已成为必然趋势。目前的研发重点包括提高ALE速率、开发新的ALE化学体系、以及将ALE与传统刻蚀技术集成，形成混合刻蚀方案。</p>
+</section>
+<section id="id6">
+<h2>新兴刻蚀技术<a class="headerlink" href="#id6" title="链接到此标题。">¶</a></h2>
+<p>随着器件尺寸持续缩小和新材料的引入，传统刻蚀技术面临新的挑战。新兴刻蚀技术不断涌现，以满足先进制程的需求。</p>
+<p>### 原子层刻蚀（ALE）</p>
+<p><strong>基本原理</strong></p>
+<p>ALE通过自限制的表面反应实现原子级精度的刻蚀。典型ALE循环包括两个步骤：</p>
+<ol class="arabic simple">
+<li><p><strong>表面改性</strong>：反应性气体与表面发生自限制反应
+- 例如：Cl₂ + Si → SiCl₂（自限制，形成单层）</p></li>
+<li><p><strong>离子去除</strong>：低能离子轰击去除改性层
+- 离子能量精确控制在改性层结合能以上、下层材料阈值以下</p></li>
+</ol>
+<p><strong>关键特性</strong></p>
+<ul class="simple">
+<li><p>刻蚀速率：每个循环去除0.1-1个原子层</p></li>
+<li><p>选择性：极高，可达1000:1以上</p></li>
+<li><p>损伤：极低，亚表面损伤&lt;1 nm</p></li>
+<li><p>均匀性：优于0.5%</p></li>
+</ul>
+<p><strong>应用案例</strong></p>
+<ul class="simple">
+<li><p><strong>FinFET鳍片修整</strong>：精确控制鳍片宽度和高度</p></li>
+<li><p><strong>GAA纳米片释放</strong>：选择性去除SiGe，保留Si</p></li>
+<li><p><strong>二维材料图案化</strong>：MoS₂、WSe₂等的原子级刻蚀</p></li>
+</ul>
+<p>### 低温刻蚀技术</p>
+<p><strong>技术动机</strong></p>
+<p>低温刻蚀（通常&lt;-50°C）具有以下优势：
+- 减少聚合物挥发，提高侧壁钝化效果
+- 降低热损伤，保护热敏感材料
+- 提高选择比，特别是对光刻胶的选择比
+- 减少微观沟槽效应</p>
+<p><strong>实现方法</strong></p>
+<ul class="simple">
+<li><p><strong>冷却系统</strong>：液氮冷却、氦背冷增强</p></li>
+<li><p><strong>温度控制</strong>：晶圆温度精确控制到±1°C</p></li>
+<li><p><strong>工艺优化</strong>：调整气体配方适应低温条件</p></li>
+</ul>
+<p><strong>典型应用</strong></p>
+<ul class="simple">
+<li><p><strong>高深宽比刻蚀</strong>：3D NAND存储孔（&gt;100:1）</p></li>
+<li><p><strong>低温硅刻蚀</strong>：MEMS器件</p></li>
+<li><p><strong>低温金属刻蚀</strong>：避免热损伤</p></li>
+</ul>
+<p>### 选择性刻蚀技术</p>
+<p><strong>气相氢氟酸刻蚀（VHF）</strong></p>
+<p>用于选择性去除氧化物而不损伤其他材料：</p>
+<ul class="simple">
+<li><p><strong>原理</strong>：HF蒸汽与SiO₂反应生成挥发性SiF₄</p></li>
+<li><p><strong>选择性</strong>：对Si、SiN、金属的选择比&gt;1000:1</p></li>
+<li><p><strong>应用</strong>：释放结构、去除牺牲层</p></li>
+</ul>
+<p><strong>干法选择性刻蚀</strong></p>
+<p>通过优化化学配方实现高选择性：</p>
+<ul class="simple">
+<li><p><strong>氧化物对氮化物</strong>：C₄F₈/CHF₃基化学，选择比&gt;50:1</p></li>
+<li><p><strong>硅对氧化物</strong>：HBr/Cl₂基化学，选择比&gt;100:1</p></li>
+<li><p><strong>金属对介质</strong>：选择性金属刻蚀</p></li>
+</ul>
+<p>### EUV光刻配套刻蚀</p>
+<p><strong>技术挑战</strong></p>
+<p>EUV光刻使用极紫外光（13.5 nm），对刻蚀提出新要求：
+- <strong>更小的CD</strong>：&lt;10 nm特征尺寸
+- <strong>更严格的均匀性</strong>：&lt;1% within wafer
+- <strong>更低的损伤</strong>：避免EUV光刻胶劣化
+- <strong>更精确的套刻</strong>：与EUV光刻的精确对准</p>
+<p><strong>解决方案</strong></p>
+<ul class="simple">
+<li><p><strong>低损伤等离子体</strong>：降低离子能量，减少光刻胶损伤</p></li>
+<li><p><strong>先进终点检测</strong>：高精度OES和激光干涉</p></li>
+<li><p><strong>实时反馈控制</strong>：基于AI的工艺补偿</p></li>
+</ul>
+<p>### 等离子体less刻蚀</p>
+<p><strong>技术原理</strong></p>
+<p>不使用等离子体，纯化学反应刻蚀：</p>
+<ul class="simple">
+<li><p><strong>热原子刻蚀</strong>：使用热原子束（如H、F）</p></li>
+<li><p><strong>光化学刻蚀</strong>：紫外光激发化学反应</p></li>
+<li><p><strong>催化刻蚀</strong>：催化剂促进表面反应</p></li>
+</ul>
+<p><strong>优势</strong></p>
+<ul class="simple">
+<li><p>零等离子体损伤</p></li>
+<li><p>极高的选择性</p></li>
+<li><p>无充电效应</p></li>
+<li><p>适用于超敏感材料</p></li>
+</ul>
+<p><strong>应用</strong></p>
+<ul class="simple">
+<li><p>二维材料刻蚀</p></li>
+<li><p>有机半导体</p></li>
+<li><p>生物相容性材料</p></li>
+</ul>
+<p>### 远程等离子体刻蚀</p>
+<p><strong>技术特点</strong></p>
+<p>等离子体产生区与刻蚀区分离：</p>
+<ul class="simple">
+<li><p><strong>等离子体源</strong>：ICP或微波等离子体</p></li>
+<li><p><strong>传输距离</strong>：等离子体通过管道传输到晶圆</p></li>
+<li><p><strong>活性物种</strong>：主要是长寿命自由基</p></li>
+</ul>
+<p><strong>优势</strong></p>
+<ul class="simple">
+<li><p>离子能量极低（&lt;1 eV）</p></li>
+<li><p>几乎无等离子体损伤</p></li>
+<li><p>均匀性好</p></li>
+<li><p>适合大面积刻蚀</p></li>
+</ul>
+<p><strong>应用</strong></p>
+<ul class="simple">
+<li><p>光刻胶去除（Ashing）</p></li>
+<li><p>表面清洗</p></li>
+<li><p>低损伤刻蚀</p></li>
+</ul>
+<p>### 激光辅助刻蚀</p>
+<p><strong>基本原理</strong></p>
+<p>激光与等离子体协同作用：</p>
+<ul class="simple">
+<li><p><strong>激光作用</strong>：局部加热、激发、改性</p></li>
+<li><p><strong>等离子体作用</strong>：化学反应、离子轰击</p></li>
+<li><p><strong>协同效应</strong>：激光增强反应速率，等离子体提高各向异性</p></li>
+</ul>
+<p><strong>技术优势</strong></p>
+<ul class="simple">
+<li><p>空间选择性高（激光聚焦）</p></li>
+<li><p>可刻蚀传统难刻材料</p></li>
+<li><p>减少侧壁损伤</p></li>
+<li><p>可实现纳米级图案</p></li>
+</ul>
+<p><strong>挑战</strong></p>
+<ul class="simple">
+<li><p>设备复杂，成本高</p></li>
+<li><p>产能较低</p></li>
+<li><p>均匀性控制困难</p></li>
+</ul>
+<p>### 新兴技术的发展趋势</p>
+<p><strong>智能化</strong></p>
+<ul class="simple">
+<li><p>AI驱动的工艺优化</p></li>
+<li><p>自适应控制算法</p></li>
+<li><p>预测性维护</p></li>
+</ul>
+<p><strong>绿色化</strong></p>
+<ul class="simple">
+<li><p>低GWP气体替代</p></li>
+<li><p>减少有害副产物</p></li>
+<li><p>节能工艺开发</p></li>
+</ul>
+<p><strong>集成化</strong></p>
+<ul class="simple">
+<li><p>多步骤集成工艺</p></li>
+<li><p>原位监控与反馈</p></li>
+<li><p>跨尺度工艺协同</p></li>
+</ul>
+</section>
+<section id="id7">
+<h2>刻蚀机台的主要构成<a class="headerlink" href="#id7" title="链接到此标题。">¶</a></h2>
+<p>现代刻蚀机台是一个高度复杂的系统，集成了多个子系统，每个子系统都承担着特定的功能。理解这些子系统的原理和作用，对于掌握刻蚀工艺和设备操作至关重要。</p>
+<p><strong>真空系统（Vacuum System）</strong></p>
+<p>真空系统是刻蚀设备的基础，负责维持反应腔内的低压环境。真空系统的性能直接影响等离子体的产生和稳定性、气体分子的平均自由程、以及刻蚀工艺的重复性。</p>
+<p>真空系统的核心组件包括：</p>
+<p>机械泵（Roughing Pump）：通常是干式旋片泵或螺杆泵，负责将反应腔从大气压抽到中等真空（约10⁻² Torr）。机械泵的抽速通常在10-100 m³/h范围，是真空系统的第一级。</p>
+<p>分子泵（Turbo Molecular Pump, TMP）：负责将真空度从10⁻² Torr提升到10⁻⁶-10⁻⁸ Torr。分子泵通过高速旋转的叶片（转速通常在20,000-90,000 RPM）将气体分子从腔室抽向排气口。分子泵的抽速通常在100-2000 L/s范围，是维持高真空的关键设备。</p>
+<p>真空计（Vacuum Gauge）：用于测量腔室内的实际压力。常用的真空计包括电容薄膜计（Capacitance Manometer，精度高，用于工艺压力控制）、皮拉尼计（Pirani Gauge，用于粗真空测量）和电离计（Ionization Gauge，用于高真空测量）。</p>
+<p>节流阀（Throttle Valve）：位于腔室和分子泵之间，通过调节阀门开度控制抽气速率，从而精确控制腔室压力。节流阀的控制精度直接影响压力稳定性和刻蚀均匀性。</p>
+<p>真空系统的设计需要考虑多个因素：抽速要足够快，以保证工艺气体的快速更换和腔室的快速抽真空；极限真空要足够低，以减少残余气体对等离子体的污染；压力控制要精确，以保证刻蚀工艺的重复性。</p>
+<p><strong>射频电源系统（RF Power System）</strong></p>
+<p>射频电源是刻蚀设备的&quot;心脏&quot;，负责产生和维持等离子体。RF电源系统的性能直接决定等离子体的密度、均匀性和稳定性。</p>
+<p>RF电源系统的核心组件包括：</p>
+<p>RF发生器（RF Generator）：产生特定频率（通常为13.56MHz，也有2MHz、400kHz、60MHz等）的射频功率。RF发生器的功率范围从几十瓦到几千瓦不等，功率稳定性通常在±1%以内。</p>
+<p>匹配网络（Matching Network）：RF发生器的输出阻抗通常为50欧姆，而等离子体的阻抗是动态变化的。匹配网络通过可调电容和电感，将等离子体阻抗匹配到50欧姆，最大化功率传输效率，减少反射功率。现代匹配网络通常采用自动调谐技术，能够实时跟踪等离子体阻抗变化。</p>
+<p>RF传输线：使用同轴电缆将RF功率从发生器传输到电极。传输线的阻抗必须严格控制（50欧姆），长度和弯曲半径也有严格要求，以避免驻波和功率损耗。</p>
+<p>在双频或多频刻蚀系统中，需要多个RF发生器和匹配网络，每个工作在不同频率，独立控制不同的工艺参数（如等离子体密度和离子能量）。多频系统需要使用RF滤波器（Filter）或双工器（Diplexer），防止不同频率的RF功率相互干扰。</p>
+<p><strong>气体输送系统（Gas Delivery System）</strong></p>
+<p>气体输送系统负责将工艺气体精确、稳定地输送到反应腔。系统的精度和稳定性直接影响刻蚀速率、均匀性和重复性。</p>
+<p>气体输送系统的核心组件包括：</p>
+<p>气源与气柜（Gas Cabinet）：存储工艺气体钢瓶，配备减压阀、过滤器、purging系统和安全联锁。气柜需要良好的通风和气体泄漏检测系统。</p>
+<p>质量流量控制器（MFC, Mass Flow Controller）：精确控制每种气体的流量，精度通常在±1%满量程以内。MFC的工作原理基于热式或层流式测量，能够实时反馈和调节流量。现代MFC的响应时间通常在几百毫秒以内，满足快速工艺切换的需求。</p>
+<p>气体混合与分配：多路气体在混合腔或分配歧管中混合，然后通过气体分配环（Showerhead）均匀地引入反应腔。气体分配的设计对等离子体均匀性和刻蚀均匀性有重要影响。</p>
+<p>背压阀（Back-pressure Regulator）：在某些系统中，用于控制气体管线的压力，保证MFC入口压力稳定。</p>
+<p>气体输送系统的设计需要考虑多个因素：气体种类兼容性（不同气体对材料的要求不同）；流量精度和稳定性；响应速度（对于快速工艺切换）；安全性（有毒、易燃气体的特殊处理）。</p>
+<p><strong>温控系统（Temperature Control System）</strong></p>
+<p>温度控制对刻蚀工艺的稳定性、均匀性和可重复性至关重要。刻蚀过程中的热量来源包括：等离子体能量沉积（离子轰击、化学反应放热）；RF功率损耗（线圈、电极、匹配网络）；以及外部加热（如果采用加热工艺）。</p>
+<p>温控系统包括：</p>
+<p>晶圆温度控制：通常通过静电卡盘（ESC, Electrostatic Chuck）实现。ESC内部集成加热元件和冷却通道，通过氦气背冷（Backside He Cooling）将热量从晶圆背面传导出去。晶圆温度通常控制在20-60°C范围，精度在±1°C以内。</p>
+<p>腔壁温度控制：反应腔壁通常配备水冷或电加热系统，维持腔壁温度在设定值。腔壁温度影响腔室内的热平衡、气体吸附/解吸行为、以及聚合物沉积速率。</p>
+<p>电极温度控制：对于CCP等使用电极耦合RF的系统，电极温度需要精确控制，以避免热变形影响电极间距和等离子体均匀性。</p>
+<p>温度传感器：使用热电偶（Thermocouple）或RTD（Resistance Temperature Detector）实时监测各关键位置的温度，反馈给温控系统进行闭环控制。</p>
+<p><strong>静电卡盘系统（ESC System）</strong></p>
+<p>静电卡盘（ESC, Electrostatic Chuck）是现代刻蚀设备中用于固定晶圆的关键部件。与传统的机械夹持相比，ESC具有无阴影效应、均匀夹持、兼容真空环境等优点。</p>
+<p>ESC的工作原理基于静电吸附力。ESC内部嵌有电极，当在电极上施加高压（通常1-5 kV）时，电极与晶圆之间形成电场。由于晶圆和ESC材料都是介电材料（有一定电阻率），在电场作用下，电极和晶圆表面会感应出相反极性的电荷，产生库仑力（Coulomb Force）或Johnsen-Rahbek力，将晶圆吸附在ESC表面。</p>
+<p>ESC的类型根据吸附机制分为两种：</p>
+<p>库仑力ESC（Coulombic ESC）：电极与晶圆之间形成电容，吸附力来源于电极和晶圆表面感应电荷之间的库仑引力。库仑力ESC的吸附力与电压平方成正比，与介电层厚度成反比。库仑力ESC的优点是释放电压后吸附力迅速消失，晶圆易于取下；缺点是需要较高的电压，对介电层绝缘性能要求高。</p>
+<p>Johnsen-Rahbek力ESC（J-R ESC）：在电场作用下，晶圆内的自由电荷（或离子）迁移到晶圆-ESC界面，形成强烈的电荷积累，产生更大的吸附力。J-R力的吸附力远大于库仑力（相同电压下），但释放电压后吸附力衰减较慢，晶圆取下困难。J-R ESC适用于需要高吸附力的应用。</p>
+<p>ESC的材料选择对性能至关重要。ESC主体通常采用陶瓷材料，如AlN（氮化铝）、Al2O3（氧化铝）或SiC（碳化硅）。这些材料需要满足以下要求：高电阻率（保证电极与晶圆之间的绝缘，防止击穿）；适当的热导率（保证晶圆温度均匀性）；低热膨胀系数（与硅晶圆的热膨胀系数匹配，减少热应力）；高机械强度（承受晶圆吸附力和工艺过程中的机械应力）。</p>
+<p><strong>终点检测系统（Endpoint Detection System）</strong></p>
+<p>终点检测系统用于实时监测刻蚀进程，确定刻蚀完成的时刻，避免过刻蚀或欠刻蚀。终点检测的精度直接影响刻蚀深度控制和工艺良率。</p>
+<p>常用的终点检测技术包括：</p>
+<p>光学发射光谱（OES, Optical Emission Spectroscopy）：通过光纤收集等离子体发射的光，用光谱仪分析特定波长的光强变化。当刻蚀到达不同材料界面时，等离子体中的活性粒子成分发生变化，导致特定波长的光强发生突变，从而确定刻蚀终点。OES是最常用的终点检测技术，具有非接触、实时、多波长同时监测等优点。</p>
+<p>激光干涉仪（Laser Interferometry）：利用激光在薄膜上下表面反射产生的干涉信号，监测薄膜厚度的变化。当薄膜被完全刻蚀时，干涉信号发生特征性变化，确定刻蚀终点。激光干涉仪适用于透明或半透明薄膜的刻蚀，精度高但对不透明材料无效。</p>
+<p>其他终点检测技术：还包括质谱分析（RGA, Residual Gas Analyzer）、声发射检测（Acoustic Emission）、等离子体阻抗监测等，适用于特定的工艺场景。</p>
+<p><strong>自动化与控制系统</strong></p>
+<p>现代刻蚀机台配备高度自动化的控制系统，实现晶圆传输、工艺执行、数据采集和设备监控的全自动化。</p>
+<p>晶圆传输系统：包括EFEM（Equipment Front-End Module）和真空传输模块，负责在多个反应腔之间传输晶圆，以及与工厂自动化系统（AMHS, Automated Material Handling System）对接。</p>
+<p>工艺控制系统：执行预定义的工艺配方（Recipe），控制RF功率、气体流量、压力、温度等参数，监控工艺过程，记录工艺数据。</p>
+<p>设备监控系统：实时监控设备各子系统的状态（真空度、温度、RF功率、气体流量等），检测异常并触发报警或保护动作。</p>
+<p>数据采集与存储：记录每次刻蚀的工艺参数和传感器数据，用于工艺追溯、统计过程控制（SPC）和故障诊断。</p>
+<p>刻蚀机台的各子系统紧密配合，共同保证刻蚀工艺的稳定性、均匀性和可重复性。在实际生产中，机台的性能不仅取决于单个子系统的性能，更取决于各子系统之间的协调和优化。</p>
+</section>
+<section id="id8">
+<h2>刻蚀工艺监控与优化<a class="headerlink" href="#id8" title="链接到此标题。">¶</a></h2>
+<p>现代半导体制造对刻蚀工艺的稳定性、均匀性和可重复性提出了极高要求。系统化的工艺监控和优化方法是保证良率的关键。</p>
+<p>### 统计过程控制（SPC）</p>
+<p><strong>控制图应用</strong></p>
+<p>刻蚀工艺的关键参数需要通过SPC控制图进行监控：</p>
+<ul class="simple">
+<li><p><strong>X-bar R图</strong>：监控刻蚀速率的均值和极差</p></li>
+<li><p><strong>Cp/Cpk指数</strong>：评估工艺能力
+- Cp ≥ 1.33：工艺能力充分
+- Cpk ≥ 1.33：工艺中心偏移可接受</p></li>
+</ul>
+<p><strong>关键监控参数</strong></p>
+<div class="line-block">
+<div class="line">参数类型 | 监控指标 | 典型规格 |</div>
+</div>
+<p><a href="#id9"><span class="problematic" id="id10">|---------|</span></a>---------<a href="#id11"><span class="problematic" id="id12">|---------|</span></a>
+| 刻蚀速率 | 均值、标准差 | ±3% within wafer |
+| 均匀性 | 非均匀性 | &lt;3% (1σ) |
+| 选择比 | 目标值范围 | ±5% |
+| 形貌 | CD、侧壁角度 | ±5 nm, ±0.5° |</p>
+<p><strong>异常检测规则</strong></p>
+<p>常用的Western Electric规则：
+- 单点超出3σ控制限
+- 连续7点在均值同侧
+- 连续6点递增或递减
+- 连续14点交替上下波动</p>
+<p>### 实验设计（DOE）</p>
+<p><strong>全因子设计</strong></p>
+<p>当因子数较少（通常&lt;5）时，全因子设计可以全面评估各因子及其交互作用：</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">2^k设计：k个因子，每个因子2个水平</span>
+<span class="pre">例如：2^3</span> <span class="pre">=</span> <span class="pre">8次实验</span>
+<span class="pre">因子：RF功率、压力、气体流量</span>
+<span class="pre">`</span></code></p>
+<p><strong>响应面方法（RSM）</strong></p>
+<p>用于建立工艺参数与响应之间的二次模型：</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">Y</span> <span class="pre">=</span> <span class="pre">β₀</span> <span class="pre">+</span> <span class="pre">Σβᵢxᵢ</span> <span class="pre">+</span> <span class="pre">Σβᵢᵢxᵢ²</span> <span class="pre">+</span> <span class="pre">ΣΣβᵢⱼxᵢxⱼ</span>
+<span class="pre">`</span></code></p>
+<p>常用设计：
+- 中心复合设计（CCD）
+- Box-Behnken设计</p>
+<p><strong>田口方法</strong></p>
+<p>适用于稳健性设计，通过信噪比（S/N比）优化：</p>
+<p><code class="docutils literal notranslate"><span class="pre">`</span>
+<span class="pre">S/N</span> <span class="pre">=</span> <span class="pre">-10</span> <span class="pre">log(1/n</span> <span class="pre">Σ(1/yᵢ²))</span>&#160; <span class="pre">（越小越好特性）</span>
+<span class="pre">`</span></code></p>
+<p>### 工艺窗口优化</p>
+<p><strong>工艺窗口定义</strong></p>
+<p>工艺窗口是指满足所有规格要求的工艺参数空间。通常通过以下方式确定：</p>
+<ol class="arabic simple">
+<li><p><strong>单因子实验</strong>：固定其他参数，扫描目标参数</p></li>
+<li><p><strong>多因子优化</strong>：使用RSM或机器学习模型</p></li>
+<li><p><strong>边界确定</strong>：找到规格限对应的参数边界</p></li>
+</ol>
+<p><strong>多目标优化</strong></p>
+<p>刻蚀工艺通常需要同时优化多个目标：
+- 最大化刻蚀速率
+- 最大化选择比
+- 最小化非均匀性
+- 控制形貌</p>
+<p>常用方法：
+- <strong>Pareto前沿</strong>：找到非支配解集
+- <strong>加权求和法</strong>：将多目标转化为单目标
+- <strong>约束优化</strong>：在满足约束条件下优化主目标</p>
+<p><strong>工艺鲁棒性</strong></p>
+<p>鲁棒性是指工艺对参数波动的容忍度。提高鲁棒性的方法：</p>
+<ul class="simple">
+<li><p>选择工艺窗口的中心区域</p></li>
+<li><p>降低敏感因子的波动</p></li>
+<li><p>使用反馈控制补偿漂移</p></li>
+<li><p>设计冗余工艺步骤</p></li>
+</ul>
+<p>### 故障检测与分类（FDC）</p>
+<p><strong>实时监控系统</strong></p>
+<p>现代刻蚀设备配备数百个传感器，实时采集：
+- RF参数（功率、反射功率、阻抗）
+- 真空参数（压力、气体流量）
+- 温度参数（电极、腔壁、晶圆）
+- 光学参数（OES光谱）</p>
+<p><strong>特征提取</strong></p>
+<p>从原始信号中提取特征：
+- 时域特征：均值、方差、峰值
+- 频域特征：FFT频谱、功率谱密度
+- 时频域特征：小波系数</p>
+<p><strong>异常检测算法</strong></p>
+<p>常用方法：
+- <strong>主成分分析（PCA）</strong>：降维，检测异常点
+- <strong>偏最小二乘（PLS）</strong>：建立预测模型
+- <strong>支持向量机（SVM）</strong>：分类正常/异常
+- <strong>神经网络</strong>：深度学习异常检测</p>
+<p><strong>故障根因分析</strong></p>
+<p>当检测到异常时，需要快速定位根因：
+- 决策树分析
+- 鱼骨图（因果图）
+- 5 Why分析
+- 故障模式与影响分析（FMEA）</p>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="02-icp-system.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">ICP刻蚀系统深度解析</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="../index.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Home</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2026
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">刻蚀技术基础</a><ul>
+<li><a class="reference internal" href="#id2">什么是刻蚀</a></li>
+<li><a class="reference internal" href="#id3">刻蚀的分类体系</a></li>
+<li><a class="reference internal" href="#id4">刻蚀的物理化学机制</a></li>
+<li><a class="reference internal" href="#id5">标准刻蚀工艺步骤</a></li>
+<li><a class="reference internal" href="#ale-vs">ALE vs 传统刻蚀</a></li>
+<li><a class="reference internal" href="#id6">新兴刻蚀技术</a></li>
+<li><a class="reference internal" href="#id7">刻蚀机台的主要构成</a></li>
+<li><a class="reference internal" href="#id8">刻蚀工艺监控与优化</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../_static/documentation_options.js?v=d13773e8"></script>
+    <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../_static/translations.js?v=540d3cec"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+    <script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.12.1/dist/mermaid.esm.min.mjs";
+
+
+
+
+
+const initStyles = () => {
+    const defaultStyle = document.createElement('style');
+    defaultStyle.textContent = `pre.mermaid {
+    /* Same as .mermaid-container > pre */
+    display: block;
+    width: 100%;
+}
+
+pre.mermaid > svg {
+    /* Same as .mermaid-container > pre > svg */
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}`;
+    document.head.appendChild(defaultStyle);
+
+    const fullscreenStyle = document.createElement('style');
+    fullscreenStyle.textContent = `.mermaid-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.mermaid-container > pre {
+    display: block;
+    width: 100%;
+}
+
+.mermaid-container > pre > svg {
+    height: 500px;
+    width: 100%;
+    max-width: 100% !important;
+}
+
+.mermaid-fullscreen-btn {
+    width: 28px;
+    height: 28px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    line-height: 1;
+    padding: 0;
+    color: #333;
+}
+
+.mermaid-fullscreen-btn:hover {
+    opacity: 100% !important;
+    background: rgba(255, 255, 255, 1);
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-btn.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-btn.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 3px 10px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 95vw;
+    height: 100vh;
+    background: rgba(255, 255, 255, 0.98);
+    z-index: 9999;
+    padding: 20px;
+    overflow: auto;
+}
+
+.mermaid-fullscreen-modal.dark-theme {
+    background: rgba(0, 0, 0, 0.98);
+}
+
+.mermaid-fullscreen-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen {
+    position: relative;
+    width: 95vw;
+    height: 90vh;
+    max-width: 95vw;
+    max-height: 90vh;
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    overflow: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen.dark-theme {
+    background: #1a1a1a;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
+}
+
+.mermaid-container-fullscreen pre.mermaid {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mermaid-container-fullscreen .mermaid svg {
+    height: 100% !important;
+    width: 100% !important;
+    cursor: grab;
+}
+
+.mermaid-fullscreen-close {
+    position: fixed !important;
+    top: 20px !important;
+    right: 20px !important;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s;
+    font-size: 24px;
+    line-height: 1;
+    color: #333;
+}
+
+.mermaid-fullscreen-close:hover {
+    background: white;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transform: scale(1.1);
+}
+
+.mermaid-fullscreen-close.dark-theme {
+    background: rgba(50, 50, 50, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+}
+
+.mermaid-fullscreen-close.dark-theme:hover {
+    background: rgba(60, 60, 60, 1);
+    box-shadow: 0 6px 16px rgba(255, 255, 255, 0.2);
+}
+
+.mermaid-fullscreen-modal .mermaid-fullscreen-btn {
+    display: none !important;
+}`;
+    document.head.appendChild(fullscreenStyle);
+}
+
+// Detect if page has dark background
+const isDarkTheme = () => {
+    // We use a set of heuristics:
+    // 1. Check for common dark mode classes or attributes
+    // 2. Check computed background color brightness
+    if (document.documentElement.classList.contains('dark') ||
+        document.documentElement.getAttribute('data-theme') === 'dark' ||
+        document.body.classList.contains('dark') ||
+        document.body.getAttribute('data-theme') === 'dark') {
+        // console.log("Dark theme detected via class/attribute");
+        return true;
+    }
+    if (document.documentElement.classList.contains('light') ||
+        document.documentElement.getAttribute('data-theme') === 'light' ||
+        document.body.classList.contains('light') ||
+        document.body.getAttribute('data-theme') === 'light') {
+        // console.log("Light theme detected via class/attribute");
+        return false;
+    }
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        // console.log("Dark theme detected via prefers-color-scheme");
+        return true;
+    }
+    const bgColor = window.getComputedStyle(document.body).backgroundColor;
+    const match = bgColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)/);
+    if (match) {
+        const r = parseInt(match[1]);
+        const g = parseInt(match[2]);
+        const b = parseInt(match[3]);
+        const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+        // console.log("Background color brightness:", brightness);
+        return brightness < 128;
+    }
+    // console.log("No dark or light theme detected, defaulting to light theme");
+    return false;
+};
+
+let darkTheme = isDarkTheme();
+let modal = null;
+let modalContent = null;
+let previousScrollOffset = [window.scrollX, window.scrollY];
+let _lazyObserver = null;
+let _renderQueue = Promise.resolve();
+
+// Apply d3 zoom to each SVG. Idempotent: an SVG already wrapped is skipped,
+// so this is safe to call both for the initial batch and for diagrams that
+// render lazily once they become visible.
+const addZoomToSvgs = (svgs) => {
+    svgs.each(function() {
+        if (this.getAttribute('data-zoom-applied') === 'true') return;
+        var svg = d3.select(this);
+        svg.html("<g class='wrapper'>" + svg.html() + "</g>");
+        var inner = svg.select("g");
+        var zoom = d3.zoom().on("zoom", function(event) {
+            inner.attr("transform", event.transform);
+        });
+        svg.call(zoom);
+        this.setAttribute('data-zoom-applied', 'true');
+    });
+};
+
+const runMermaid = async (rerun) => {
+    console.log("Running mermaid diagrams, rerun =", rerun);
+    // clear all existing mermaid charts
+    let all_mermaids = document.querySelectorAll(".mermaid");
+
+    if (rerun) {
+        // Disconnect any previous lazy rendering observer
+        if (_lazyObserver) {
+            _lazyObserver.disconnect();
+            _lazyObserver = null;
+        }
+
+        all_mermaids.forEach((el) => {
+            el.removeAttribute('data-mermaid-deferred');
+            el.removeAttribute('data-mermaid-render-failed');
+            if(!el.hasAttribute("data-original-code")) {
+                // store original code
+                // console.log(`Storing original code for first run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+            if(el.getAttribute("data-processed") === "true") {
+                // remove and restore original
+                el.removeAttribute("data-processed");
+                // console.log(`Restoring original code for re-run: `, el.getAttribute('data-original-code'));
+                el.innerHTML = el.getAttribute('data-original-code');
+            } else {
+                // store original code
+                // console.log(`Storing original code for re-run: `, el.innerHTML);
+                el.setAttribute('data-original-code', el.innerHTML);
+            }
+        });
+
+        // Separate visible and hidden elements. Mermaid's layout engine measures
+        // text dimensions via the DOM, which fails for elements hidden by a parent
+        // (e.g., Reveal.js non-active slides, sphinx-design unopened tabs),
+        // producing broken SVGs. Render visible elements now, defer hidden ones.
+        const visible = [];
+        const hidden = [];
+        all_mermaids.forEach((el) => {
+            // offsetParent is null for display:none ancestors.
+            // getClientRects().length > 0 catches position:fixed elements
+            // (which also have null offsetParent but are still visible).
+            if (el.offsetParent !== null || el.getClientRects().length > 0) {
+                visible.push(el);
+            } else {
+                hidden.push(el);
+                el.setAttribute('data-mermaid-deferred', 'true');
+            }
+        });
+
+        if (visible.length > 0) {
+            try {
+                await mermaid.run({ nodes: visible });
+            } catch (e) {
+                console.error("Mermaid rendering failed:", e);
+            }
+        }
+
+        // Lazily render hidden elements when they become visible.
+        // Uses a promise chain (_renderQueue) to serialize rendering,
+        // since IntersectionObserver may report multiple entries at once
+        // and mermaid.run() is not safe to call concurrently.
+        if (hidden.length > 0) {
+            if (typeof IntersectionObserver === 'undefined') {
+                console.warn("IntersectionObserver not available; hidden mermaid diagrams will not render.");
+            } else {
+                _renderQueue = Promise.resolve();
+                _lazyObserver = new IntersectionObserver((entries) => {
+                    for (const entry of entries) {
+                        if (entry.isIntersecting && entry.target.getAttribute("data-processed") !== "true") {
+                            _lazyObserver.unobserve(entry.target);
+                            const el = entry.target;
+                            _renderQueue = _renderQueue.then(async () => {
+                                try {
+                                    await mermaid.run({ nodes: [el] });
+                                    el.removeAttribute('data-mermaid-deferred');
+                                    // Apply zoom to the now-rendered diagram, matching
+                                    // the decoration visible diagrams receive.
+                                    if ("False" === "True") {
+                                        addZoomToSvgs(d3.selectAll(""));
+                                    }
+                                } catch (e) {
+                                    console.error("Mermaid deferred rendering failed:", e);
+                                    el.removeAttribute('data-mermaid-deferred');
+                                    el.setAttribute('data-mermaid-render-failed', 'true');
+                                }
+                            });
+                        }
+                    }
+                });
+                hidden.forEach((el) => _lazyObserver.observe(el));
+            }
+        }
+    }
+
+    all_mermaids = document.querySelectorAll(".mermaid");
+    // Exclude deferred (hidden) and render-failed elements from completion checks
+    const mermaids_active = document.querySelectorAll(".mermaid:not([data-mermaid-deferred]):not([data-mermaid-render-failed])");
+    const mermaids_processed = document.querySelectorAll(".mermaid:not([data-mermaid-deferred]):not([data-mermaid-render-failed])[data-processed='true']");
+
+    if ("False" === "True") {
+        const mermaids_to_add_zoom = -1 === -1 ? mermaids_active.length : -1;
+        if(mermaids_to_add_zoom > 0) {
+            var svgs = d3.selectAll("");
+            // Wait until every active (visible) diagram has rendered. Deferred
+            // diagrams are excluded, so a fixed d3_node_count that counts a
+            // hidden diagram no longer loops forever waiting for its SVG.
+            if(mermaids_active.length !== mermaids_processed.length) {
+                setTimeout(() => runMermaid(false), 200);
+                return;
+            }
+            addZoomToSvgs(svgs);
+        }
+    } else if(mermaids_active.length !== mermaids_processed.length) {
+        // Wait for mermaid to process all diagrams
+        setTimeout(() => runMermaid(false), 200);
+        return;
+    }
+
+    // Stop here if not adding fullscreen capability
+    if ("True" !== "True") return;
+
+    if (modal !== null ) {
+        // Destroy existing modal
+        modal.remove();
+        modal = null;
+        modalContent = null;
+    }
+
+    modal = document.createElement('div');
+    modal.className = 'mermaid-fullscreen-modal' + (darkTheme ? ' dark-theme' : '');
+    modal.setAttribute('role', 'dialog');
+    modal.setAttribute('aria-modal', 'true');
+    modal.setAttribute('aria-label', 'Fullscreen diagram viewer');
+    modal.innerHTML = `
+        <button class="mermaid-fullscreen-close${darkTheme ? ' dark-theme' : ''}" aria-label="Close fullscreen">✕</button>
+        <div class="mermaid-container-fullscreen${darkTheme ? ' dark-theme' : ''}"></div>
+    `;
+    document.body.appendChild(modal);
+
+    modalContent = modal.querySelector('.mermaid-container-fullscreen');
+    const closeBtn = modal.querySelector('.mermaid-fullscreen-close');
+
+    const closeModal = () => {
+        modal.classList.remove('active');
+        modalContent.innerHTML = '';
+        document.body.style.overflow = ''
+        window.scrollTo({left: previousScrollOffset[0], top: previousScrollOffset[1], behavior: 'instant'});
+    };
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+    });
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('active')) {
+            closeModal();
+        }
+    });
+
+    document.querySelectorAll('.mermaid').forEach((mermaidDiv) => {
+        if (mermaidDiv.parentNode.classList.contains('mermaid-container') ||
+            mermaidDiv.closest('.mermaid-fullscreen-modal')) {
+            // Already processed, adjust button class if needed
+            const existingBtn = mermaidDiv.parentNode.querySelector('.mermaid-fullscreen-btn');
+            if (existingBtn) {
+                existingBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+            }
+            return;
+        }
+
+        const container = document.createElement('div');
+        container.className = 'mermaid-container';
+        mermaidDiv.parentNode.insertBefore(container, mermaidDiv);
+        container.appendChild(mermaidDiv);
+
+        const fullscreenBtn = document.createElement('button');
+        fullscreenBtn.className = 'mermaid-fullscreen-btn' + (darkTheme ? ' dark-theme' : '');
+        fullscreenBtn.setAttribute('aria-label', 'View diagram in fullscreen');
+        fullscreenBtn.textContent = '⛶';
+        fullscreenBtn.style.opacity = '50%';
+
+        // Calculate dynamic position based on diagram's margin and padding
+        const diagramStyle = window.getComputedStyle(mermaidDiv);
+        const marginTop = parseFloat(diagramStyle.marginTop) || 0;
+        const marginRight = parseFloat(diagramStyle.marginRight) || 0;
+        const paddingTop = parseFloat(diagramStyle.paddingTop) || 0;
+        const paddingRight = parseFloat(diagramStyle.paddingRight) || 0;
+        fullscreenBtn.style.top = `${marginTop + paddingTop + 4}px`;
+        fullscreenBtn.style.right = `${marginRight + paddingRight + 4}px`;
+
+        fullscreenBtn.addEventListener('click', () => {
+            previousScrollOffset = [window.scroll, window.scrollY];
+            const clone = mermaidDiv.cloneNode(true);
+            modalContent.innerHTML = '';
+            modalContent.appendChild(clone);
+
+            const svg = clone.querySelector('svg');
+            if (svg) {
+                svg.removeAttribute('width');
+                svg.removeAttribute('height');
+                svg.style.width = '100%';
+                svg.style.height = 'auto';
+                svg.style.maxWidth = '100%';
+                svg.style.sdisplay = 'block';
+
+                if ("False" === "True") {
+                    setTimeout(() => {
+                        const g = svg.querySelector('g');
+                        if (g) {
+                            var svgD3 = d3.select(svg);
+                            svgD3.html("<g class='wrapper'>" + svgD3.html() + "</g>");
+                            var inner = svgD3.select("g");
+                            var zoom = d3.zoom().on("zoom", function(event) {
+                                inner.attr("transform", event.transform);
+                            });
+                            svgD3.call(zoom);
+                        }
+                    }, 100);
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        container.appendChild(fullscreenBtn);
+    });
+};
+
+const load = async () => {
+    initStyles();
+
+    await runMermaid(true);
+
+    const reRunIfThemeChanges = async () => {
+        const newDarkTheme = isDarkTheme();
+        if (newDarkTheme !== darkTheme) {
+            darkTheme = newDarkTheme;
+            console.log("Theme change detected, re-running mermaid with", darkTheme ? "dark" : "default", "theme");
+            await mermaid.initialize(
+                {...JSON.parse(
+                    `{"startOnLoad": false}`
+                ),
+                ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+                }
+            );
+            await runMermaid(true);
+        }
+    };
+
+    // Update theme classes when theme changes
+    const themeObserver = new MutationObserver(reRunIfThemeChanges);
+    themeObserver.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+    themeObserver.observe(document.body, {
+        attributes: true,
+        attributeFilter: ['class', 'style', 'data-theme']
+    });
+};
+
+
+
+
+
+console.log("Initializing mermaid with", darkTheme ? "dark" : "default", "theme");
+mermaid.initialize(
+    {...JSON.parse(
+        `{"startOnLoad": false}`
+    ),
+    ...{ darkMode: darkTheme, theme: darkTheme ? 'dark' : 'default' },
+    }
+);
+
+window.addEventListener("load", load);
+window.runMermaid = runMermaid;</script>
+    </body>
+</html>
