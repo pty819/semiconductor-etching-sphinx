@@ -1,5 +1,5 @@
 CCP刻蚀系统深度解析
-==================
+====================
 
 本章系统介绍电容耦合等离子体（CCP）刻蚀系统的完整架构、各子系统的详细工作原理、设计考量以及实际工程应用。CCP刻蚀系统是半导体制造中应用最广泛的刻蚀技术平台，尤其在介质刻蚀（氧化物、氮化物）领域占据主导地位。CCP以其高选择比、优异的形貌控制能力和成熟的产业化经验，在现代集成电路制造中发挥着不可替代的作用。
 
@@ -15,6 +15,30 @@ CCP与ICP的根本区别在于能量耦合机制：
 在ICP中，射频功率通过线圈以电磁感应方式耦合到等离子体。线圈与等离子体之间通过介电窗（石英或陶瓷）隔离，线圈产生的交变磁场在等离子体中感应出涡旋电场，电场加速电子产生等离子体。
 
 这种耦合机制的差异导致了CCP和ICP在等离子体特性上的显著不同：
+
+.. mermaid::
+
+   graph TB
+       subgraph CCP系统架构
+           RF[射频电源 13.56MHz] -->|直接耦合| UpperElectrode[上电极]
+           RF -->|直接耦合| LowerElectrode[下电极]
+           UpperElectrode -->|电场加速| Plasma[等离子体区域]
+           LowerElectrode -->|电场加速| Plasma
+           
+           Gas[工艺气体] --> MFC[质量流量控制器]
+           MFC -->|10-100 mTorr| Chamber[反应腔]
+           
+           Plasma -->|高密度: 10⁹-10¹⁰ cm⁻³| Wafer[晶圆]
+           
+           Vacuum[真空系统] --> Chamber
+           TC[温控系统] --> UpperElectrode
+           TC --> LowerElectrode
+       end
+       
+       style Plasma fill:#e1f5ff
+       style Wafer fill:#fff4e1
+       style UpperElectrode fill:#ffe1e1
+       style LowerElectrode fill:#ffe1e1
 
 等离子体密度：CCP的等离子体密度通常在10⁹-10¹⁰ cm⁻³范围，比ICP（10¹¹-10¹² cm⁻³）低1-2个数量级。这是因为CCP中电子在电场中加速的距离受限（等于电极间距），而ICP中电子可以在感应电场中持续加速。
 

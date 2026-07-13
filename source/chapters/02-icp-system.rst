@@ -18,6 +18,26 @@ ICP技术的关键特征在于"源功率"（Source Power）和"偏置功率"（B
 
 ICP系统的等离子体密度通常可达10¹¹-10¹² cm⁻³，比CCP高1-2个数量级。高密度带来的优势包括：更高的刻蚀速率（单位时间内更多的活性粒子和离子参与反应）；更低的鞘层电压（在相同偏置功率下，高密度等离子体的鞘层更薄，电压更低），有利于降低离子损伤；更低的工艺气压（1-50 mTorr vs CCP的10-100 mTorr），有利于提高离子各向异性和减少气相反应。
 
+.. mermaid::
+
+   graph TB
+       subgraph ICP系统架构
+           RF1[源RF: 13.56MHz/2MHz] -->|源功率| Coil[顶部线圈]
+           Coil -->|电磁感应| Plasma[等离子体区域]
+           Plasma -->|高密度: 10¹¹-10¹² cm⁻³| Wafer[晶圆]
+           
+           RF2[偏置RF: 13.56MHz/400kHz] -->|偏置功率| Electrode[底部电极]
+           Electrode -->|离子加速| Wafer
+           
+           Gas[工艺气体] -->|MFC控制| Chamber[反应腔]
+           Chamber --> Plasma
+           
+           Vacuum[真空系统] -->|1-50 mTorr| Chamber
+       end
+       
+       style Plasma fill:#e1f5ff
+       style Wafer fill:#fff4e1
+
 反应腔系统
 ----------
 
