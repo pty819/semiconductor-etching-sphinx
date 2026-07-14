@@ -1,22 +1,14 @@
-========================
+====================
 ICP刻蚀系统深度解析
-===================
+====================
+
+本章详细介绍ICP（电感耦合等离子体）刻蚀系统的硬件架构、工作原理和工艺应用。ICP刻蚀机是半导体制造中用于硅刻蚀、金属刻蚀和高深宽比刻蚀的核心设备。
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    02-00-intro
-   02-01-overview
-   02-02-reactor
-   02-03-coil
-   02-04-rf
-   02-05-gas
-   02-06-vacuum
-   02-07-temperature
-   02-08-backside-he
-   02-09-exhaust
-   02-10-esc
-   02-11-etch-process
-   02-12-advanced
-   02-13-integration
-   02-14-conclusion
+   group-plasma-source
+   group-gas-vacuum
+   group-temperature-wafer
+   group-process-advanced
