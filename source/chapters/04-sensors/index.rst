@@ -1,20 +1,14 @@
 ========================
 传感器与故障诊断
-================
+========================
+
+本章介绍刻蚀设备中的传感器系统、故障检测与分类（FDC）技术，以及相关行业标准。
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
    04-00-intro
-   04-01-sensor-overview
-   04-02-process-sensors
-   04-03-endpoint-detection
-   04-04-equipment-sensors
-   04-05-sensor-layout
-   04-06-fdc
-   04-07-advanced-diagnostics
-   04-08-suppliers
-   04-09-standards
-   04-10-future-trends
-   04-11-summary
-   04-12-references
+   group-basics
+   group-engineering
+   group-advanced
+   group-summary
